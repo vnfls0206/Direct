@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Default">
+      <UniqueIdentifier>{3e35fc95-4041-450b-ae61-657e8745a855}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Default\리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\00. Device">
+      <UniqueIdentifier>{2a2db1a2-21c5-40bc-b6f3-3a13cd417d27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\99. Base">
+      <UniqueIdentifier>{27826604-1135-41c2-8703-717513f66095}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00. Device\02. Frame">
+      <UniqueIdentifier>{812688f9-1985-4d61-913e-3fb9d1761acc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00. Device\01. Timer">
+      <UniqueIdentifier>{dbea15aa-17ad-44f6-bf12-67ec047ba2cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00. Device\00. GraphicDev">
+      <UniqueIdentifier>{504e01b8-1caf-42c9-84fd-1dbb0ce344bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00. Device\01. Timer\Mgr">
+      <UniqueIdentifier>{e924aba1-fc99-4046-93ae-24ad8c21e2cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00. Device\02. Frame\Instance">
+      <UniqueIdentifier>{a1ac8a5e-6118-4a76-832c-b115f1a8e1e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00. Device\01. Timer\Instance">
+      <UniqueIdentifier>{adf2c7d8-ea9d-4d09-afd2-89ec2eb783a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00. Device\02. Frame\Mgr">
+      <UniqueIdentifier>{97c5663e-859a-4548-b417-31cc4f537ff3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02. Scene">
+      <UniqueIdentifier>{4f06e2f2-df40-432c-82bf-8d037111deb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00. Device\03. Font">
+      <UniqueIdentifier>{48b07de3-e4af-4ef6-8fdf-cdbb7de836a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00. Device\03. Font\Instance">
+      <UniqueIdentifier>{2176c0e6-31d5-4875-8fdf-c873545b3d8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00. Device\03. Font\Mgr">
+      <UniqueIdentifier>{5c778569-2bcd-43a3-b74e-17b62a31e71a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03. Component">
+      <UniqueIdentifier>{24270f86-47b2-405e-ae95-2564352a2d09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03. Component\Mgr">
+      <UniqueIdentifier>{63e8077e-4d9f-4da2-bcad-cf82caa175d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03. Component\Instance">
+      <UniqueIdentifier>{6e9e3d98-2dbc-47df-a1aa-152d2e45725d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03. Component\Instance\Buffer">
+      <UniqueIdentifier>{94981425-f3eb-4f8d-ad5a-6e07b998927c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03. Component\Instance\Texture">
+      <UniqueIdentifier>{2f092246-23fd-4cb2-be78-baf267c2e564}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03. Component\Instance\Rendercom">
+      <UniqueIdentifier>{779c192d-80ec-4268-8248-956f0f1e12be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03. Component\Instance\Shader">
+      <UniqueIdentifier>{a6f47261-a486-4c2f-876a-822894f07ed5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03. Component\Instance\Buffer\Buffer_RcTex">
+      <UniqueIdentifier>{3fd6ba8e-cfa9-4f28-bd17-6c8c74def02f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\04. ShaderFiles">
+      <UniqueIdentifier>{78733467-826b-465c-9773-7e06ea07b727}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03. Component\Instance\Transform">
+      <UniqueIdentifier>{d222339b-280e-4248-a60e-1f32efe39b49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01. GameObject">
+      <UniqueIdentifier>{b1c34dd1-64a5-4798-8c35-864b9c1d252a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00. Device\04. Key">
+      <UniqueIdentifier>{499054ec-5f13-49a9-8b97-835cb073bf09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\06. Video">
+      <UniqueIdentifier>{5cb044db-942f-4da1-b18e-c08efb6a37aa}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Default</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Engine_Macro.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBase.h">
+      <Filter>소스 파일\99. Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Engine_Include.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Engine_Function.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CGraphic_Device.h">
+      <Filter>소스 파일\00. Device\00. GraphicDev</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CFrame.h">
+      <Filter>소스 파일\00. Device\02. Frame\Instance</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CFrameMgr.h">
+      <Filter>소스 파일\00. Device\02. Frame\Mgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTimer.h">
+      <Filter>소스 파일\00. Device\01. Timer\Instance</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTimerMgr.h">
+      <Filter>소스 파일\00. Device\01. Timer\Mgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScene.h">
+      <Filter>소스 파일\02. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CManagement.h">
+      <Filter>소스 파일\02. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CLayer.h">
+      <Filter>소스 파일\01. GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CGameObject.h">
+      <Filter>소스 파일\01. GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CGameObject_Manager.h">
+      <Filter>소스 파일\01. GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CFont.h">
+      <Filter>소스 파일\00. Device\03. Font\Instance</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CFontMgr.h">
+      <Filter>소스 파일\00. Device\03. Font\Mgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CComponent.h">
+      <Filter>소스 파일\03. Component\Instance</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBuffer.h">
+      <Filter>소스 파일\03. Component\Instance\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CRenderCom.h">
+      <Filter>소스 파일\03. Component\Instance\Rendercom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShader.h">
+      <Filter>소스 파일\03. Component\Instance\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTexture.h">
+      <Filter>소스 파일\03. Component\Instance\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTransform.h">
+      <Filter>소스 파일\03. Component\Instance\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Engine_Struct.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBuffer_RcTex.h">
+      <Filter>소스 파일\03. Component\Instance\Buffer\Buffer_RcTex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCamera.h">
+      <Filter>소스 파일\01. GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CComponent_Manager.h">
+      <Filter>소스 파일\03. Component\Mgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CKeyManager.h">
+      <Filter>소스 파일\00. Device\04. Key</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Default</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>Default</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Default</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBase.cpp">
+      <Filter>소스 파일\99. Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGraphic_Device.cpp">
+      <Filter>소스 파일\00. Device\00. GraphicDev</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFrame.cpp">
+      <Filter>소스 파일\00. Device\02. Frame\Instance</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFrameMgr.cpp">
+      <Filter>소스 파일\00. Device\02. Frame\Mgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTimer.cpp">
+      <Filter>소스 파일\00. Device\01. Timer\Instance</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTimerMgr.cpp">
+      <Filter>소스 파일\00. Device\01. Timer\Mgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CManagement.cpp">
+      <Filter>소스 파일\02. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene.cpp">
+      <Filter>소스 파일\02. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGameObject.cpp">
+      <Filter>소스 파일\01. GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGameObject_Manager.cpp">
+      <Filter>소스 파일\01. GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLayer.cpp">
+      <Filter>소스 파일\01. GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFont.cpp">
+      <Filter>소스 파일\00. Device\03. Font\Instance</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFontMgr.cpp">
+      <Filter>소스 파일\00. Device\03. Font\Mgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CComponent.cpp">
+      <Filter>소스 파일\03. Component\Instance</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBuffer.cpp">
+      <Filter>소스 파일\03. Component\Instance\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CRenderCom.cpp">
+      <Filter>소스 파일\03. Component\Instance\Rendercom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShader.cpp">
+      <Filter>소스 파일\03. Component\Instance\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTexture.cpp">
+      <Filter>소스 파일\03. Component\Instance\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTransform.cpp">
+      <Filter>소스 파일\03. Component\Instance\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBuffer_RcTex.cpp">
+      <Filter>소스 파일\03. Component\Instance\Buffer\Buffer_RcTex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCamera.cpp">
+      <Filter>소스 파일\01. GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CComponent_Manager.cpp">
+      <Filter>소스 파일\03. Component\Mgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CKeyManager.cpp">
+      <Filter>소스 파일\00. Device\04. Key</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\..\Reference\Shaders\Shader_Default.fx">
+      <Filter>소스 파일\04. ShaderFiles</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>
