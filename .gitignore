@@ -35,6 +35,8 @@
 *.log
 *.pdb
 *.lik
+*.ilk
+*.idb
 .vs/
 ignore-.vs/
 
