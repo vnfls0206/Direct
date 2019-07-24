@@ -110,6 +110,11 @@
     <FxCompile>
       <ShaderModel>2.0</ShaderModel>
     </FxCompile>
+    <PostBuildEvent>
+      <Command>copy /y ..\Bin\*.dll ..\..\Client\Bin\;
+copy /y ..\Bin\*.lib ..\..\Reference\Libraies\;
+copy /y ..\Header\*.h ..\..\Reference\Headers\;</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -151,6 +156,11 @@
     <FxCompile>
       <ShaderModel>2.0</ShaderModel>
     </FxCompile>
+    <PostBuildEvent>
+      <Command>copy /y ..\Bin\*.dll ..\..\Client\Bin\;
+copy /y ..\Bin\*.lib ..\..\Reference\Libraies\;
+copy /y ..\Header\*.h ..\..\Reference\Headers\;</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
