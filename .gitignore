@@ -42,4 +42,10 @@ ignore-.vs/
 
 git rm --cached *.suo
 git commit -m "Delete suo file from repository"
+<<<<<<< HEAD
 Engine/Bin/Engine\.exp
+=======
+Engine/Default/Engine\.vcxproj
+
+Engine/Bin/
+>>>>>>> master
