@@ -19,7 +19,7 @@ CTexture::CTexture(const CTexture & rhs)
 }
 
 HRESULT CTexture::Add_Texture_Array_To_Vector(const TCHAR * pTexPath, const TCHAR* pTexExtension,
-	const int iTextureMinIndex, const int iTextureMaxIndex)
+	const int iTextureMinIndex, const int iTextureMaxIndex, TEXTURE_INFO info)
 {
 	if (pTexPath == nullptr){
 		return E_FAIL;
@@ -59,7 +59,14 @@ HRESULT CTexture::Add_Texture_Array_To_Vector(const TCHAR * pTexPath, const TCHA
 		lstrcat(tMaxPath, tExtension);		// 경로 + 숫자 + 확장자명 까지 총 경로를 세팅
 
 		LPDIRECT3DTEXTURE9 pTexture;
-		D3DXCreateTextureFromFile(Get_Graphic_Device(), tMaxPath, &pTexture);
+
+		if(info.height != NULL)
+			D3DXCreateTextureFromFileEx(Get_Graphic_Device(), tMaxPath, info.width, info.height, 1, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, info.color, NULL, NULL, &pTexture);
+		else
+			D3DXCreateTextureFromFile(Get_Graphic_Device(), tMaxPath, &pTexture);
+
+
+
 		m_vecTextureArray.push_back(pTexture);
 	}
 
@@ -82,11 +89,11 @@ LPDIRECT3DTEXTURE9 CTexture::Get_Texture_From_Array_In_Vector(const int & iIndex
 
 CComponent * CTexture::Create(LPDIRECT3DDEVICE9 pGraphic_Device,
 	const TCHAR* pTexPath, const TCHAR* pTexExtension,
-	const int iTextureMinIndex, const int iTextureMaxIndex)
+	const int iTextureMinIndex, const int iTextureMaxIndex, TEXTURE_INFO info)
 {
 	CTexture* pInstance = new CTexture(pGraphic_Device);
 	if (FAILED(pInstance->Add_Texture_Array_To_Vector
-	(pTexPath, pTexExtension, iTextureMinIndex, iTextureMaxIndex)))
+	(pTexPath, pTexExtension, iTextureMinIndex, iTextureMaxIndex, info)))
 	{
 		MSG_BOX("텍스처 초기화 오류");
 		Engine::Safe_Release(pInstance);
