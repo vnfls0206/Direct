@@ -49,3 +49,7 @@ Engine/Default/Engine\.vcxproj
 
 Engine/Bin/
 >>>>>>> master
+
+Client/Default/Debug/
+
+Client/Bin/

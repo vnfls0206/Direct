@@ -6,9 +6,13 @@
 
 BEGIN(Engine)
 class CGraphic_Device;
+class CGameObject_Manager;
+class CComponent_Manager;
 class CFontMgr;
 class CManagement;
+class CKeyManager;
 END
+class CSound_Manager;		//Engine พฦดิ
 
 class CMainGame final :
 	public Engine::CBase
@@ -32,7 +36,11 @@ public :
 private :
 	Engine::CManagement* m_pManagement;
 	Engine::CGraphic_Device* m_pGraphic_Device;
+	Engine::CGameObject_Manager* m_pGameObject;
+	Engine::CComponent_Manager* m_pComponentMgr;
 	Engine::CFontMgr* m_pFontMgr;
+	Engine::CKeyManager* m_pCKeyMgr;
+	CSound_Manager* m_pSoundMgr;
 	LPDIRECT3DDEVICE9 m_pDevice = nullptr;
 
 private :

@@ -1,10 +1,11 @@
 #include "stdafx.h"
 #include "CGameObject.h"
-
+#include "CComponent_Manager.h"
 USING(Engine)
 
 CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: m_pDevice(pGraphic_Device)
+	, m_pComponentMgr(Engine::CComponent_Manager::GetInstance())
 {
 
 }
