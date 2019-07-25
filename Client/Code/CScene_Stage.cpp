@@ -6,7 +6,7 @@
 #include "CGameObject_Manager.h"
 #include "CComponent_Manager.h"
 #include "CGraphic_Device.h"
-#include "CSound_Mananger.h"
+#include "CSound_Manager.h"
 
 #include "CTransform.h"
 #include "CStatic_Camera.h"
@@ -40,7 +40,7 @@ HRESULT CScene_Stage::Initialize_Scene()
 
 	Engine::Safe_Release(pObjMgr);
 
-	CSound_Mananger::GetInstance()->PlayBGM(L"Adam Levine - Lost Stars Lyrics.mp3");
+	CSound_Manager::GetInstance()->PlayBGM(L"Adam Levine - Lost Stars Lyrics.mp3");
 
 	return NOERROR;
 }

@@ -174,7 +174,7 @@
     <ClInclude Include="..\Header\CPlayer.h" />
     <ClInclude Include="..\Header\CScene_Logo.h" />
     <ClInclude Include="..\Header\CScene_Stage.h" />
-    <ClInclude Include="..\Header\CSound_Mananger.h" />
+    <ClInclude Include="..\Header\CSound_Manager.h" />
     <ClInclude Include="..\Header\CStatic_Camera.h" />
     <ClInclude Include="..\Header\CVideo_Manager.h" />
     <ClInclude Include="Client.h" />
@@ -188,7 +188,7 @@
     <ClCompile Include="..\Code\CPlayer.cpp" />
     <ClCompile Include="..\Code\CScene_Logo.cpp" />
     <ClCompile Include="..\Code\CScene_Stage.cpp" />
-    <ClCompile Include="..\Code\CSound_Mananger.cpp" />
+    <ClCompile Include="..\Code\CSound_Manager.cpp" />
     <ClCompile Include="..\Code\CStatic_Camera.cpp" />
     <ClCompile Include="..\Code\CVideo_Manager.cpp" />
     <ClCompile Include="Client.cpp" />

@@ -29,15 +29,10 @@ HRESULT CBack::Initialize_GameObject()
 
 HRESULT CBack::Initialize_CloneObject()
 {
-	Engine::CComponent_Manager* pCompMgr = Engine::CComponent_Manager::GetInstance();
-	if (pCompMgr == nullptr) {
-		return E_FAIL;
-	}
-
 	m_fTimeAcc = 0.f;
-
+	
 	m_pTransform = dynamic_cast<Engine::CTransform*>
-		(pCompMgr->Get_Component_In_Map_By_Clone(L"Component_Transform"));
+		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Transform"));
 	if (m_pTransform == nullptr) {
 		MSG_BOX("트랜스폼 컴포넌트가 NULLPTR 로 반환");
 		return E_FAIL;
@@ -49,7 +44,7 @@ HRESULT CBack::Initialize_CloneObject()
 	m_pTransform->Set_Rotation(D3DXVECTOR3(D3DXToRadian(0.f), D3DXToRadian(180.f), D3DXToRadian(0.f)));
 
 	m_pTextureCom = dynamic_cast<Engine::CTexture*>
-		(pCompMgr->Get_Component_In_Map_By_Clone(L"Component_Texture_Back"));
+		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Texture_Back"));
 	if (m_pTextureCom == nullptr) {
 		MSG_BOX("텍스처 컴포넌트가 NULLPTR 로 반환");
 		return E_FAIL;
@@ -57,7 +52,7 @@ HRESULT CBack::Initialize_CloneObject()
 	m_mapComponent.emplace(L"Com_Texture", m_pTextureCom);
 
 	m_pRenderCom = dynamic_cast<Engine::CRenderCom*>
-		(pCompMgr->Get_Component_In_Map_By_Proto(L"Component_RenderCom"));
+		(m_pComponentMgr->Get_Component_In_Map_By_Proto(L"Component_RenderCom"));
 	if (m_pRenderCom == nullptr) {
 		MSG_BOX("렌더러 컴포넌트가 NULLPTR 로 반환");
 		return E_FAIL;
@@ -65,7 +60,7 @@ HRESULT CBack::Initialize_CloneObject()
 	m_mapComponent.emplace(L"Com_Renderer", m_pRenderCom);
 
 	m_pShaderCom = dynamic_cast<Engine::CShader*>
-		(pCompMgr->Get_Component_In_Map_By_Clone(L"Component_Shader_Default"));
+		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Shader_Default"));
 	if (m_pShaderCom == nullptr) {
 		MSG_BOX("쉐이더 컴포넌트가 NULLPTR 로 반환");
 		return E_FAIL;
@@ -73,7 +68,7 @@ HRESULT CBack::Initialize_CloneObject()
 	m_mapComponent.emplace(L"Com_Shader", m_pShaderCom);
 
 	m_pBufferCom = dynamic_cast<Engine::CBuffer*>
-		(pCompMgr->Get_Component_In_Map_By_Clone(L"Component_Buffer_RcTex"));
+		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Buffer_RcTex"));
 	if (m_pBufferCom == nullptr) {
 		MSG_BOX("버퍼 컴포넌트가 NULLPTR 로 반환");
 		return E_FAIL;

@@ -1,27 +1,27 @@
 #include "stdafx.h"
-#include "CSound_Mananger.h"
+#include "CSound_Manager.h"
 
-IMPLEMENT_SINGLETON(CSound_Mananger)
+IMPLEMENT_SINGLETON(CSound_Manager)
 
-CSound_Mananger::CSound_Mananger()
+CSound_Manager::CSound_Manager()
 {
 	Initialize();
 }
 
 
-void CSound_Mananger::Initialize()
+void CSound_Manager::Initialize()
 {
 	FMOD_System_Create(&m_pSystem);	// 시스템 할당
 	FMOD_System_Init(m_pSystem, eCount, FMOD_INIT_NORMAL, nullptr); // 시스템 초기화
 	LoadSoundFile();
 }
 
-void CSound_Mananger::Update()
+void CSound_Manager::Update()
 {
 	FMOD_System_Update(m_pSystem);
 }
 
-void CSound_Mananger::PlaySound(const TCHAR* pSoundKey, CHANNEL_ID eID)
+void CSound_Manager::PlaySound(const TCHAR* pSoundKey, CHANNEL_ID eID)
 {
 	auto iter_find = find_if(m_MapSound.begin(), m_MapSound.end(),
 		[&](auto& MyPair)
@@ -38,7 +38,7 @@ void CSound_Mananger::PlaySound(const TCHAR* pSoundKey, CHANNEL_ID eID)
 	FMOD_System_PlaySound(m_pSystem, FMOD_CHANNEL_FREE, iter_find->second, FALSE, &m_pChannel[eID]);
 }
 
-void CSound_Mananger::PlayBGM(const TCHAR * pSoundKey)
+void CSound_Manager::PlayBGM(const TCHAR * pSoundKey)
 {
 	auto iter_find = find_if(m_MapSound.begin(), m_MapSound.end(),
 		[&](auto& MyPair)
@@ -56,29 +56,29 @@ void CSound_Mananger::PlayBGM(const TCHAR * pSoundKey)
 	FMOD_Channel_SetMode(m_pChannel[eBGM], FMOD_LOOP_NORMAL);
 }
 
-void CSound_Mananger::StopSound(CHANNEL_ID eID)
+void CSound_Manager::StopSound(CHANNEL_ID eID)
 {
 	FMOD_Channel_Stop(m_pChannel[eID]);
 }
 
-void CSound_Mananger::StopAll()
+void CSound_Manager::StopAll()
 {
 	for (int i = 0; i < eCount; ++i)
 		FMOD_Channel_Stop(m_pChannel[i]);
 }
 
-void CSound_Mananger::PauseSound(CHANNEL_ID eID, BOOL bPause/* = TRUE*/)
+void CSound_Manager::PauseSound(CHANNEL_ID eID, BOOL bPause/* = TRUE*/)
 {
 	FMOD_Channel_SetPaused(m_pChannel[eID], bPause);
 }
 
-void CSound_Mananger::PauseAll(CHANNEL_ID eID, BOOL bPause/* = TRUE*/)
+void CSound_Manager::PauseAll(CHANNEL_ID eID, BOOL bPause/* = TRUE*/)
 {
 	for (int i = 0; i < eCount; ++i)
 		FMOD_Channel_SetPaused(m_pChannel[i], bPause);
 }
 
-void CSound_Mananger::LoadSoundFile()
+void CSound_Manager::LoadSoundFile()
 {
 	_finddata_t	fd;
 
@@ -118,12 +118,12 @@ void CSound_Mananger::LoadSoundFile()
 	FMOD_System_Update(m_pSystem);
 }
 
-void CSound_Mananger::Free()
+void CSound_Manager::Free()
 {
 	ReleaseAll();
 }
 
-void CSound_Mananger::ReleaseAll()
+void CSound_Manager::ReleaseAll()
 {
 	for (auto& MyPair : m_MapSound)
 	{

@@ -1,3 +1,4 @@
+#pragma region Headers
 #include "stdafx.h"
 #include "CMainGame.h"
 #include "CGraphic_Device.h"
@@ -9,8 +10,8 @@
 #include "CGameObject_Manager.h"
 #include "CComponent_Manager.h"
 #include "CGraphic_Device.h"
-#include "CSound_Mananger.h"
 #include "CKeyManager.h"
+#include "CSound_Manager.h"
 
 #include "CTransform.h"
 #include "CShader.h"
@@ -27,12 +28,21 @@
 #include "CScene_Stage.h"
 
 
+#pragma endregion 
+
+
 CMainGame::CMainGame()
 	: m_pGraphic_Device(Engine::CGraphic_Device::GetInstance()),
 	m_pManagement(Engine::CManagement::GetInstance()),
+	m_pGameObject(Engine::CGameObject_Manager::GetInstance()),
+	m_pComponentMgr(Engine::CComponent_Manager::GetInstance()),
 	m_pFontMgr(Engine::CFontMgr::GetInstance()),
+	m_pCKeyMgr(Engine::CKeyManager::GetInstance()),
+	m_pSoundMgr(CSound_Manager::GetInstance()),
 	m_pDevice(nullptr)
 {
+	m_pGameObject->AddRef();
+	m_pComponentMgr->AddRef();
 }
 
 HRESULT CMainGame::Initialize_CMainGame()
@@ -46,55 +56,45 @@ HRESULT CMainGame::Initialize_CMainGame()
 	lstrcpy(m_szKey, L"±¼¸²");
 	m_pFontMgr->Add_Font(m_pDevice, 20, 50, FW_BOLD, m_szKey);
 
-	Engine::CGameObject_Manager* pObjMgr = Engine::CGameObject_Manager::GetInstance();
-	if (pObjMgr == nullptr) {
-		return E_FAIL;
-	}
-	pObjMgr->AddRef();
 
-	Engine::CComponent_Manager* pCompMgr = Engine::CComponent_Manager::GetInstance();
-	if (pCompMgr == nullptr) {
-		return E_FAIL;
-	}
-	pCompMgr->AddRef();
 
-	LPDIRECT3DDEVICE9 pGrpahicDev = Engine::CGraphic_Device::GetInstance()->Get_Graphic_Device();
+	//LPDIRECT3DDEVICE9 pGrpahicDev = Engine::CGraphic_Device::GetInstance()->Get_Graphic_Device();
 
-	pObjMgr->Reserve_Proto_Layer_Array(eScene_Count);
+	m_pGameObject->Reserve_Proto_Layer_Array(eScene_Count);
 
-	pCompMgr->Add_Component_In_Map(L"Component_Transform",
-		Engine::CTransform::Create(pGrpahicDev));
+	m_pComponentMgr->Add_Component_In_Map(L"Component_Transform",
+		Engine::CTransform::Create(m_pDevice));
 
-	pCompMgr->Add_Component_In_Map(L"Component_Texture_Player",
-		Engine::CTexture::Create(pGrpahicDev, L"../../Resource/Player/", L".png", 0, 2));
+	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_Player",
+		Engine::CTexture::Create(m_pDevice, L"../../Resource/Player/", L".png", 0, 2));
 
-	pCompMgr->Add_Component_In_Map(L"Component_Texture_Back",
-		Engine::CTexture::Create(pGrpahicDev, L"../../Resource/Back/", L".dds", 0, 0));
+	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_Back",
+		Engine::CTexture::Create(m_pDevice, L"../../Resource/Back/", L".dds", 0, 0));
 
-	pCompMgr->Add_Component_In_Map(L"Component_Buffer_RcTex",
-		Engine::CBuffer_RcTex::Create(pGrpahicDev));
+	m_pComponentMgr->Add_Component_In_Map(L"Component_Buffer_RcTex",
+		Engine::CBuffer_RcTex::Create(m_pDevice));
 
-	pCompMgr->Add_Component_In_Map(L"Component_RenderCom",
-		Engine::CRenderCom::Create(pGrpahicDev));
+	m_pComponentMgr->Add_Component_In_Map(L"Component_RenderCom",
+		Engine::CRenderCom::Create(m_pDevice));
 
-	pCompMgr->Add_Component_In_Map(L"Component_Shader_Default",
-		Engine::CShader::Create(pGrpahicDev, L"../../Reference/Shaders/Shader_Default.fx"));
+	m_pComponentMgr->Add_Component_In_Map(L"Component_Shader_Default",
+		Engine::CShader::Create(m_pDevice, L"../../Reference/Shaders/Shader_Default.fx"));
 
 
 	Engine::DESC_PROJ tagProj = {WINCX, WINCY, 1.f, 1000.f};
 	Engine::DESC_VIEW tagView = {D3DXVECTOR3(0,0,0),D3DXVECTOR3(0,0,0),D3DXVECTOR3(0,1,0)};
 
-	pObjMgr->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
-		L"GameObject_Proto_StaticCamera", CStatic_Camera::Create(pGrpahicDev, tagView, tagProj));
+	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
+		L"GameObject_Proto_StaticCamera", CStatic_Camera::Create(m_pDevice, tagView, tagProj));
 
-	pObjMgr->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
-		L"GameObject_Proto_Player", CPlayer::Create(pGrpahicDev));
+	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
+		L"GameObject_Proto_Player", CPlayer::Create(m_pDevice));
 
-	pObjMgr->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
-		L"GameObject_Proto_Back", CBack::Create(pGrpahicDev));
+	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
+		L"GameObject_Proto_Back", CBack::Create(m_pDevice));
 
-	Engine::Safe_Release(pObjMgr);
-	Engine::Safe_Release(pCompMgr);
+	Engine::Safe_Release(m_pGameObject);
+	Engine::Safe_Release(m_pComponentMgr);
 
 	m_eSceneState = eScene_Logo;
 	Swap_Scene(eScene_Logo);
@@ -113,8 +113,8 @@ int CMainGame::Update(const float& fTimeDelta)
 
 	m_pManagement->Update_CurrentScene(fTimeDelta);
 
-	Engine::CKeyManager::GetInstance()->Update();
-	CSound_Mananger::GetInstance()->Update();
+	m_pCKeyMgr->Update();
+	m_pSoundMgr->Update();
 	return 0;
 }
 
@@ -186,6 +186,10 @@ void CMainGame::Free()
 
 	m_pFontMgr->DestroyInstance();
 	m_pManagement->DestroyInstance();
+	m_pCKeyMgr->DestroyInstance();
+	m_pGameObject->DestroyInstance();
+	m_pComponentMgr->DestroyInstance();
+	m_pSoundMgr->DestroyInstance();
 
 	Engine::Safe_Release(m_pDevice);
 }
