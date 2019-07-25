@@ -9,13 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Default">
-      <UniqueIdentifier>{80b5c3e5-b4bc-4ba8-a1c9-16a63775e543}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Default\리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="소스 파일\00. Client">
       <UniqueIdentifier>{6e6eb060-c72a-42e5-b72c-82d02ef84bec}</UniqueIdentifier>
     </Filter>
@@ -46,19 +39,26 @@
     <Filter Include="소스 파일\04. Manager\01. VideoMgr">
       <UniqueIdentifier>{d5ed20da-4681-476c-8cad-a4824676d371}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Default">
+      <UniqueIdentifier>{80b5c3e5-b4bc-4ba8-a1c9-16a63775e543}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Default\리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Client.h">
-      <Filter>Default</Filter>
+      <Filter>소스 파일\Default</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
-      <Filter>Default</Filter>
+      <Filter>소스 파일\Default</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
-      <Filter>Default</Filter>
+      <Filter>소스 파일\Default</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CMainGame.h">
       <Filter>소스 파일\01. MainGame</Filter>
@@ -90,16 +90,16 @@
     <ClInclude Include="..\Header\CBack.h">
       <Filter>소스 파일\03. GameObject\02. Back</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CSound_Mananger.h">
-      <Filter>소스 파일\04. Manager\00. SoundMgr</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CVideo_Manager.h">
       <Filter>소스 파일\04. Manager\01. VideoMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSound_Manager.h">
+      <Filter>소스 파일\04. Manager\00. SoundMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
-      <Filter>Default</Filter>
+      <Filter>소스 파일\Default</Filter>
     </ClCompile>
     <ClCompile Include="Client.cpp">
       <Filter>소스 파일\00. Client</Filter>
@@ -122,24 +122,24 @@
     <ClCompile Include="..\Code\CBack.cpp">
       <Filter>소스 파일\03. GameObject\02. Back</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CSound_Mananger.cpp">
-      <Filter>소스 파일\04. Manager\00. SoundMgr</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CVideo_Manager.cpp">
       <Filter>소스 파일\04. Manager\01. VideoMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSound_Manager.cpp">
+      <Filter>소스 파일\04. Manager\00. SoundMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
-      <Filter>Default\리소스 파일</Filter>
+      <Filter>소스 파일\Default\리소스 파일</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
-      <Filter>Default\리소스 파일</Filter>
+      <Filter>소스 파일\Default\리소스 파일</Filter>
     </Image>
     <Image Include="Client.ico">
-      <Filter>Default\리소스 파일</Filter>
+      <Filter>소스 파일\Default\리소스 파일</Filter>
     </Image>
   </ItemGroup>
 </Project>

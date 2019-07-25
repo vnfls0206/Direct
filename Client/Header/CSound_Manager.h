@@ -10,17 +10,17 @@
 
 #include "CBase.h"
 
-class CSound_Mananger final :
+class CSound_Manager final :
 	public Engine::CBase
 {
 public :
-	DECLARE_SINGLETON(CSound_Mananger)
+	DECLARE_SINGLETON(CSound_Manager)
 
-	enum CHANNEL_ID { eBGM=0, ePlayer, eCount};
+	enum CHANNEL_ID { eBGM=0, ePlayer, eMonster, eCount};
 
 private :
-	explicit CSound_Mananger();
-	virtual ~CSound_Mananger() = default;
+	explicit CSound_Manager();
+	virtual ~CSound_Manager() = default;
 
 public:
 	void Update();

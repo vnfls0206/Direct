@@ -10,7 +10,7 @@
 #include "CBuffer_RcTex.h"
 
 #include "CKeyManager.h"
-#include "CSound_Mananger.h"
+#include "CSound_Manager.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: Engine::CGameObject(pGraphic_Device)
@@ -31,15 +31,10 @@ HRESULT CPlayer::Initialize_GameObject()
 
 HRESULT CPlayer::Initialize_CloneObject()
 {
-	Engine::CComponent_Manager* pCompMgr = Engine::CComponent_Manager::GetInstance();
-	if (pCompMgr == nullptr) {
-		return E_FAIL;
-	}
-
 	m_fTimeAcc = 0.f;
 
 	m_pTransform = dynamic_cast<Engine::CTransform*>
-		(pCompMgr->Get_Component_In_Map_By_Clone(L"Component_Transform"));
+		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Transform"));
 	if (m_pTransform == nullptr) {
 		MSG_BOX("트랜스폼 컴포넌트가 NULLPTR 로 반환");
 		return E_FAIL;
@@ -51,7 +46,7 @@ HRESULT CPlayer::Initialize_CloneObject()
 	m_pTransform->Set_Rotation(D3DXVECTOR3(D3DXToRadian(0.f), D3DXToRadian(-180.f), D3DXToRadian(0.f)));
 
 	m_pTextureCom = dynamic_cast<Engine::CTexture*>
-		(pCompMgr->Get_Component_In_Map_By_Clone(L"Component_Texture_Player"));
+		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Texture_Player"));
 	if (m_pTextureCom == nullptr) {
 		MSG_BOX("텍스처 컴포넌트가 NULLPTR 로 반환");
 		return E_FAIL;
@@ -59,7 +54,7 @@ HRESULT CPlayer::Initialize_CloneObject()
 	m_mapComponent.emplace(L"Com_Texture", m_pTextureCom);
 
 	m_pRenderCom = dynamic_cast<Engine::CRenderCom*>
-		(pCompMgr->Get_Component_In_Map_By_Proto(L"Component_RenderCom"));
+		(m_pComponentMgr->Get_Component_In_Map_By_Proto(L"Component_RenderCom"));
 	if (m_pRenderCom == nullptr) {
 		MSG_BOX("렌더러 컴포넌트가 NULLPTR 로 반환");
 		return E_FAIL;
@@ -67,7 +62,7 @@ HRESULT CPlayer::Initialize_CloneObject()
 	m_mapComponent.emplace(L"Com_Renderer", m_pRenderCom);
 
 	m_pShaderCom = dynamic_cast<Engine::CShader*>
-		(pCompMgr->Get_Component_In_Map_By_Clone(L"Component_Shader_Default"));
+		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Shader_Default"));
 	if (m_pShaderCom == nullptr) {
 		MSG_BOX("쉐이더 컴포넌트가 NULLPTR 로 반환");
 		return E_FAIL;
@@ -75,7 +70,7 @@ HRESULT CPlayer::Initialize_CloneObject()
 	m_mapComponent.emplace(L"Com_Shader", m_pShaderCom);
 
 	m_pBufferCom = dynamic_cast<Engine::CBuffer*>
-		(pCompMgr->Get_Component_In_Map_By_Clone(L"Component_Buffer_RcTex"));
+		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Buffer_RcTex"));
 	if (m_pBufferCom == nullptr) {
 		MSG_BOX("버퍼 컴포넌트가 NULLPTR 로 반환");
 		return E_FAIL;
@@ -103,11 +98,11 @@ void CPlayer::Update_GameObject(const float & fTimeDelta)
 		vPos.x += m_fMoveSpeed * fTimeDelta;
 	}
 	if (Engine::CKeyManager::GetInstance()->KeyUp(VK_UP)) {
-		CSound_Mananger::GetInstance()->PlaySound(L"Shot.wav", CSound_Mananger::ePlayer);
+		CSound_Manager::GetInstance()->PlaySound(L"Shot.wav", CSound_Manager::ePlayer);
 		vPos.y += 5000.f * fTimeDelta;
 	}
 	if (Engine::CKeyManager::GetInstance()->KeyDown(VK_DOWN)) {
-		CSound_Mananger::GetInstance()->PlaySound(L"ChainSaw1.wav", CSound_Mananger::ePlayer);
+		CSound_Manager::GetInstance()->PlaySound(L"ChainSaw1.wav", CSound_Manager::ePlayer);
 		vPos.y -= 5000.f * fTimeDelta;
 	}
 

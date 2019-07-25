@@ -94,6 +94,24 @@
     <Filter Include="소스 파일\06. Video">
       <UniqueIdentifier>{5cb044db-942f-4da1-b18e-c08efb6a37aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\05.Camera">
+      <UniqueIdentifier>{517056ca-ab71-4826-b87a-13d46845682a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02. Scene\00.Scene">
+      <UniqueIdentifier>{b6c0f82e-66fa-4bea-a2fe-bf7df4c90b6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02. Scene\01.Layer">
+      <UniqueIdentifier>{5d342a69-4316-45cc-8a3b-53baf3c160cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02. Scene\02.CManager">
+      <UniqueIdentifier>{d37ec146-fdb6-420d-a3e6-520368f14843}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01. GameObject\00.GameObject">
+      <UniqueIdentifier>{2205d969-9fd3-4052-9fc7-ceed2d089303}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01. GameObject\01.GameObjectMgr">
+      <UniqueIdentifier>{9ed1cbc4-5167-4073-b3f4-dee3887bdb62}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -129,21 +147,6 @@
     <ClInclude Include="..\Header\CTimerMgr.h">
       <Filter>소스 파일\00. Device\01. Timer\Mgr</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CScene.h">
-      <Filter>소스 파일\02. Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CManagement.h">
-      <Filter>소스 파일\02. Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CLayer.h">
-      <Filter>소스 파일\01. GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CGameObject.h">
-      <Filter>소스 파일\01. GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CGameObject_Manager.h">
-      <Filter>소스 파일\01. GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CFont.h">
       <Filter>소스 파일\00. Device\03. Font\Instance</Filter>
     </ClInclude>
@@ -174,14 +177,29 @@
     <ClInclude Include="..\Header\CBuffer_RcTex.h">
       <Filter>소스 파일\03. Component\Instance\Buffer\Buffer_RcTex</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CCamera.h">
-      <Filter>소스 파일\01. GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CComponent_Manager.h">
       <Filter>소스 파일\03. Component\Mgr</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CKeyManager.h">
       <Filter>소스 파일\00. Device\04. Key</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCamera.h">
+      <Filter>소스 파일\05.Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScene.h">
+      <Filter>소스 파일\02. Scene\00.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CLayer.h">
+      <Filter>소스 파일\02. Scene\01.Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CManagement.h">
+      <Filter>소스 파일\02. Scene\02.CManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CGameObject.h">
+      <Filter>소스 파일\01. GameObject\00.GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CGameObject_Manager.h">
+      <Filter>소스 파일\01. GameObject\01.GameObjectMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -212,21 +230,6 @@
     <ClCompile Include="..\Code\CTimerMgr.cpp">
       <Filter>소스 파일\00. Device\01. Timer\Mgr</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CManagement.cpp">
-      <Filter>소스 파일\02. Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CScene.cpp">
-      <Filter>소스 파일\02. Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CGameObject.cpp">
-      <Filter>소스 파일\01. GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CGameObject_Manager.cpp">
-      <Filter>소스 파일\01. GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CLayer.cpp">
-      <Filter>소스 파일\01. GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CFont.cpp">
       <Filter>소스 파일\00. Device\03. Font\Instance</Filter>
     </ClCompile>
@@ -254,14 +257,29 @@
     <ClCompile Include="..\Code\CBuffer_RcTex.cpp">
       <Filter>소스 파일\03. Component\Instance\Buffer\Buffer_RcTex</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CCamera.cpp">
-      <Filter>소스 파일\01. GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CComponent_Manager.cpp">
       <Filter>소스 파일\03. Component\Mgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CKeyManager.cpp">
       <Filter>소스 파일\00. Device\04. Key</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCamera.cpp">
+      <Filter>소스 파일\05.Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene.cpp">
+      <Filter>소스 파일\02. Scene\00.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLayer.cpp">
+      <Filter>소스 파일\02. Scene\01.Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CManagement.cpp">
+      <Filter>소스 파일\02. Scene\02.CManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGameObject.cpp">
+      <Filter>소스 파일\01. GameObject\00.GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGameObject_Manager.cpp">
+      <Filter>소스 파일\01. GameObject\01.GameObjectMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
