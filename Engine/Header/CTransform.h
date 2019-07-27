@@ -33,11 +33,9 @@ private :
 
 public :
 	void						Set_Scale(D3DXVECTOR3 vScale);
-
 	void						Set_Rotation(D3DXVECTOR3 vRot);
-	
 	void						Set_Position(D3DXVECTOR3 vPos);
-
+	POINT					    Set_ObjectPoint(D3DXVECTOR3 vPos, POINT MousePoint);
 	void						MoveToMouse(POINT MousePoint, float movespeed, const float& fDeltaTime); //마우스 좌표로 이동
 
 public :

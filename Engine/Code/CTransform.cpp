@@ -86,6 +86,14 @@ void Engine::CTransform::Set_Position(D3DXVECTOR3 vPos) {
 	m_vecPosition = vPos;
 }
 
+POINT Engine::CTransform::Set_ObjectPoint(D3DXVECTOR3 vPos, POINT MousePoint)
+{
+	MousePoint.x = vPos.x;
+	MousePoint.y = vPos.y;
+
+	return MousePoint;
+}
+
 
 void Engine::CTransform::MoveToMouse(POINT MousePoint, float movespeed, const float& fDeltaTime)
 {
