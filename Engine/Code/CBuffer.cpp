@@ -48,6 +48,16 @@ HRESULT Engine::CBuffer::Draw_Buffer()
 	return NOERROR;
 }
 
+UINT Engine::CBuffer::Get_NumVertices()
+{
+	return m_iNumVertices;
+}
+
+ULONG Engine::CBuffer::Get_FVF()
+{
+	return m_dwVtxFVF;
+}
+
 void Engine::CBuffer::Free()
 {
 	CComponent::Free();

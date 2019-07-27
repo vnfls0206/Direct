@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CPlayer.h"
+#include "Client_Include.h"
 
 #include "CComponent_Manager.h"
 
@@ -8,6 +9,7 @@
 #include "CShader.h"
 #include "CRenderCom.h"
 #include "CBuffer_RcTex.h"
+#include "CCollider.h"
 
 #include "CKeyManager.h"
 #include "CSound_Manager.h"
@@ -42,7 +44,7 @@ HRESULT CPlayer::Initialize_CloneObject()
 	m_mapComponent.emplace(L"Com_Transform", m_pTransform);
 
 	m_pTransform->Set_Position(D3DXVECTOR3(0.f, 0.f, -5.f));
-	m_pTransform->Set_Scale(D3DXVECTOR3(500.f, 500.f, 1.f));
+	m_pTransform->Set_Scale(D3DXVECTOR3(100.f, 100.f, 1.f));
 	m_pTransform->Set_Rotation(D3DXVECTOR3(D3DXToRadian(0.f), D3DXToRadian(-180.f), D3DXToRadian(0.f)));
 
 	m_pTextureCom = dynamic_cast<Engine::CTexture*>
@@ -77,6 +79,15 @@ HRESULT CPlayer::Initialize_CloneObject()
 	}
 	m_mapComponent.emplace(L"Com_Buffer", m_pBufferCom);
 
+	m_pCollider = dynamic_cast<Engine::CCollider*>
+		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Collider"));
+	if (m_pCollider == nullptr) {
+		MSG_BOX("버퍼 컴포넌트가 NULLPTR 로 반환");
+		return E_FAIL;
+	}
+	m_mapComponent.emplace(L"Com_Collider", m_pCollider);
+	m_pCollider->Initialize_Collider(m_pTransform->Get_Position, m_pBufferCom->Get_NumVertices, m_pBufferCom->Get_FVF);
+
 	// 릭을 잡고 =->...
 	// 플레이어객체를 띄워볼꺼야...-> 카메라를 플레이어에 고정시키고,
 	// 움직일거야....
@@ -91,7 +102,7 @@ void CPlayer::Update_GameObject(const float & fTimeDelta)
 
 	D3DXVECTOR3 vPos = m_pTransform->Get_Position();
 
-	if (Engine::CKeyManager::GetInstance()->KeyPressing(VK_LEFT)) {
+	/*if (Engine::CKeyManager::GetInstance()->KeyPressing(VK_LEFT)) {
 		vPos.x -= m_fMoveSpeed * fTimeDelta;
 	}
 	if (Engine::CKeyManager::GetInstance()->KeyPressing(VK_RIGHT)) {
@@ -104,11 +115,23 @@ void CPlayer::Update_GameObject(const float & fTimeDelta)
 	if (Engine::CKeyManager::GetInstance()->KeyDown(VK_DOWN)) {
 		CSound_Manager::GetInstance()->PlaySound(L"ChainSaw1.wav", CSound_Manager::ePlayer);
 		vPos.y -= 5000.f * fTimeDelta;
-	}
+	}*/
 
 
+<<<<<<< HEAD
 	m_pTransform->Set_Position(vPos);
+	m_pCollider->Set_ColliderPos(m_pTransform->Get_Position, m_pBufferCom->Get_NumVertices, m_pBufferCom->Get_FVF);
+=======
+	if(Engine::CKeyManager::GetInstance()->KeyDown(VK_LBUTTON))
+	{
+		GetCursorPos(&m_pCursor);
+		ScreenToClient(g_hWnd, &m_pCursor);
+		m_pCursor.x = m_pCursor.x - WINCX / 2;
+		m_pCursor.y = WINCY / 2 - m_pCursor.y;
+	}
+>>>>>>> master
 
+	m_pTransform->MoveToMouse(m_pCursor, m_fMoveSpeed, fTimeDelta);
 }
 
 void CPlayer::LastUpdate_GameObject(const float & fTimeDelta)

@@ -9,6 +9,7 @@ class CBuffer;
 class CTexture;
 class CShader;
 class CRenderCom;
+class CCollider;
 END
 
 class CPlayer final :
@@ -39,11 +40,13 @@ private :
 	Engine::CTexture* m_pTextureCom;
 	Engine::CShader* m_pShaderCom;
 	Engine::CRenderCom* m_pRenderCom;
+	Engine::CCollider* m_pCollider;
 
 private :
 	HRESULT Ready_Shader(const float& fTimeDelta);
 
 private :
+	POINT m_pCursor = { 0,0 };
 	float m_fTimeAcc;
 	
 	unsigned int m_iMinIndex = 0;
@@ -51,7 +54,7 @@ private :
 	unsigned int m_iCurIndex = 0;
 
 private :
-	float	m_fMoveSpeed = 20.f;
+	float	m_fMoveSpeed = 200.f;
 };
 
 
