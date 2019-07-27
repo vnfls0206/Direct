@@ -31,6 +31,10 @@ protected :
 	unsigned int					m_iNumSubSets = 0;
 	D3DFORMAT						m_IndexFmt;
 
+public:
+	UINT Get_NumVertices();
+	ULONG Get_FVF();
+
 public :
 	virtual CComponent* Clone() = 0;
 

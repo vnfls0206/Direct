@@ -8,6 +8,7 @@
 #include "CShader.h"
 #include "CRenderCom.h"
 #include "CBuffer_RcTex.h"
+#include "CCollider.h"
 
 #include "CKeyManager.h"
 #include "CSound_Manager.h"
@@ -77,6 +78,15 @@ HRESULT CPlayer::Initialize_CloneObject()
 	}
 	m_mapComponent.emplace(L"Com_Buffer", m_pBufferCom);
 
+	m_pCollider = dynamic_cast<Engine::CCollider*>
+		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Collider"));
+	if (m_pCollider == nullptr) {
+		MSG_BOX("버퍼 컴포넌트가 NULLPTR 로 반환");
+		return E_FAIL;
+	}
+	m_mapComponent.emplace(L"Com_Collider", m_pCollider);
+	m_pCollider->Initialize_Collider(m_pTransform->Get_Position, m_pBufferCom->Get_NumVertices, m_pBufferCom->Get_FVF);
+
 	// 릭을 잡고 =->...
 	// 플레이어객체를 띄워볼꺼야...-> 카메라를 플레이어에 고정시키고,
 	// 움직일거야....
@@ -108,6 +118,7 @@ void CPlayer::Update_GameObject(const float & fTimeDelta)
 
 
 	m_pTransform->Set_Position(vPos);
+	m_pCollider->Set_ColliderPos(m_pTransform->Get_Position, m_pBufferCom->Get_NumVertices, m_pBufferCom->Get_FVF);
 
 }
 

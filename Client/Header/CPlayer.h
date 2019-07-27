@@ -9,6 +9,7 @@ class CBuffer;
 class CTexture;
 class CShader;
 class CRenderCom;
+class CCollider;
 END
 
 class CPlayer final :
@@ -39,6 +40,7 @@ private :
 	Engine::CTexture* m_pTextureCom;
 	Engine::CShader* m_pShaderCom;
 	Engine::CRenderCom* m_pRenderCom;
+	Engine::CCollider* m_pCollider;
 
 private :
 	HRESULT Ready_Shader(const float& fTimeDelta);

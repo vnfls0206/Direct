@@ -18,6 +18,7 @@
 #include "CTexture.h"
 #include "CRenderCom.h"
 #include "CBuffer_RcTex.h"
+#include "CCollider.h"
 
 #include "CStatic_Camera.h"
 #include "CPlayer.h"
@@ -79,6 +80,8 @@ HRESULT CMainGame::Initialize_CMainGame()
 
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Shader_Default",
 		Engine::CShader::Create(m_pDevice, L"../../Reference/Shaders/Shader_Default.fx"));
+	m_pComponentMgr->Add_Component_In_Map(L"Component_Collider",
+		Engine::CCollider::Creat(m_pDevice));
 
 
 	Engine::DESC_PROJ tagProj = {WINCX, WINCY, 1.f, 1000.f};
@@ -134,7 +137,8 @@ void CMainGame::Render()
 	SetWindowText(g_hWnd, m_szFPS);
 
 
-	if (m_eSceneState != eScene_Logo) {
+	if (m_eSceneState != eScene_Logo) 
+	{
 		m_pDevice->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL,
 			D3DXCOLOR(0.f, 0.f, 1.f, 1.f), 1.f, 0);
 		m_pDevice->BeginScene();
