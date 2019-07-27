@@ -25,13 +25,7 @@ namespace Engine
 		float	m_fNear, m_fFar;			// 출력해야할 영역의 최대거리 : Far, 눈 바로 앞까지의 거리 : Near
 	}DESC_PROJ;
 
-	typedef struct tagTexture_Info
-	{
-		int		width, height;
-		D3DXCOLOR color;
 
-
-	}TEXTURE_INFO;
 }
 
 #endif   

@@ -44,6 +44,11 @@ void Engine::CManagement::Render_CurrentScene()
 	m_pCurrentScene->Render_Scene();
 }
 
+bool Engine::CManagement::Check_CurrentScene_End()
+{
+	return m_pCurrentScene->Is_End_Scene;
+}
+
 void Engine::CManagement::Free()
 {
 	Engine::Safe_Release(m_pCurrentScene);

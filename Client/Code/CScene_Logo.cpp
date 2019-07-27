@@ -1,8 +1,11 @@
 #include "stdafx.h"
 #include "CScene_Logo.h"
+#include "CScene_Stage.h"
 
 #include "Client_Enum.h"
 #include "CVideo_Manager.h"
+#include "CManagement.h"
+
 
 
 CScene_Logo::CScene_Logo(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -20,6 +23,11 @@ HRESULT CScene_Logo::Initialize_Scene()
 
 void CScene_Logo::Update_Scene(const float & fTimeDelta)
 {
+	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
+	{
+		Is_End_Scene = true;
+	}
+
 	return;
 }
 

@@ -12,6 +12,7 @@
 #include "CStatic_Camera.h"
 
 
+
 CScene_Stage::CScene_Stage(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CScene(pGraphic_Device)
 {

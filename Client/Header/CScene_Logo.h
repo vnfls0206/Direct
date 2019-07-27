@@ -13,6 +13,8 @@ private :
 	// CScene을(를) 통해 상속됨
 private :
 	virtual HRESULT Initialize_Scene() override;
+
+
 public :
 	// CScene을(를) 통해 상속됨
 	virtual void Update_Scene(const float & fTimeDelta) override;

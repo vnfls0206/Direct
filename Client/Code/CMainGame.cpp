@@ -107,10 +107,10 @@ HRESULT CMainGame::Initialize_CMainGame()
 }
 int CMainGame::Update(const float& fTimeDelta)
 {
-	if (GetAsyncKeyState(VK_RETURN) & 0x8000 )
+	if (m_pManagement->Check_CurrentScene_End())
 	{
-		m_eSceneState = eScene_Stage1;
-		Swap_Scene(eScene_Stage1);
+		m_eSceneState = (eSceneState)(m_eSceneState + 1);
+		Swap_Scene(m_eSceneState);
 	}
 
 	m_fTImeAcc += fTimeDelta;

@@ -21,6 +21,7 @@ public :
 	HRESULT SetUp_CurrentScene(int iSceneID, Engine::CScene* pScene);
 	void Update_CurrentScene(const float& fTimeDelta);
 	void Render_CurrentScene();
+	bool Check_CurrentScene_End();
 
 private :
 	LPDIRECT3DDEVICE9 m_pDevice = nullptr;

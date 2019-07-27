@@ -112,6 +112,9 @@
     <Filter Include="소스 파일\01. GameObject\01.GameObjectMgr">
       <UniqueIdentifier>{9ed1cbc4-5167-4073-b3f4-dee3887bdb62}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\03. Component\Instance\Collider">
+      <UniqueIdentifier>{aafc3510-211e-47f7-a1cb-bf587b340d34}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -201,6 +204,9 @@
     <ClInclude Include="..\Header\CGameObject_Manager.h">
       <Filter>소스 파일\01. GameObject\01.GameObjectMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CCollider.h">
+      <Filter>소스 파일\03. Component\Instance\Collider</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -280,6 +286,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CGameObject_Manager.cpp">
       <Filter>소스 파일\01. GameObject\01.GameObjectMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCollider.cpp">
+      <Filter>소스 파일\03. Component\Instance\Collider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

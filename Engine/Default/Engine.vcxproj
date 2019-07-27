@@ -185,6 +185,7 @@ copy /y ..\Header\*.h ..\..\Reference\Headers\;</Command>
     <ClInclude Include="..\Header\CBuffer.h" />
     <ClInclude Include="..\Header\CBuffer_RcTex.h" />
     <ClInclude Include="..\Header\CCamera.h" />
+    <ClInclude Include="..\Header\CCollider.h" />
     <ClInclude Include="..\Header\CComponent.h" />
     <ClInclude Include="..\Header\CComponent_Manager.h" />
     <ClInclude Include="..\Header\CFont.h" />
@@ -216,6 +217,7 @@ copy /y ..\Header\*.h ..\..\Reference\Headers\;</Command>
     <ClCompile Include="..\Code\CBuffer.cpp" />
     <ClCompile Include="..\Code\CBuffer_RcTex.cpp" />
     <ClCompile Include="..\Code\CCamera.cpp" />
+    <ClCompile Include="..\Code\CCollider.cpp" />
     <ClCompile Include="..\Code\CComponent.cpp" />
     <ClCompile Include="..\Code\CComponent_Manager.cpp" />
     <ClCompile Include="..\Code\CFont.cpp" />

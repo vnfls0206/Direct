@@ -11,3 +11,5 @@ LPDIRECT3DDEVICE9 Engine::CScene::Get_Graphic_Device()
 	return m_pDevice;
 }
 
+
+
