@@ -34,6 +34,14 @@ void CCamera::Calculate_ViewSpaceMatrix()
 
 
 }
+
+DESC_VIEW& CCamera::Get_View_DESC()
+{
+	return stView;
+}
+
+
+
 void CCamera::Calculate_ProjectionSpaceMatrix()
 {
 	D3DXMatrixOrthoLH(&matProj, 800.f, 600.f, stProj.m_fNear, stProj.m_fFar);

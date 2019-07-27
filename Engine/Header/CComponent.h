@@ -16,9 +16,7 @@ protected :
 private :
 	LPDIRECT3DDEVICE9		m_pGraphic_Device = nullptr;
 protected :
-	LPDIRECT3DDEVICE9		Get_Graphic_Device() {
-		return m_pGraphic_Device;
-	}
+	LPDIRECT3DDEVICE9		Get_Graphic_Device();
 
 
 public :

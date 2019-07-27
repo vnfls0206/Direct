@@ -16,6 +16,13 @@ CGameObject::CGameObject(const CGameObject & rhs)
 	m_pDevice->AddRef();
 }
 
+
+LPDIRECT3DDEVICE9 CGameObject::Get_Graphic_Device() 
+{ 
+	return m_pDevice; 
+}
+
+
 HRESULT CGameObject::Initialize_GameObject()
 {
 	return E_NOTIMPL;

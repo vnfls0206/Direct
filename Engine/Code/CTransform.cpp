@@ -61,6 +61,32 @@ void Engine::CTransform::Make_LocalSpace_Matrix()
 																						// 부(모이동값)
 }
 
+
+
+D3DXVECTOR3 Engine::CTransform::Get_Position()
+{
+	return m_vecPosition;
+}
+
+D3DXMATRIX*	Engine::CTransform::Get_m_matLocal()
+{ 
+	return &m_matLocal;
+}
+
+void Engine::CTransform::Set_Scale(D3DXVECTOR3 vScale)
+{
+	m_vecScale = vScale;
+}
+
+void Engine::CTransform::Set_Rotation(D3DXVECTOR3 vRot) {
+	m_vecRotation = vRot;
+}
+
+void Engine::CTransform::Set_Position(D3DXVECTOR3 vPos) {
+	m_vecPosition = vPos;
+}
+
+
 void Engine::CTransform::MoveToMouse(POINT MousePoint, float movespeed, const float& fDeltaTime)
 {
 	m_vecMousePosition = { (float)MousePoint.x ,(float)MousePoint.y, -5.0f };
@@ -74,10 +100,26 @@ void Engine::CTransform::MoveToMouse(POINT MousePoint, float movespeed, const fl
 	}
 }
 
-D3DXVECTOR3 Engine::CTransform::Get_Position()
-{
-	return m_vecPosition;
+
+D3DXVECTOR3	Engine::CTransform::Get_Scale() {
+	D3DXVECTOR3 vScale;
+
+	D3DXVECTOR3 vecRight, vecUp, vecLook;
+
+	memcpy(&vecRight, &m_matLocal._11, sizeof(D3DXVECTOR3));
+	memcpy(&vecUp, &m_matLocal._21, sizeof(D3DXVECTOR3));
+	memcpy(&vecLook, &m_matLocal._31, sizeof(D3DXVECTOR3));
+
+	vScale.x = D3DXVec3Length(&vecRight);
+	vScale.y = D3DXVec3Length(&vecUp);
+	vScale.z = D3DXVec3Length(&vecLook);
+
+	// D3DXVec3TransformNormal(,);
+	// D3DXVec3TransformCoord(,);
+
+	return vScale;
 }
+
 
 Engine::CTransform * Engine::CTransform::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {

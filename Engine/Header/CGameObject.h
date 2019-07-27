@@ -17,7 +17,7 @@ protected  :
 private :
 	LPDIRECT3DDEVICE9 m_pDevice;
 protected :
-	LPDIRECT3DDEVICE9 Get_Graphic_Device() { return m_pDevice; }
+	LPDIRECT3DDEVICE9 Get_Graphic_Device();
 
 protected :
 	virtual HRESULT Initialize_GameObject() = 0;

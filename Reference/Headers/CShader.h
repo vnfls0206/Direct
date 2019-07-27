@@ -23,7 +23,7 @@ private :
 private :
 	LPD3DXEFFECT			m_pEffectShader;
 public :
-	LPD3DXEFFECT			Get_Effect() { return m_pEffectShader; }
+	LPD3DXEFFECT			Get_Effect();
 
 	// 로컬스페이스 행렬
 public:

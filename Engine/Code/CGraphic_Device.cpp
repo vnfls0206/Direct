@@ -52,6 +52,13 @@ HRESULT Engine::CGraphic_Device::Intialize_CGraphic_Device(HWND hwnd, eWinMode e
 
 	return S_OK;
 }
+
+LPDIRECT3DDEVICE9 Engine::CGraphic_Device::Get_Graphic_Device() 
+{ 
+	return m_pDevice;
+}
+
+
 void Engine::CGraphic_Device::SetParameters(D3DPRESENT_PARAMETERS& d3dpp, eWinMode eState, HWND hwnd, int iWINCX, int iWINCY)
 {
 	d3dpp.BackBufferWidth = iWINCX;

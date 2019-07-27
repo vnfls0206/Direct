@@ -19,7 +19,7 @@ private :
 
 public :
 	HRESULT Intialize_CGraphic_Device(HWND hwnd, eWinMode eState, int iWINCX, int iWINCY, LPDIRECT3DDEVICE9* ppGraphicDevice);
-	LPDIRECT3DDEVICE9 Get_Graphic_Device() { return m_pDevice; }
+	LPDIRECT3DDEVICE9 Get_Graphic_Device();
 
 private :
 	void SetParameters(D3DPRESENT_PARAMETERS& d3dpp, eWinMode eState, HWND hwnd, int iWINCX, int iWINCY);
