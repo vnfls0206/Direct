@@ -113,7 +113,7 @@
       <UniqueIdentifier>{9ed1cbc4-5167-4073-b3f4-dee3887bdb62}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\03. Component\Instance\Collider">
-      <UniqueIdentifier>{aafc3510-211e-47f7-a1cb-bf587b340d34}</UniqueIdentifier>
+      <UniqueIdentifier>{8b7df336-fe12-47f2-a988-b0008bb71b03}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
