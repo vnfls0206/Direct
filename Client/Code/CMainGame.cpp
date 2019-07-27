@@ -80,6 +80,7 @@ HRESULT CMainGame::Initialize_CMainGame()
 
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Shader_Default",
 		Engine::CShader::Create(m_pDevice, L"../../Reference/Shaders/Shader_Default.fx"));
+
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Collider",
 		Engine::CCollider::Creat(m_pDevice));
 
