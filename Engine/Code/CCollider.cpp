@@ -226,7 +226,7 @@ Engine::CComponent * Engine::CCollider::Creat(LPDIRECT3DDEVICE9 pDevice)
 
 Engine::CComponent * Engine::CCollider::Clone()
 {
-	return nullptr;
+	return new CCollider(*this);
 }
 
 void Engine::CCollider::Free()

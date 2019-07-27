@@ -82,11 +82,11 @@ HRESULT CPlayer::Initialize_CloneObject()
 	m_pCollider = dynamic_cast<Engine::CCollider*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Collider"));
 	if (m_pCollider == nullptr) {
-		MSG_BOX("버퍼 컴포넌트가 NULLPTR 로 반환");
+		MSG_BOX("콜라이더 컴포넌트가 NULLPTR 로 반환");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Collider", m_pCollider);
-	m_pCollider->Initialize_Collider(m_pTransform->Get_Position, m_pBufferCom->Get_NumVertices, m_pBufferCom->Get_FVF);
+	m_pCollider->Initialize_Collider(&m_pTransform->Get_Position(), m_pBufferCom->Get_NumVertices(), m_pBufferCom->Get_FVF());
 
 	// 릭을 잡고 =->...
 	// 플레이어객체를 띄워볼꺼야...-> 카메라를 플레이어에 고정시키고,
@@ -118,10 +118,10 @@ void CPlayer::Update_GameObject(const float & fTimeDelta)
 	}*/
 
 
-<<<<<<< HEAD
+
 	m_pTransform->Set_Position(vPos);
-	m_pCollider->Set_ColliderPos(m_pTransform->Get_Position, m_pBufferCom->Get_NumVertices, m_pBufferCom->Get_FVF);
-=======
+	m_pCollider->Set_ColliderPos(&m_pTransform->Get_Position(), m_pBufferCom->Get_NumVertices(), m_pBufferCom->Get_FVF());
+
 	if(Engine::CKeyManager::GetInstance()->KeyDown(VK_LBUTTON))
 	{
 		GetCursorPos(&m_pCursor);
@@ -129,7 +129,7 @@ void CPlayer::Update_GameObject(const float & fTimeDelta)
 		m_pCursor.x = m_pCursor.x - WINCX / 2;
 		m_pCursor.y = WINCY / 2 - m_pCursor.y;
 	}
->>>>>>> master
+
 
 	m_pTransform->MoveToMouse(m_pCursor, m_fMoveSpeed, fTimeDelta);
 }
