@@ -28,6 +28,8 @@ private :
 	D3DXVECTOR3					m_vecScale;
 	D3DXVECTOR3					m_vecRotation;
 	D3DXVECTOR3					m_vecPosition;
+	D3DXVECTOR3					m_vecMousePosition;		//마우스의 위치벡터
+	D3DXVECTOR3					m_vecDist;				//마우스-플레이어의 거리벡터
 
 public :
 	void						Set_Scale(D3DXVECTOR3 vScale)
@@ -41,6 +43,8 @@ public :
 	void						Set_Position(D3DXVECTOR3 vPos) {
 		m_vecPosition = vPos;
 	}
+
+	void						MoveToMouse(POINT MousePoint, float movespeed, const float& fDeltaTime); //마우스 좌표로 이동
 
 public :
 	D3DXVECTOR3					Get_Scale() {
