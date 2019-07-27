@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CPlayer.h"
+#include "Client_Include.h"
 
 #include "CComponent_Manager.h"
 
@@ -42,7 +43,7 @@ HRESULT CPlayer::Initialize_CloneObject()
 	m_mapComponent.emplace(L"Com_Transform", m_pTransform);
 
 	m_pTransform->Set_Position(D3DXVECTOR3(0.f, 0.f, -5.f));
-	m_pTransform->Set_Scale(D3DXVECTOR3(500.f, 500.f, 1.f));
+	m_pTransform->Set_Scale(D3DXVECTOR3(100.f, 100.f, 1.f));
 	m_pTransform->Set_Rotation(D3DXVECTOR3(D3DXToRadian(0.f), D3DXToRadian(-180.f), D3DXToRadian(0.f)));
 
 	m_pTextureCom = dynamic_cast<Engine::CTexture*>
@@ -91,7 +92,7 @@ void CPlayer::Update_GameObject(const float & fTimeDelta)
 
 	D3DXVECTOR3 vPos = m_pTransform->Get_Position();
 
-	if (Engine::CKeyManager::GetInstance()->KeyPressing(VK_LEFT)) {
+	/*if (Engine::CKeyManager::GetInstance()->KeyPressing(VK_LEFT)) {
 		vPos.x -= m_fMoveSpeed * fTimeDelta;
 	}
 	if (Engine::CKeyManager::GetInstance()->KeyPressing(VK_RIGHT)) {
@@ -104,11 +105,18 @@ void CPlayer::Update_GameObject(const float & fTimeDelta)
 	if (Engine::CKeyManager::GetInstance()->KeyDown(VK_DOWN)) {
 		CSound_Manager::GetInstance()->PlaySound(L"ChainSaw1.wav", CSound_Manager::ePlayer);
 		vPos.y -= 5000.f * fTimeDelta;
+	}*/
+
+
+	if(Engine::CKeyManager::GetInstance()->KeyDown(VK_LBUTTON))
+	{
+		GetCursorPos(&m_pCursor);
+		ScreenToClient(g_hWnd, &m_pCursor);
+		m_pCursor.x = m_pCursor.x - WINCX / 2;
+		m_pCursor.y = WINCY / 2 - m_pCursor.y;
 	}
 
-
-	m_pTransform->Set_Position(vPos);
-
+	m_pTransform->MoveToMouse(m_pCursor, m_fMoveSpeed, fTimeDelta);
 }
 
 void CPlayer::LastUpdate_GameObject(const float & fTimeDelta)

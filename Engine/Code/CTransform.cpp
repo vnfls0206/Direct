@@ -61,6 +61,19 @@ void Engine::CTransform::Make_LocalSpace_Matrix()
 																						// 부(모이동값)
 }
 
+void Engine::CTransform::MoveToMouse(POINT MousePoint, float movespeed, const float& fDeltaTime)
+{
+	m_vecMousePosition = { (float)MousePoint.x ,(float)MousePoint.y, -5.0f };
+	m_vecDist = m_vecMousePosition - m_vecPosition;
+
+	if (D3DXVec3Length(&m_vecDist) > 2.5f)
+	{
+		D3DXVec3Normalize(&m_vecDist, &m_vecDist);
+		m_vecPosition.x += m_vecDist.x * fDeltaTime * movespeed;
+		m_vecPosition.y += m_vecDist.y * fDeltaTime * movespeed;
+	}
+}
+
 D3DXVECTOR3 Engine::CTransform::Get_Position()
 {
 	return m_vecPosition;
