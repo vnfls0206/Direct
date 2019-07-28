@@ -40,6 +40,12 @@ HRESULT CShader::Add_Shader_FromProto()
 	return NOERROR;
 }
 
+LPD3DXEFFECT CShader::Get_Effect() 
+{ 
+	return m_pEffectShader; 
+}
+
+
 void CShader::Set_Object_Matrix(const CHAR * pConstantKey, const D3DXMATRIX * pMatrix)
 {
 	m_pEffectShader->SetMatrix(pConstantKey, pMatrix);

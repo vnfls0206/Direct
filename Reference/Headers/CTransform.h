@@ -20,76 +20,29 @@ public :
 public :
 	void						Make_LocalSpace_Matrix();
 public:
-	D3DXMATRIX*					Get_m_matLocal() { return &m_matLocal; }
+	D3DXMATRIX*					Get_m_matLocal();
 private :
-	D3DXMATRIX					m_matLocal;				// ÀÚ±âÀÚ½ÅÀÇ Çà·Ä
-	D3DXMATRIX*					m_pmatParent;			// ºÎ¸ðÀÇ Çà·Ä 
+	D3DXMATRIX					m_matLocal;				// ï¿½Ú±ï¿½ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	D3DXMATRIX*					m_pmatParent;			// ï¿½Î¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ 
 
 	D3DXVECTOR3					m_vecScale;
 	D3DXVECTOR3					m_vecRotation;
 	D3DXVECTOR3					m_vecPosition;
-	D3DXVECTOR3					m_vecMousePosition;		//¸¶¿ì½ºÀÇ À§Ä¡º¤ÅÍ
-	D3DXVECTOR3					m_vecDist;				//¸¶¿ì½º-ÇÃ·¹ÀÌ¾îÀÇ °Å¸®º¤ÅÍ
+	D3DXVECTOR3					m_vecMousePosition;		//ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½
+	D3DXVECTOR3					m_vecDist;				//ï¿½ï¿½ï¿½ì½º-ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ï¿½
 
 public :
-	void						Set_Scale(D3DXVECTOR3 vScale)
-	{
-		//memcpy(&m_vecScale, &vScale, sizeof(m_vecScale));
-		D3DXVECTOR3 vecScale;
-		m_vecScale = vScale;
-		memcpy(&vecScale, &m_matLocal._11, sizeof(vecScale));
-		D3DXVec3Normalize(&vecScale, &vecScale);
-		vecScale * D3DXVec3Length(&vScale);
-		memcpy(&m_matLocal._11, &vecScale, sizeof(vecScale));
-
-		memcpy(&vecScale, &m_matLocal._21, sizeof(vecScale));
-		D3DXVec3Normalize(&vecScale, &vecScale);
-		vecScale * D3DXVec3Length(&vScale);
-		memcpy(&m_matLocal._21, &vecScale, sizeof(vecScale));
-
-		memcpy(&vecScale, &m_matLocal._31, sizeof(vecScale));
-		D3DXVec3Normalize(&vecScale, &vecScale);
-		vecScale * D3DXVec3Length(&vScale);
-		memcpy(&m_matLocal._31, &vecScale, sizeof(vecScale));
-
-
-	}
-	void						Set_Rotation(D3DXVECTOR3 vRot) {
-		m_vecRotation = vRot;
-		//D3DXMatrixRotationX(&m_matLocal, m_vecRotation.x);
-		//D3DXMatrixRotationY(&m_matLocal, m_vecRotation.y);
-		//D3DXMatrixRotationZ(&m_matLocal, m_vecRotation.z);
-	}
-	void						Set_Position(D3DXVECTOR3 vPos) {
-		m_vecPosition = vPos;
-		memcpy(&m_matLocal._41, &m_vecPosition, sizeof(m_vecPosition));
-	}
-
-	void						MoveToMouse(POINT MousePoint, float movespeed, const float& fDeltaTime); //¸¶¿ì½º ÁÂÇ¥·Î ÀÌµ¿
+	void						Set_Scale(D3DXVECTOR3 vScale);
+	void						Set_Rotation(D3DXVECTOR3 vRot);
+	void						Set_Position(D3DXVECTOR3 vPos);
+	POINT					    Set_ObjectPoint(D3DXVECTOR3 vPos, POINT MousePoint);
+	void						MoveToMouse(POINT MousePoint, float movespeed, const float& fDeltaTime); //ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½Ìµï¿½
 
 public :
-	D3DXVECTOR3					Get_Scale() {
-		/*D3DXVECTOR3 vScale;
-		
-		D3DXVECTOR3 vecRight, vecUp, vecLook;
-
-		memcpy(&vecRight, &m_matLocal._11, sizeof(D3DXVECTOR3));
-		memcpy(&vecUp, &m_matLocal._21, sizeof(D3DXVECTOR3));
-		memcpy(&vecLook, &m_matLocal._31, sizeof(D3DXVECTOR3));
-
-		vScale.x = D3DXVec3Length(&vecRight);
-		vScale.y = D3DXVec3Length(&vecUp);
-		vScale.z = D3DXVec3Length(&vecLook);
-
-		// D3DXVec3TransformNormal(,);
-		// D3DXVec3TransformCoord(,);
-
-		return vScale;*/
-		return m_vecScale;
-	}
+	D3DXVECTOR3					Get_Scale();
 	D3DXVECTOR3					Get_Position();
-	// °¢µµ?
-	// ÀÌµ¿°ª?
+	// ï¿½ï¿½ï¿½ï¿½?
+	// ï¿½Ìµï¿½ï¿½ï¿½?
 
 public :
 	static CTransform* Create(LPDIRECT3DDEVICE9 pGraphicDev);

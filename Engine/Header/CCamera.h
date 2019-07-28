@@ -22,7 +22,7 @@ private :
 	DESC_PROJ stProj;
 	D3DXMATRIX matProj;		// 투영행렬
 public :
-	DESC_VIEW& Get_View_DESC() { return stView; }
+	DESC_VIEW& Get_View_DESC();
 
 	// Perspective - 원근투영
 	// Field Of View		: 절두체의 위와 아래 사이각
