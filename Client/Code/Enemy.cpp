@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "CPlayer.h"
+#include "Enemy.h"
 #include "Client_Include.h"
 
 #include "CComponent_Manager.h"
@@ -14,11 +14,11 @@
 #include "CKeyManager.h"
 #include "CSound_Manager.h"
 
-CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphic_Device)
+Enemy::Enemy(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: Engine::CGameObject(pGraphic_Device)
 {
 }
-CPlayer::CPlayer(const CPlayer & rhs)
+Enemy::Enemy(const Enemy & rhs)
 	: Engine::CGameObject(rhs)
 {
 
@@ -26,15 +26,14 @@ CPlayer::CPlayer(const CPlayer & rhs)
 
 
 
-HRESULT CPlayer::Initialize_GameObject()
+HRESULT Enemy::Initialize_GameObject()
 {
 	return NOERROR;
 }
 
-HRESULT CPlayer::Initialize_CloneObject()
+HRESULT Enemy::Initialize_CloneObject()
 {
 	m_fTimeAcc = 0.f;
-
 
 	m_pTransform = dynamic_cast<Engine::CTransform*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Transform"));
@@ -44,12 +43,12 @@ HRESULT CPlayer::Initialize_CloneObject()
 	}
 	m_mapComponent.emplace(L"Com_Transform", m_pTransform);
 
-	m_pTransform->Set_Position(D3DXVECTOR3(0.f, 0.f, -5.f));
+	m_pTransform->Set_Position(D3DXVECTOR3(-200.f, -200.f, -5.f));
 	m_pTransform->Set_Scale(D3DXVECTOR3(100.f, 100.f, 1.f));
 	m_pTransform->Set_Rotation(D3DXVECTOR3(D3DXToRadian(0.f), D3DXToRadian(-180.f), D3DXToRadian(0.f)));
 
 	m_pTextureCom = dynamic_cast<Engine::CTexture*>
-		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Texture_Player"));
+		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Texture_Enemy"));
 	if (m_pTextureCom == nullptr) {
 		MSG_BOX("텍스처 컴포넌트가 NULLPTR 로 반환");
 		return E_FAIL;
@@ -93,7 +92,7 @@ HRESULT CPlayer::Initialize_CloneObject()
 	return NOERROR;
 }
 
-void CPlayer::Update_GameObject(const float & fTimeDelta)
+void Enemy::Update_GameObject(const float & fTimeDelta)
 {
 	m_pTransform->Make_LocalSpace_Matrix();
 
@@ -118,7 +117,7 @@ void CPlayer::Update_GameObject(const float & fTimeDelta)
 
 	m_pTransform->Set_Position(vPos);
 
-	if(Engine::CKeyManager::GetInstance()->KeyDown(VK_LBUTTON))
+	if (Engine::CKeyManager::GetInstance()->KeyDown(VK_LBUTTON))
 	{
 		GetCursorPos(&m_pCursor);
 		ScreenToClient(g_hWnd, &m_pCursor);
@@ -131,15 +130,15 @@ void CPlayer::Update_GameObject(const float & fTimeDelta)
 	m_pCollider->Set_ColliderPos(m_pTransform->Get_m_matLocal());
 }
 
-void CPlayer::LastUpdate_GameObject(const float & fTimeDelta)
+void Enemy::LastUpdate_GameObject(const float & fTimeDelta)
 {
-	m_pRenderCom->Add_GameObject_To_List(Engine::CRenderCom::eRender_3, this);
+	m_pRenderCom->Add_GameObject_To_List(Engine::CRenderCom::eRender_4, this);
 	Ready_Shader(fTimeDelta);
 }
 
-void CPlayer::Render_GameObject()
+void Enemy::Render_GameObject()
 {
-	m_pShaderCom->Get_Effect()->Begin(0 ,0);
+	m_pShaderCom->Get_Effect()->Begin(0, 0);
 	m_pShaderCom->Get_Effect()->BeginPass(0);
 
 	if (FAILED(m_pBufferCom->Draw_Buffer()))
@@ -149,13 +148,11 @@ void CPlayer::Render_GameObject()
 
 	m_pShaderCom->Get_Effect()->EndPass();
 	m_pShaderCom->Get_Effect()->End();
-
-	m_pCollider->Render_Collider();
 }
 
-Engine::CGameObject * CPlayer::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
+Engine::CGameObject * Enemy::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
-	CPlayer* pInstance = new CPlayer(pGraphic_Device);
+	Enemy* pInstance = new Enemy(pGraphic_Device);
 	if (FAILED(pInstance->Initialize_GameObject()))
 	{
 		MSG_BOX("???");
@@ -163,9 +160,9 @@ Engine::CGameObject * CPlayer::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 	}
 	return pInstance;
 }
-Engine::CGameObject * CPlayer::Clone()
+Engine::CGameObject * Enemy::Clone()
 {
-	CPlayer* pInstance = new CPlayer(*this);
+	Enemy* pInstance = new Enemy(*this);
 	if (FAILED(pInstance->Initialize_CloneObject()))
 	{
 		MSG_BOX("해당 클론 시 초기화에 실패");
@@ -174,7 +171,7 @@ Engine::CGameObject * CPlayer::Clone()
 	return pInstance;
 }
 
-HRESULT CPlayer::Ready_Shader(const float& fTimedetla)
+HRESULT Enemy::Ready_Shader(const float& fTimedetla)
 {
 	D3DXMATRIX matView, matProj;
 	Get_Graphic_Device()->GetTransform(D3DTS_VIEW, &matView);
@@ -199,12 +196,6 @@ HRESULT CPlayer::Ready_Shader(const float& fTimedetla)
 
 	m_pShaderCom->Get_Effect()->SetTexture("g_texture",
 		m_pTextureCom->Get_Texture_From_Array_In_Vector(m_iCurIndex));
-	
+
 	return NOERROR;
-}
-
-void CPlayer::Free()
-{
-
-	Engine::CGameObject::Free();
 }

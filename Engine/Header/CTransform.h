@@ -35,20 +35,41 @@ public :
 	void						Set_Scale(D3DXVECTOR3 vScale)
 	{
 		//memcpy(&m_vecScale, &vScale, sizeof(m_vecScale));
+		D3DXVECTOR3 vecScale;
 		m_vecScale = vScale;
+		memcpy(&vecScale, &m_matLocal._11, sizeof(vecScale));
+		D3DXVec3Normalize(&vecScale, &vecScale);
+		vecScale * D3DXVec3Length(&vScale);
+		memcpy(&m_matLocal._11, &vecScale, sizeof(vecScale));
+
+		memcpy(&vecScale, &m_matLocal._21, sizeof(vecScale));
+		D3DXVec3Normalize(&vecScale, &vecScale);
+		vecScale * D3DXVec3Length(&vScale);
+		memcpy(&m_matLocal._21, &vecScale, sizeof(vecScale));
+
+		memcpy(&vecScale, &m_matLocal._31, sizeof(vecScale));
+		D3DXVec3Normalize(&vecScale, &vecScale);
+		vecScale * D3DXVec3Length(&vScale);
+		memcpy(&m_matLocal._31, &vecScale, sizeof(vecScale));
+
+
 	}
 	void						Set_Rotation(D3DXVECTOR3 vRot) {
 		m_vecRotation = vRot;
+		//D3DXMatrixRotationX(&m_matLocal, m_vecRotation.x);
+		//D3DXMatrixRotationY(&m_matLocal, m_vecRotation.y);
+		//D3DXMatrixRotationZ(&m_matLocal, m_vecRotation.z);
 	}
 	void						Set_Position(D3DXVECTOR3 vPos) {
 		m_vecPosition = vPos;
+		memcpy(&m_matLocal._41, &m_vecPosition, sizeof(m_vecPosition));
 	}
 
 	void						MoveToMouse(POINT MousePoint, float movespeed, const float& fDeltaTime); //마우스 좌표로 이동
 
 public :
 	D3DXVECTOR3					Get_Scale() {
-		D3DXVECTOR3 vScale;
+		/*D3DXVECTOR3 vScale;
 		
 		D3DXVECTOR3 vecRight, vecUp, vecLook;
 
@@ -63,7 +84,8 @@ public :
 		// D3DXVec3TransformNormal(,);
 		// D3DXVec3TransformCoord(,);
 
-		return vScale;
+		return vScale;*/
+		return m_vecScale;
 	}
 	D3DXVECTOR3					Get_Position();
 	// 각도?

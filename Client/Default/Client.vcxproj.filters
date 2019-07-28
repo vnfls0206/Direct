@@ -46,6 +46,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="소스 파일\03. GameObject\03. Enemy">
+      <UniqueIdentifier>{d7e6b790-d14e-4fbd-bc66-8972dfcb8ec9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -96,6 +99,9 @@
     <ClInclude Include="..\Header\CSound_Manager.h">
       <Filter>소스 파일\04. Manager\00. SoundMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Enemy.h">
+      <Filter>소스 파일\03. GameObject\03. Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -127,6 +133,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CSound_Manager.cpp">
       <Filter>소스 파일\04. Manager\00. SoundMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Enemy.cpp">
+      <Filter>소스 파일\03. GameObject\03. Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

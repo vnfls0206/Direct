@@ -177,6 +177,7 @@
     <ClInclude Include="..\Header\CSound_Manager.h" />
     <ClInclude Include="..\Header\CStatic_Camera.h" />
     <ClInclude Include="..\Header\CVideo_Manager.h" />
+    <ClInclude Include="..\Header\Enemy.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -191,6 +192,7 @@
     <ClCompile Include="..\Code\CSound_Manager.cpp" />
     <ClCompile Include="..\Code\CStatic_Camera.cpp" />
     <ClCompile Include="..\Code\CVideo_Manager.cpp" />
+    <ClCompile Include="..\Code\Enemy.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

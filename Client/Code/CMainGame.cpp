@@ -23,6 +23,7 @@
 #include "CStatic_Camera.h"
 #include "CPlayer.h"
 #include "CBack.h"
+#include "Enemy.h"
 
 
 #include "CScene_Logo.h"
@@ -69,6 +70,9 @@ HRESULT CMainGame::Initialize_CMainGame()
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_Player",
 		Engine::CTexture::Create(m_pDevice, L"../../Resource/Player/", L".png", 0, 2));
 
+	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_Enemy",
+		Engine::CTexture::Create(m_pDevice, L"../../Resource/Player/", L".png", 0, 0));
+
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_Back",
 		Engine::CTexture::Create(m_pDevice, L"../../Resource/Back/", L".dds", 0, 0));
 
@@ -93,7 +97,8 @@ HRESULT CMainGame::Initialize_CMainGame()
 
 	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
 		L"GameObject_Proto_Player", CPlayer::Create(m_pDevice));
-
+	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
+		L"GameObject_Proto_Enemy", Enemy::Create(m_pDevice));
 	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
 		L"GameObject_Proto_Back", CBack::Create(m_pDevice));
 
