@@ -35,9 +35,9 @@ void Engine::CCollider::Initialize_Collider(D3DXMATRIX* matLocal, D3DXVECTOR3 ve
 	Center.y = vecPos.y;
 	Center.z = vecPos.z;
 
-	Extent.x = vecScale.x *(vecMax.x - Center.x);
-	Extent.y = vecScale.y *(vecMax.y - Center.y);
-	Extent.z = vecScale.z *(vecMax.z - Center.z);
+	Extent.x = (vecMax.x - Center.x);
+	Extent.y = (vecMax.y - Center.y);
+	Extent.z = (vecMax.z - Center.z);
 
 	Axis[0] = { vecMax.x - vecMin.x, 0.f, 0.f };
 	Axis[1] = { 0.f, vecMax.y - vecMin.y, 0.f };

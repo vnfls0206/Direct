@@ -76,6 +76,22 @@ D3DXMATRIX*	Engine::CTransform::Get_m_matLocal()
 void Engine::CTransform::Set_Scale(D3DXVECTOR3 vScale)
 {
 	m_vecScale = vScale;
+	D3DXVECTOR3 vecScale;
+	memcpy(&vecScale, &m_matLocal._11, sizeof(D3DXVECTOR3));
+	D3DXVec3Normalize(&vecScale, &vecScale);
+	vecScale *= vScale.x;
+	memcpy(&m_matLocal._11, &vecScale, sizeof(D3DXVECTOR3));
+
+	memcpy(&vecScale, &m_matLocal._21, sizeof(D3DXVECTOR3));
+	D3DXVec3Normalize(&vecScale, &vecScale);
+	vecScale *= vScale.y;
+	memcpy(&m_matLocal._21, &vecScale, sizeof(D3DXVECTOR3));
+
+	memcpy(&vecScale, &m_matLocal._31, sizeof(D3DXVECTOR3));
+	D3DXVec3Normalize(&vecScale, &vecScale);
+	vecScale *= vScale.z;
+	memcpy(&m_matLocal._31, &vecScale, sizeof(D3DXVECTOR3));
+
 }
 
 void Engine::CTransform::Set_Rotation(D3DXVECTOR3 vRot) {
@@ -84,6 +100,7 @@ void Engine::CTransform::Set_Rotation(D3DXVECTOR3 vRot) {
 
 void Engine::CTransform::Set_Position(D3DXVECTOR3 vPos) {
 	m_vecPosition = vPos;
+	memcpy(&m_matLocal._41, &m_vecPosition, sizeof(D3DXVECTOR3));
 }
 
 POINT Engine::CTransform::Set_ObjectPoint(D3DXVECTOR3 vPos, POINT MousePoint)
