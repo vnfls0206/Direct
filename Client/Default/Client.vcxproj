@@ -177,6 +177,7 @@
     <ClInclude Include="..\Header\CScene_Stage.h" />
     <ClInclude Include="..\Header\CSound_Manager.h" />
     <ClInclude Include="..\Header\CStatic_Camera.h" />
+    <ClInclude Include="..\Header\CUI.h" />
     <ClInclude Include="..\Header\CVideo_Manager.h" />
     <ClInclude Include="..\Header\Enemy.h" />
     <ClInclude Include="Client.h" />
@@ -195,6 +196,7 @@
     <ClCompile Include="..\Code\CScene_Stage.cpp" />
     <ClCompile Include="..\Code\CSound_Manager.cpp" />
     <ClCompile Include="..\Code\CStatic_Camera.cpp" />
+    <ClCompile Include="..\Code\CUI.cpp" />
     <ClCompile Include="..\Code\CVideo_Manager.cpp" />
     <ClCompile Include="..\Code\Enemy.cpp" />
     <ClCompile Include="Client.cpp" />

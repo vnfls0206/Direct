@@ -124,8 +124,8 @@ void CPlayer::Update_GameObject(const float & fTimeDelta)
 	{
 		GetCursorPos(&m_pCursor);
 		ScreenToClient(g_hWnd, &m_pCursor);
-		m_pCursor.x = m_pCursor.x - WINCX / 2;
-		m_pCursor.y = WINCY / 2 - m_pCursor.y;
+		m_pCursor.x = m_pCursor.x - WINCX / 2 + vPos.x;
+		m_pCursor.y = WINCY / 2 - m_pCursor.y + vPos.y;
 	}
 
 

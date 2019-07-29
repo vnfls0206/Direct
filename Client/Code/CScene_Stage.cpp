@@ -91,8 +91,8 @@ void CScene_Stage::Update_Scene(const float & fTimeDelta)
 	{
 		MSG_BOX("1");
 		pTransform->Set_Position(pTransform->Get_Position() - D3DXVECTOR3(100.f, 100.f, 0.f));
-		pCamera->Set_Camera_Zoom(.8f);
-		m_pTimerMgr->Get_Timer_Info(L"Timer_60")->Set_BulletTime(.5f);
+		pCamera->Set_Camera_Zoom(1.5f);
+		m_pTimerMgr->Get_Timer_Info(L"Timer_60")->Set_BulletTime(1.f);
 		//pObjMgr->Release_Map_All_Object((int)eScene_Stage1);
 	}
 	

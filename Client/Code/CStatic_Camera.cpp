@@ -29,7 +29,8 @@ HRESULT CStatic_Camera::Initialize_Camera_Matrix(Engine::DESC_VIEW tmpDESC_VIEW,
 
 void CStatic_Camera::Update_GameObject(const float & fTimeDelta)
 {
-	CCamera::Get_View_DESC().m_vAt = D3DXVECTOR3(0.f, 0.f, 0.f);
+	CCamera::Get_View_DESC().m_vAt = m_pPlayerTransform->Get_Position();
+	
 	CCamera::Get_View_DESC().m_vEye = D3DXVECTOR3( 
 		CCamera::Get_View_DESC().m_vAt.x,
 		CCamera::Get_View_DESC().m_vAt.y + 0.1f,
