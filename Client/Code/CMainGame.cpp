@@ -41,6 +41,7 @@ CMainGame::CMainGame()
 	m_pFontMgr(Engine::CFontMgr::GetInstance()),
 	m_pCKeyMgr(Engine::CKeyManager::GetInstance()),
 	m_pSoundMgr(CSound_Manager::GetInstance()),
+	m_pTimerMgr(Engine::CTimerMgr::GetInstance()),
 	m_pDevice(nullptr)
 {
 	m_pGameObject->AddRef();
@@ -57,10 +58,6 @@ HRESULT CMainGame::Initialize_CMainGame()
 
 	lstrcpy(m_szKey, L"±¼¸²");
 	m_pFontMgr->Add_Font(m_pDevice, 20, 50, FW_BOLD, m_szKey);
-
-
-
-	//LPDIRECT3DDEVICE9 pGrpahicDev = Engine::CGraphic_Device::GetInstance()->Get_Graphic_Device();
 
 	m_pGameObject->Reserve_Proto_Layer_Array(eScene_Count);
 
@@ -89,7 +86,7 @@ HRESULT CMainGame::Initialize_CMainGame()
 		Engine::CCollider::Creat(m_pDevice));
 
 
-	Engine::DESC_PROJ tagProj = {WINCX, WINCY, 1.f, 1000.f};
+	Engine::DESC_PROJ tagProj = {WINCX, WINCY, 1.f, 100.f};
 	Engine::DESC_VIEW tagView = {D3DXVECTOR3(0,0,0),D3DXVECTOR3(0,0,0),D3DXVECTOR3(0,1,0)};
 
 	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
@@ -200,6 +197,7 @@ void CMainGame::Free()
 	m_pGameObject->DestroyInstance();
 	m_pComponentMgr->DestroyInstance();
 	m_pSoundMgr->DestroyInstance();
+	m_pTimerMgr->DestroyInstance();
 
 	Engine::Safe_Release(m_pDevice);
 }

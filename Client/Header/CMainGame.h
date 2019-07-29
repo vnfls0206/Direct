@@ -11,6 +11,7 @@ class CComponent_Manager;
 class CFontMgr;
 class CManagement;
 class CKeyManager;
+class CTimerMgr;
 END
 class CSound_Manager;		//Engine พฦดิ
 
@@ -40,6 +41,7 @@ private :
 	Engine::CComponent_Manager* m_pComponentMgr;
 	Engine::CFontMgr* m_pFontMgr;
 	Engine::CKeyManager* m_pCKeyMgr;
+	Engine::CTimerMgr* m_pTimerMgr;
 	CSound_Manager* m_pSoundMgr;
 	LPDIRECT3DDEVICE9 m_pDevice = nullptr;
 

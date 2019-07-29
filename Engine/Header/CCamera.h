@@ -21,6 +21,8 @@ private :
 	// Ortho = 직교투영
 	DESC_PROJ stProj;
 	D3DXMATRIX matProj;		// 투영행렬
+
+	float m_fZoomRatio = 1.f;
 public :
 	DESC_VIEW& Get_View_DESC();
 
@@ -29,7 +31,7 @@ public :
 	// Aspect 비율			: 화면의 비율, 출력할 화면의 비율 (줌인, 줌아웃)
 	// Near
 	// Far
-
+	void Set_Camera_Zoom(float fRatio);
 protected:
 	void Calculate_ViewSpaceMatrix();
 	void Calculate_ProjectionSpaceMatrix();

@@ -1,6 +1,9 @@
 #ifndef Engine_Macro_h__
 #define Engine_Macro_h__
 
+#define WINCX 800
+#define WINCY 600
+
 #define MSG_BOX(MESSAGE) MessageBox(0, TEXT(MESSAGE), TEXT("System Message"), MB_OK);
 
 #define BEGIN(NAMESPACE) namespace NAMESPACE {

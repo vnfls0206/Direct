@@ -29,10 +29,23 @@ float Engine::CTimer::Calculate_Timer()
 		m_fFixTime = m_fFrametime;
 	}
 
-	m_fTimedelta = (((m_fFrametime.QuadPart - m_fLasttime.QuadPart)) / (float)m_fCpuTick.QuadPart);
+	m_fTimedelta = ((m_fFrametime.QuadPart - m_fLasttime.QuadPart)/ (float)m_fCpuTick.QuadPart);
 	//																	1초에 한번씩 계산되는, 초당 진동수
+	m_fTimedelta *= m_fBulletTime;
 	m_fLasttime = m_fFrametime;
 	return m_fTimedelta;
+}
+
+void Engine::CTimer::Set_BulletTime(float fValue)
+{
+	if (fValue <= 0.f)
+	{
+		m_fBulletTime = 1.f;
+	}
+	else if (fValue > 0.f)
+	{
+		m_fBulletTime = fValue;
+	}
 }
 
 
