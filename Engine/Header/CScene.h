@@ -5,7 +5,6 @@
 
 BEGIN(Engine)
 
-
 class ENGINE_DLL CScene abstract :
 	public Engine::CBase
 {

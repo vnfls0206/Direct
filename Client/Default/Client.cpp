@@ -52,28 +52,29 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	MSG msg;
 	msg.message = WM_NULL;
 
-	CMainGame* pGame = CMainGame::Create();
-	if (pGame == nullptr)
-	{
-		MSG_BOX("메인게임 클래스를 생성하는 데 실패했습니다!");
-		return FALSE;
-	}
 
 	Engine::CFrameMgr* m_pFrmMgr = Engine::CFrameMgr::GetInstance();
 	if (m_pFrmMgr == nullptr)
 		MSG_BOX("프레임 매니저 객체를 받아올 수 없어습니다!");
 	m_pFrmMgr->AddRef();
 
-	Engine::CFrame* pFrame = Engine::CFrame::Create(52.f);
-	m_pFrmMgr->Insert_Frame(L"Frame_76", pFrame);
+	Engine::CFrame* pFrame = Engine::CFrame::Create(60.f);
+	m_pFrmMgr->Insert_Frame(L"Frame_60", pFrame);
 
 	Engine::CTimerMgr* m_pTimerMgr = Engine::CTimerMgr::GetInstance();
 	if (m_pTimerMgr == nullptr)
 		MSG_BOX("타이머 매니저 객체를 받아올 수 없었습니다!");
 	m_pTimerMgr->AddRef();
-
+	
 	m_pTimerMgr->Insert_Timer(L"Timer_Default");
-	m_pTimerMgr->Insert_Timer(L"Timer_76");
+	m_pTimerMgr->Insert_Timer(L"Timer_60");
+
+	CMainGame* pGame = CMainGame::Create();
+	if (pGame == nullptr)
+	{
+		MSG_BOX("메인게임 클래스를 생성하는 데 실패했습니다!");
+		return FALSE;
+	}
 
 	while (msg.message != WM_QUIT)
 	{
@@ -88,9 +89,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 		float fTimeDelta = m_pTimerMgr->Update_Timer(L"Timer_Default");
 
-		if (m_pFrmMgr->Update_Frame(L"Frame_76", fTimeDelta))
+		if (m_pFrmMgr->Update_Frame(L"Frame_60", fTimeDelta))
 		{
-			float fTimeAlpha = m_pTimerMgr->Update_Timer(L"Timer_76");
+			float fTimeAlpha = m_pTimerMgr->Update_Timer(L"Timer_60");
 			pGame->Update(fTimeAlpha);
 			pGame->Render();
 		}

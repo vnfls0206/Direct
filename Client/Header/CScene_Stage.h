@@ -3,6 +3,10 @@
 
 #include "CScene.h"
 
+BEGIN(Engine)
+class CTimerMgr;
+END
+
 class CScene_Stage final :
 	public Engine::CScene
 {
@@ -10,6 +14,7 @@ private:
 	explicit CScene_Stage(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual ~CScene_Stage() = default;
 
+	Engine::CTimerMgr* m_pTimerMgr;
 	// CScene을(를) 통해 상속됨
 private:
 	virtual HRESULT Initialize_Scene() override;

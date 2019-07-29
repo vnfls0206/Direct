@@ -21,12 +21,13 @@ private :
 
 private :
 	float m_fTimedelta = 0.f;
-
+	float m_fBulletTime = 1.f;			//Timedelta에 곱하는 값
 
 private :
 	HRESULT Init_Timer();
 public :
 	float Calculate_Timer();
+	void Set_BulletTime(float fValue);	//fValue값이 0이되면 안되며 1보다 크면 빨라지고 1보다 작으면 느려진다
 
 
 public:

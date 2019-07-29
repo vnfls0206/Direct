@@ -16,6 +16,15 @@ CCamera::CCamera(const CCamera & rhs)
 {
 }
 
+void CCamera::Set_Camera_Zoom(float fRatio)
+{
+	if (fRatio <= 0.f)
+	{
+		fRatio - 1.f;
+	}
+	m_fZoomRatio = fRatio;
+}
+
 void CCamera::Calculate_ViewSpaceMatrix()
 {
 	D3DXMatrixLookAtLH(&matView, &stView.m_vEye, &stView.m_vAt, &stView.m_vAxisY);		// 왼손좌표계 // 이함수를 안쓰고, 행렬을 만드렁와 뷰스페이스
@@ -44,7 +53,7 @@ DESC_VIEW& CCamera::Get_View_DESC()
 
 void CCamera::Calculate_ProjectionSpaceMatrix()
 {
-	D3DXMatrixOrthoLH(&matProj, 800.f, 600.f, stProj.m_fNear, stProj.m_fFar);
+	D3DXMatrixOrthoLH(&matProj, ((float)WINCX / m_fZoomRatio), ((float)WINCY / m_fZoomRatio), stProj.m_fNear, stProj.m_fFar);
 	Get_Graphic_Device()->SetTransform(D3DTS_PROJECTION, &matProj);
 }
 void CCamera::Initialize_View_Proj_Matrix(DESC_VIEW pDESC_VIEW, DESC_PROJ pDESC_PROJ)
