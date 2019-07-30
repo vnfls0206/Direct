@@ -22,6 +22,7 @@
 
 #include "CStatic_Camera.h"
 #include "CPlayer.h"
+#include "CMonster.h"
 #include "CBack.h"
 #include "Enemy.h"
 
@@ -69,6 +70,9 @@ HRESULT CMainGame::Initialize_CMainGame()
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_Enemy",
 		Engine::CTexture::Create(m_pDevice, L"../../Resource/Player/", L".png", 0, 0));
 
+	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_Rinel",
+		Engine::CTexture::Create(m_pDevice, L"../../Resource/Rinel/", L".png", 0, 82));
+
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_Back",
 		Engine::CTexture::Create(m_pDevice, L"../../Resource/Back/", L".dds", 0, 0));
 
@@ -95,6 +99,15 @@ HRESULT CMainGame::Initialize_CMainGame()
 		L"GameObject_Proto_Player", CPlayer::Create(m_pDevice));
 	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
 		L"GameObject_Proto_Enemy", Enemy::Create(m_pDevice));
+
+	MON_INFO Rinel_Info = { {{ 0.5f, 8, 15 }, { 0.5f, 24, 31 }, { 0.5f, 16, 23 }, { 0.5f, 0, 7 },
+							 { 0.5f, 37, 41 }, { 0.5f, 47, 51 }, { 0.5f, 42, 46 }, { 0.5f, 32, 36 },
+							 { 0.5f, 60, 66 }, { 0.5f, 75, 82 }, { 0.5f, 67, 74 }, { 0.5f, 52, 59 }}, 300, 150 };
+
+
+	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
+		L"GameObject_Proto_Rinel", CMonster::Create(m_pDevice, Rinel_Info));
+
 	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
 		L"GameObject_Proto_Back", CBack::Create(m_pDevice));
 

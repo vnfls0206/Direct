@@ -46,7 +46,7 @@ HRESULT CPlayer::Initialize_CloneObject()
 
 	m_pTransform->Set_Position(D3DXVECTOR3(-200.f, 0.f, -5.f));
 	m_pTransform->Set_Scale(D3DXVECTOR3(100.f, 100.f, 1.f));
-	m_pTransform->Set_Rotation(D3DXVECTOR3(D3DXToRadian(0.f), D3DXToRadian(-180.f), D3DXToRadian(0.f)));
+	m_pTransform->Set_Rotation(D3DXVECTOR3(D3DXToRadian(0.f), D3DXToRadian(180.f), D3DXToRadian(0.f)));
 
 	m_pCursor = m_pTransform->Set_ObjectPoint(m_pTransform->Get_Position(), m_pCursor);
 

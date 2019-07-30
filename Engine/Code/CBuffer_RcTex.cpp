@@ -33,22 +33,26 @@ HRESULT CBuffer_RcTex::Create_Buffer_RcTex()
 	m_pVertexBuffer->Lock(0, 0, (void**)&pVertices, 0);
 	
 	pVertices[0].vPosition = D3DXVECTOR3(-0.5f, -0.5f, 0.f);
-	pVertices[0].vTexUV = D3DXVECTOR2(0.0f, 1.0f);
+	pVertices[0].vTexUV = D3DXVECTOR2(1.0f, 1.0f);
 
 	pVertices[1].vPosition = D3DXVECTOR3(0.5f, -0.5f, 0.f);
-	pVertices[1].vTexUV = D3DXVECTOR2(1.0f, 1.0f);
+	pVertices[1].vTexUV = D3DXVECTOR2(0.0f, 1.0f);
 
 	pVertices[2].vPosition = D3DXVECTOR3(0.5f, 0.5f, 0.f);
-	pVertices[2].vTexUV = D3DXVECTOR2(1.0f, 0.0f);
+	pVertices[2].vTexUV = D3DXVECTOR2(0.0f, 0.0f);
 
 	pVertices[3].vPosition = D3DXVECTOR3(-0.5f, 0.5f, 0.f);
-	pVertices[3].vTexUV = D3DXVECTOR2(0.0f, 0.0f);
+
+	pVertices[3].vTexUV = D3DXVECTOR2(1.0f, 0.0f);
 	
 	/*pVertices[0].vPosition = D3DXVECTOR3(-0.5f, -0.5f, 0.f);
 	pVertices[0].vTexUV = D3DXVECTOR2(1.0f, 1.0f);
 
 	pVertices[1].vPosition = D3DXVECTOR3(0.5f, -0.5f, 0.f);
 	pVertices[1].vTexUV = D3DXVECTOR2(0.0f, 1.0f);
+=======
+	pVertices[3].vTexUV = D3DXVECTOR2(1.0f, 0.0f);
+>>>>>>> Stashed changes
 
 	pVertices[2].vPosition = D3DXVECTOR3(0.5f, 0.5f, 0.f);
 	pVertices[2].vTexUV = D3DXVECTOR2(0.0f, 0.0f);

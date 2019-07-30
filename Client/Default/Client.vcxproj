@@ -171,6 +171,7 @@
     <ClInclude Include="..\Header\Client_Extern.h" />
     <ClInclude Include="..\Header\Client_Include.h" />
     <ClInclude Include="..\Header\CMainGame.h" />
+    <ClInclude Include="..\Header\CMonster.h" />
     <ClInclude Include="..\Header\CPlayer.h" />
     <ClInclude Include="..\Header\CScene_Logo.h" />
     <ClInclude Include="..\Header\CScene_Stage.h" />
@@ -179,6 +180,8 @@
     <ClInclude Include="..\Header\CVideo_Manager.h" />
     <ClInclude Include="..\Header\Enemy.h" />
     <ClInclude Include="Client.h" />
+    <ClInclude Include="Client_Funtion.h" />
+    <ClInclude Include="Client_Struct.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -186,6 +189,7 @@
   <ItemGroup>
     <ClCompile Include="..\Code\CBack.cpp" />
     <ClCompile Include="..\Code\CMainGame.cpp" />
+    <ClCompile Include="..\Code\CMonster.cpp" />
     <ClCompile Include="..\Code\CPlayer.cpp" />
     <ClCompile Include="..\Code\CScene_Logo.cpp" />
     <ClCompile Include="..\Code\CScene_Stage.cpp" />

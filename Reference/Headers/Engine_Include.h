@@ -23,6 +23,7 @@
 #include <map>
 #include <algorithm>
 #include <functional>
+#include <math.h>
 
 #include "Engine_Struct.h"
 #include "Engine_Macro.h"

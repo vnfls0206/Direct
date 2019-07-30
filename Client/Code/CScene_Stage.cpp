@@ -10,6 +10,8 @@
 #include "CTimerMgr.h"
 #include "CTimer.h"
 
+#include "CMonster.h"
+
 #include "CTransform.h"
 #include "CCollider.h"
 #include "CStatic_Camera.h"
@@ -40,6 +42,10 @@ HRESULT CScene_Stage::Initialize_Scene()
 		(int)eScene_Stage1, L"Layer_Enemy");
 	pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Back",
 		(int)eScene_Stage1, L"Layer_Back");
+	pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Rinel",
+		(int)eScene_Stage1, L"Layer_Monster");
+
+
 
 	Engine::CGameObject* pPlayer = pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_Player")->Get_GameObject_In_List(0);
 	Engine::CGameObject* pPlayer1 = pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_Enemy")->Get_GameObject_In_List(0);
@@ -58,6 +64,11 @@ HRESULT CScene_Stage::Initialize_Scene()
 	pTransform1->Set_Position({200.f, 180.f, 0.f});
 
 
+
+
+	dynamic_cast<CStatic_Camera*>(pCamera)->Get_Player_Transform
+	(dynamic_cast<Engine::CTransform*>(pPlayer->Get_Component_In_Map(L"Com_Transform")));
+	
 	Engine::Safe_Release(pObjMgr);
 
 	CSound_Manager::GetInstance()->PlayBGM(L"Adam Levine - Lost Stars Lyrics.mp3");

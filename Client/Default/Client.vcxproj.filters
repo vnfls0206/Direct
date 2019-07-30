@@ -1,58 +1,49 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="소스 파일\00. Client">
-      <UniqueIdentifier>{6e6eb060-c72a-42e5-b72c-82d02ef84bec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\01. MainGame">
-      <UniqueIdentifier>{af21b75a-73cf-4e5b-a3da-37f8d3323107}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\02. Scene">
-      <UniqueIdentifier>{f1d2cc5b-fbe6-43b2-9709-a690ce3e74ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\03. GameObject">
-      <UniqueIdentifier>{1acd4642-8b7a-4c4a-ab11-169cdecc164d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\03. GameObject\00. Static_Camera">
-      <UniqueIdentifier>{e73599cc-9a19-4e61-a167-7c2d67d646bf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\03. GameObject\01. Player">
-      <UniqueIdentifier>{ced1fcf1-bb03-436f-8d3b-bf7aab82a15b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\03. GameObject\02. Back">
-      <UniqueIdentifier>{734caed2-de5d-4c0a-8970-fd7a4404f1f0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\04. Manager">
-      <UniqueIdentifier>{f636880f-79e5-4843-b536-fdb89ff522cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\04. Manager\00. SoundMgr">
-      <UniqueIdentifier>{522af4e2-d621-4f30-8ff2-53e7fe69f2f8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\04. Manager\01. VideoMgr">
-      <UniqueIdentifier>{d5ed20da-4681-476c-8cad-a4824676d371}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Default">
-      <UniqueIdentifier>{80b5c3e5-b4bc-4ba8-a1c9-16a63775e543}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Default\리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="소스 파일\03. GameObject\03. Enemy">
-      <UniqueIdentifier>{d7e6b790-d14e-4fbd-bc66-8972dfcb8ec9}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="..\Code\CBack.cpp">
+      <Filter>소스 파일\03. GameObject\02. Back</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>소스 파일\00. Client</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>소스 파일\Default</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMainGame.cpp">
+      <Filter>소스 파일\01. MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Enemy.cpp">
+      <Filter>소스 파일\03. GameObject\03. Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene_Logo.cpp">
+      <Filter>소스 파일\02. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene_Stage.cpp">
+      <Filter>소스 파일\02. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CStatic_Camera.cpp">
+      <Filter>소스 파일\03. GameObject\00. Static</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayer.cpp">
+      <Filter>소스 파일\03. GameObject\01. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMonster.cpp">
+      <Filter>소스 파일\03. GameObject\04. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSound_Manager.cpp">
+      <Filter>소스 파일\04. Manager\00. SoundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CVideo_Manager.cpp">
+      <Filter>소스 파일\04. Manager\01. VideoManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="..\Header\CBack.h">
+      <Filter>소스 파일\03. GameObject\02. Back</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>소스 파일\Default</Filter>
     </ClInclude>
     <ClInclude Include="Client.h">
       <Filter>소스 파일\Default</Filter>
@@ -60,13 +51,16 @@
     <ClInclude Include="Resource.h">
       <Filter>소스 파일\Default</Filter>
     </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>소스 파일\Default</Filter>
+    <ClInclude Include="Client_Struct.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CMainGame.h">
-      <Filter>소스 파일\01. MainGame</Filter>
+    <ClInclude Include="..\Header\Client_Enum.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Client_Extern.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Client_Funtion.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Client_Include.h">
@@ -75,80 +69,98 @@
     <ClInclude Include="..\Header\Client_Define.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Client_Enum.h">
+    <ClInclude Include="stdafx.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CScene_Logo.h">
-      <Filter>소스 파일\02. Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CStatic_Camera.h">
-      <Filter>소스 파일\03. GameObject\00. Static_Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CPlayer.h">
-      <Filter>소스 파일\03. GameObject\01. Player</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CScene_Stage.h">
-      <Filter>소스 파일\02. Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CBack.h">
-      <Filter>소스 파일\03. GameObject\02. Back</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CVideo_Manager.h">
-      <Filter>소스 파일\04. Manager\01. VideoMgr</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CSound_Manager.h">
-      <Filter>소스 파일\04. Manager\00. SoundMgr</Filter>
+    <ClInclude Include="..\Header\CMainGame.h">
+      <Filter>소스 파일\01. MainGame</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Enemy.h">
       <Filter>소스 파일\03. GameObject\03. Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CScene_Logo.h">
+      <Filter>소스 파일\02. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScene_Stage.h">
+      <Filter>소스 파일\02. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CStatic_Camera.h">
+      <Filter>소스 파일\03. GameObject\00. Static</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPlayer.h">
+      <Filter>소스 파일\03. GameObject\01. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMonster.h">
+      <Filter>소스 파일\03. GameObject\04. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSound_Manager.h">
+      <Filter>소스 파일\04. Manager\00. SoundManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CVideo_Manager.h">
+      <Filter>소스 파일\04. Manager\01. VideoManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>소스 파일\Default</Filter>
-    </ClCompile>
-    <ClCompile Include="Client.cpp">
-      <Filter>소스 파일\00. Client</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CMainGame.cpp">
-      <Filter>소스 파일\01. MainGame</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CScene_Logo.cpp">
-      <Filter>소스 파일\02. Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CStatic_Camera.cpp">
-      <Filter>소스 파일\03. GameObject\00. Static_Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CPlayer.cpp">
-      <Filter>소스 파일\03. GameObject\01. Player</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CScene_Stage.cpp">
-      <Filter>소스 파일\02. Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CBack.cpp">
-      <Filter>소스 파일\03. GameObject\02. Back</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CVideo_Manager.cpp">
-      <Filter>소스 파일\04. Manager\01. VideoMgr</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CSound_Manager.cpp">
-      <Filter>소스 파일\04. Manager\00. SoundMgr</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Enemy.cpp">
-      <Filter>소스 파일\03. GameObject\03. Enemy</Filter>
-    </ClCompile>
+    <Image Include="Client.ico">
+      <Filter>소스 파일\Default\리소스 파일</Filter>
+    </Image>
+    <Image Include="small.ico">
+      <Filter>소스 파일\Default\리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{94edc4fa-c79e-41f4-9508-6b7dfbc6bf96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00. Client">
+      <UniqueIdentifier>{f14d9e54-8d97-4888-908e-59d232488ed5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03. GameObject">
+      <UniqueIdentifier>{af57d831-53a2-4790-bddc-4066cabbcabc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03. GameObject\00. Static">
+      <UniqueIdentifier>{101cb1b3-fd56-4aba-9dea-03685429f099}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03. GameObject\01. Player">
+      <UniqueIdentifier>{87a30bc6-8764-49b6-aa14-7ad367b74970}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03. GameObject\02. Back">
+      <UniqueIdentifier>{b274a1fb-c9ba-428c-b26e-1205c37564e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03. GameObject\03. Enemy">
+      <UniqueIdentifier>{122f4f13-fa67-48b6-887e-ce8198f3b131}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03. GameObject\04. Monster">
+      <UniqueIdentifier>{eef1493c-4af8-4ccc-be82-1baf7451a3d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Default">
+      <UniqueIdentifier>{37079843-161e-4ec7-b18e-187247f330ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Default\리소스 파일">
+      <UniqueIdentifier>{16379560-c1c9-4198-8de9-3684f02dcae8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02. Scene">
+      <UniqueIdentifier>{931b4397-cdb7-4189-b1ac-1cf9a66f3b5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01. MainGame">
+      <UniqueIdentifier>{ef80db83-495e-4a87-b467-c0e6170b0c7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{d420f80b-fa27-46db-854e-66e1cfc80431}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\04. Manager">
+      <UniqueIdentifier>{bb2447a9-6602-41a5-95ed-2e76ebd36989}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\04. Manager\00. SoundManager">
+      <UniqueIdentifier>{b61c9b22-9f60-43a2-a107-590412278f7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\04. Manager\01. VideoManager">
+      <UniqueIdentifier>{77e91669-7aa7-4bcb-93ff-5a4d922afeae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
       <Filter>소스 파일\Default\리소스 파일</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="small.ico">
-      <Filter>소스 파일\Default\리소스 파일</Filter>
-    </Image>
-    <Image Include="Client.ico">
-      <Filter>소스 파일\Default\리소스 파일</Filter>
-    </Image>
   </ItemGroup>
 </Project>
