@@ -118,6 +118,7 @@ Engine::CGameObject * CBack::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 	}
 	return pInstance;
 }
+
 Engine::CGameObject * CBack::Clone()
 {
 	CBack* pInstance = new CBack(*this);

@@ -3,6 +3,7 @@
 
 #include "CGameObject.h"
 
+enum e_UiNum { Card1=0, Card2 , Card3, Card4, Card5, Card6, NumCount};
 
 BEGIN(Engine)
 class CTransform;
@@ -10,7 +11,6 @@ class CBuffer;
 class CTexture;
 class CShader;
 class CRenderCom;
-class CCollider;
 END
 
 class CUI final:
@@ -37,12 +37,11 @@ public:
 	CGameObject * Clone() override;
 private:
 	// 컴포넌트 목록
-	Engine::CTransform* m_pTransform;
-	Engine::CBuffer* m_pBufferCom;
+	Engine::CTransform* m_pTransform ;
+	Engine::CBuffer* m_pBufferCom ;
 	Engine::CTexture* m_pTextureCom;
 	Engine::CShader* m_pShaderCom;
 	Engine::CRenderCom* m_pRenderCom;
-	Engine::CCollider* m_pCollider;
 
 private:
 	HRESULT Ready_Shader(const float& fTimeDelta);
@@ -51,14 +50,17 @@ private:
 	float m_fTimeAcc;
 
 	unsigned int m_iMinIndex = 0;
-	unsigned int m_iMaxIndex = 2;
+	unsigned int m_iMaxIndex = 6;
 	unsigned int m_iCurIndex = 0;
-
-private:
-	float	m_fMoveSpeed = 200.f;
 
 protected:
 	virtual void Free() override;
+
+private:
+	Engine::CTransform*		m_pPlayerTransform;
+
+public:
+	void					Get_Player_Transform(Engine::CTransform* vTransform);
 };
 
 #endif

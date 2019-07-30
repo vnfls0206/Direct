@@ -25,7 +25,7 @@
 #include "CMonster.h"
 #include "CBack.h"
 #include "Enemy.h"
-
+#include "CUI.h"
 
 #include "CScene_Logo.h"
 #include "CScene_Stage.h"
@@ -76,6 +76,9 @@ HRESULT CMainGame::Initialize_CMainGame()
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_Back",
 		Engine::CTexture::Create(m_pDevice, L"../../Resource/Back/", L".dds", 0, 0));
 
+	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_UI",
+		Engine::CTexture::Create(m_pDevice, L"../../Resource/Card/", L".png", 0, 6));
+
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Buffer_RcTex",
 		Engine::CBuffer_RcTex::Create(m_pDevice));
 
@@ -110,6 +113,8 @@ HRESULT CMainGame::Initialize_CMainGame()
 
 	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
 		L"GameObject_Proto_Back", CBack::Create(m_pDevice));
+	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
+		L"GameObject_Proto_UI", CUI::Create(m_pDevice));
 
 	Engine::Safe_Release(m_pGameObject);
 	Engine::Safe_Release(m_pComponentMgr);

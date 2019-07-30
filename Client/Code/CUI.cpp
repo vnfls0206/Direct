@@ -13,7 +13,6 @@ CUI::CUI(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: Engine::CGameObject(pGraphic_Device)
 {
 }
-
 CUI::CUI(const CUI & rhs)
 	:Engine::CGameObject(rhs)
 {
@@ -21,7 +20,7 @@ CUI::CUI(const CUI & rhs)
 
 HRESULT CUI::Initialize_GameObject()
 {
-	return E_NOTIMPL;
+	return NOERROR;;
 }
 
 HRESULT CUI::Initialize_CloneObject()
@@ -37,11 +36,11 @@ HRESULT CUI::Initialize_CloneObject()
 	m_mapComponent.emplace(L"Com_Transform", m_pTransform);
 
 	m_pTransform->Set_Position(D3DXVECTOR3(0.f, -10.f, 0.f));
-	m_pTransform->Set_Scale(D3DXVECTOR3(600.f, 800.f, 1.f));
+	m_pTransform->Set_Scale(D3DXVECTOR3(100.f, 120.f, 1.f));
 	m_pTransform->Set_Rotation(D3DXVECTOR3(D3DXToRadian(0.f), D3DXToRadian(180.f), D3DXToRadian(0.f)));
 
 	m_pTextureCom = dynamic_cast<Engine::CTexture*>
-		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Texture_Back"));
+		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Texture_UI"));
 	if (m_pTextureCom == nullptr) {
 		MSG_BOX("텍스처 컴포넌트가 NULLPTR 로 반환");
 		return E_FAIL;
@@ -82,11 +81,18 @@ HRESULT CUI::Initialize_CloneObject()
 
 void CUI::Update_GameObject(const float & fTimeDelta)
 {
+	m_pTransform->Make_LocalSpace_Matrix();
+
+	D3DXVECTOR3 vPos = m_pTransform->Get_Position();
+	vPos.x = m_pPlayerTransform->Get_Position().x-200;
+	vPos.y = m_pPlayerTransform->Get_Position().y-200;
+
+	m_pTransform->Set_Position(vPos);
 }
 
 void CUI::LastUpdate_GameObject(const float & fTimeDelta)
 {
-	m_pRenderCom->Add_GameObject_To_List(Engine::CRenderCom::eRender_1, this);
+	m_pRenderCom->Add_GameObject_To_List(Engine::CRenderCom::eRender_10, this);
 	Ready_Shader(fTimeDelta);
 }
 
@@ -104,6 +110,17 @@ void CUI::Render_GameObject()
 	m_pShaderCom->Get_Effect()->End();
 }
 
+Engine::CGameObject * CUI::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
+{
+	CUI* pInstance = new CUI(pGraphic_Device);
+	if (FAILED(pInstance->Initialize_GameObject()))
+	{
+		MSG_BOX("???");
+		Engine::Safe_Release(pInstance);
+	}
+	return pInstance;
+}
+
 Engine::CGameObject * CUI::Clone()
 {
 	CUI* pInstance = new CUI(*this);
@@ -118,15 +135,40 @@ Engine::CGameObject * CUI::Clone()
 HRESULT CUI::Ready_Shader(const float& fTimedetla)
 {
 	D3DXMATRIX matView, matProj;
+
 	Get_Graphic_Device()->GetTransform(D3DTS_VIEW, &matView);
 	Get_Graphic_Device()->GetTransform(D3DTS_PROJECTION, &matProj);
+	
 
 	m_pShaderCom->Set_Object_Matrix("g_matWorld", m_pTransform->Get_m_matLocal());
 	m_pShaderCom->Set_Object_Matrix("g_matView", &matView);
 	m_pShaderCom->Set_Object_Matrix("g_matProj", &matProj);
 
+	if (m_fTimeAcc >= 0.5f)
+	{
+		if (m_iCurIndex >= m_iMaxIndex) {
+			m_iCurIndex = m_iMinIndex;
+		}
+		else
+			m_iCurIndex++;
+
+		m_fTimeAcc = 0.f;
+	}
+	else
+		m_fTimeAcc += fTimedetla;
+
 	m_pShaderCom->Get_Effect()->SetTexture("g_texture",
 		m_pTextureCom->Get_Texture_From_Array_In_Vector(0));
-
 	return NOERROR;
+}
+
+void CUI::Get_Player_Transform(Engine::CTransform * vTransform)
+{
+	if (vTransform == nullptr)
+		MSG_BOX("해당 트랜스폼은 널포인터입니다.");
+	m_pPlayerTransform = vTransform;
+}
+
+void CUI::Free()
+{
 }

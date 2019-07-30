@@ -16,6 +16,7 @@
 #include "CCollider.h"
 #include "CStatic_Camera.h"
 #include "CPlayer.h"
+#include "CUI.h"
 
 
 
@@ -44,15 +45,22 @@ HRESULT CScene_Stage::Initialize_Scene()
 		(int)eScene_Stage1, L"Layer_Back");
 	pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Rinel",
 		(int)eScene_Stage1, L"Layer_Monster");
+	pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_UI",
+		(int)eScene_Stage1, L"Layer_UI");
 
 
 
 	Engine::CGameObject* pPlayer = pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_Player")->Get_GameObject_In_List(0);
 	Engine::CGameObject* pPlayer1 = pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_Enemy")->Get_GameObject_In_List(0);
 	Engine::CGameObject* pCamera = pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_StaticCamera")->Get_GameObject_In_List(0);
+	Engine::CGameObject* pUI = pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_UI")->Get_GameObject_In_List(0);
+
 	//Engine::CTransform* pCameraTransform = dynamic_cast<Engine::CTransform*>(pCamera->Get_Component_In_Map(L"Com_Transform"));
 
 	dynamic_cast<CStatic_Camera*>(pCamera)->Get_Player_Transform
+	(dynamic_cast<Engine::CTransform*>(pPlayer->Get_Component_In_Map(L"Com_Transform")));
+
+	dynamic_cast<CUI*>(pUI)->Get_Player_Transform
 	(dynamic_cast<Engine::CTransform*>(pPlayer->Get_Component_In_Map(L"Com_Transform")));
 	//D3DXVECTOR3 vecCameraPos = pCameraTransform->Get_Position();
 	//vecCameraPos.z -= 50.f;
@@ -109,7 +117,7 @@ CScene_Stage * CScene_Stage::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 	CScene_Stage* pInstance = new CScene_Stage(pGraphic_Device);
 	if (FAILED(pInstance->Initialize_Scene()))
 	{
-		MSG_BOX("½ºÅ×ÀÌÁö ¾À ½ÇÇà ½ÇÆÐ");
+		MSG_BOX("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		Engine::Safe_Release(pInstance);
 	}
 	return pInstance;
