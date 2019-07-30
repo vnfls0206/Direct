@@ -60,7 +60,9 @@ HRESULT CTexture::Add_Texture_Array_To_Vector(const TCHAR * pTexPath, const TCHA
 
 		LPDIRECT3DTEXTURE9 pTexture;
 
-		D3DXCreateTextureFromFile(Get_Graphic_Device(), tMaxPath, &pTexture);
+		//D3DXCreateTextureFromFile(Get_Graphic_Device(), tMaxPath, &pTexture);
+		D3DXCreateTextureFromFileEx(Get_Graphic_Device(), tMaxPath, 0, 0, 0, 0,
+			D3DFMT_A8P8, D3DPOOL_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, D3DCOLOR_ARGB(255,147, 187, 236), NULL, NULL, &pTexture);
 
 		
 	

@@ -55,9 +55,8 @@ HRESULT CMainGame::Initialize_CMainGame()
 		MSG_BOX("디바이스 초기화가 실패하였습니다!");
 		return E_FAIL;
 	}
-
-	lstrcpy(m_szKey, L"굴림");
-	m_pFontMgr->Add_Font(m_pDevice, 20, 50, FW_BOLD, m_szKey);
+	
+	m_pFontMgr->Add_Font(m_pDevice, 10, 10, FW_LIGHT, L"굴림");
 
 	m_pGameObject->Reserve_Proto_Layer_Array(eScene_Count);
 
@@ -65,7 +64,7 @@ HRESULT CMainGame::Initialize_CMainGame()
 		Engine::CTransform::Create(m_pDevice));
 
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_Player",
-		Engine::CTexture::Create(m_pDevice, L"../../Resource/Player/", L".png", 0, 2));
+		Engine::CTexture::Create(m_pDevice, L"../../Resource/Player/Move/Back/", L".png", 0, 5));
 
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_Enemy",
 		Engine::CTexture::Create(m_pDevice, L"../../Resource/Player/", L".png", 0, 0));
@@ -133,11 +132,10 @@ void CMainGame::Render()
 	++m_iRenderCnt;
 	if (m_fTImeAcc >= 1.f)
 	{
-		wsprintf(m_szFPS, L"에프피에스 : %d", m_iRenderCnt);
+		wsprintf(m_szFPS, L"FPS : %d", m_iRenderCnt);
 		m_iRenderCnt = 0;
 		m_fTImeAcc = 0.f;
 	}
-	SetWindowText(g_hWnd, m_szFPS);
 
 
 	if (m_eSceneState != eScene_Logo) 
@@ -150,7 +148,7 @@ void CMainGame::Render()
 		m_pManagement->Render_CurrentScene();
 
 		POINT pt = { 0,20 };
-		m_pFontMgr->Render_Font(m_szKey, m_szFPS, pt, D3DCOLOR_ARGB(255, 0, 255, 0));
+		m_pFontMgr->Render_Font(L"굴림", m_szFPS, pt, D3DCOLOR_ARGB(255, 83, 223, 214));
 
 		m_pDevice->EndScene();
 		m_pDevice->Present(nullptr, nullptr, g_hWnd, nullptr);

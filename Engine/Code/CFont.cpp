@@ -10,7 +10,7 @@ CFont::CFont()
 
 }
 
-HRESULT CFont::Initialize_Font(LPDIRECT3DDEVICE9 pGraphicDev, int iHeight, unsigned int uiWidth, unsigned int uiWeight, TCHAR * pFaceName)
+HRESULT CFont::Initialize_Font(LPDIRECT3DDEVICE9 pGraphicDev, int iHeight, unsigned int uiWidth, unsigned int uiWeight, const TCHAR * pFaceName)
 {
 	ZeroMemory(&m_tagFontDesc, sizeof(D3DXFONT_DESC));
 	m_tagFontDesc.CharSet = HANGUL_CHARSET;
@@ -24,7 +24,7 @@ HRESULT CFont::Initialize_Font(LPDIRECT3DDEVICE9 pGraphicDev, int iHeight, unsig
 	return NOERROR;
 }
 
-void CFont::Render_Font(TCHAR* pSentence, POINT SenPoint, D3DCOLOR pARGB)
+void CFont::Render_Font(const TCHAR* pSentence, POINT SenPoint, D3DCOLOR pARGB)
 {
 	RECT rc = {
 		SenPoint.x,
@@ -37,7 +37,7 @@ void CFont::Render_Font(TCHAR* pSentence, POINT SenPoint, D3DCOLOR pARGB)
 		m_pFont->DrawTextW(NULL, pSentence,lstrlen(pSentence), &rc, DT_NOCLIP, pARGB);
 }
 
-CFont * CFont::Create(LPDIRECT3DDEVICE9 pGraphicDev, int iHeight, unsigned int uiWidth, unsigned int uiWeight, TCHAR * pFaceName)
+CFont * CFont::Create(LPDIRECT3DDEVICE9 pGraphicDev, int iHeight, unsigned int uiWidth, unsigned int uiWeight, const TCHAR * pFaceName)
 {
 	CFont* pInstance = new CFont();
 	if (FAILED(pInstance->Initialize_Font(pGraphicDev, iHeight, uiWidth, uiWeight, pFaceName)))

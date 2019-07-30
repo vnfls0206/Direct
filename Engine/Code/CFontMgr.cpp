@@ -4,7 +4,7 @@
 
 IMPLEMENT_SINGLETON(Engine::CFontMgr)
 
-HRESULT Engine::CFontMgr::Add_Font(LPDIRECT3DDEVICE9 pGraphicDev, int iHeight, unsigned int uiWidth, unsigned int uiWeight, TCHAR * pFaceName)
+HRESULT Engine::CFontMgr::Add_Font(LPDIRECT3DDEVICE9 pGraphicDev, int iHeight, unsigned int uiWidth, unsigned int uiWeight, const TCHAR * pFaceName)
 {
 	if (Check_Overlapped_Fonts(pFaceName) == nullptr)
 	{// 없으면 생성을 합니다.
@@ -18,7 +18,7 @@ HRESULT Engine::CFontMgr::Add_Font(LPDIRECT3DDEVICE9 pGraphicDev, int iHeight, u
 	return NOERROR;
 }
 
-void Engine::CFontMgr::Render_Font(TCHAR * pFontKey,TCHAR * pSentence, POINT SenPoint, D3DCOLOR pARGB)
+void Engine::CFontMgr::Render_Font(const TCHAR * pFontKey, const TCHAR * pSentence, POINT SenPoint, D3DCOLOR pARGB)
 {
 	Engine::CFont* pFont = Check_Overlapped_Fonts(pFontKey);
 	if (pFont == nullptr)
@@ -27,7 +27,7 @@ void Engine::CFontMgr::Render_Font(TCHAR * pFontKey,TCHAR * pSentence, POINT Sen
 	pFont->Render_Font(pSentence, SenPoint, pARGB);
 }
 
-Engine::CFont * Engine::CFontMgr::Check_Overlapped_Fonts(TCHAR * pFontKey){
+Engine::CFont * Engine::CFontMgr::Check_Overlapped_Fonts(const TCHAR * pFontKey){
 	auto iter_find = find_if(m_MapFont.begin(), m_MapFont.end(), CFinder_Tag(pFontKey));
 	if (iter_find == m_MapFont.end()) {
 		// 못찾았어요.

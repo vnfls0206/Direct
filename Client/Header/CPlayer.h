@@ -50,7 +50,7 @@ private :
 	float m_fTimeAcc;
 	
 	unsigned int m_iMinIndex = 0;
-	unsigned int m_iMaxIndex = 2;
+	unsigned int m_iMaxIndex = 5;
 	unsigned int m_iCurIndex = 0;
 
 private :

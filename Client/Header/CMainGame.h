@@ -46,7 +46,6 @@ private :
 	LPDIRECT3DDEVICE9 m_pDevice = nullptr;
 
 private :
-	TCHAR			m_szKey[50];
 	TCHAR			m_szFPS[128] = L"";
 	int m_iRenderCnt = 0;
 	float m_fTImeAcc = 0.f;

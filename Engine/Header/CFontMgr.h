@@ -15,16 +15,16 @@ private :
 
 public :
 	// 폰트 생성
-	HRESULT Add_Font(LPDIRECT3DDEVICE9 pGraphicDev, int iHeight, unsigned int uiWidth, unsigned int uiWeight, TCHAR* pFaceName);
+	HRESULT Add_Font(LPDIRECT3DDEVICE9 pGraphicDev, int iHeight, unsigned int uiWidth, unsigned int uiWeight, const TCHAR* pFaceName);
 	// 폰트 출력
-	void Render_Font(TCHAR * pFontKey, TCHAR* pSentence, POINT SenPoint, D3DCOLOR pARGB);
+	void Render_Font(const TCHAR * pFontKey, const TCHAR* pSentence, POINT SenPoint, D3DCOLOR pARGB);
 
 private :
 	// 중복 폰트 점검
-	CFont* Check_Overlapped_Fonts(TCHAR* pFontKey);
+	CFont* Check_Overlapped_Fonts(const TCHAR* pFontKey);
 
 private :
-	typedef map<TCHAR*, CFont*>				MAPFONT;
+	typedef map<const TCHAR*, CFont*>				MAPFONT;
 	MAPFONT									m_MapFont;
 
 public :

@@ -14,9 +14,9 @@ private :
 
 
 private :
-	HRESULT Initialize_Font(LPDIRECT3DDEVICE9 pGraphicDev, int iHeight, unsigned int uiWidth, unsigned int uiWeight, TCHAR* pFaceName);
+	HRESULT Initialize_Font(LPDIRECT3DDEVICE9 pGraphicDev, int iHeight, unsigned int uiWidth, unsigned int uiWeight, const TCHAR* pFaceName);
 public :
-	void Render_Font(TCHAR* pSentence, POINT SenPoint, D3DCOLOR pARGB);
+	void Render_Font(const TCHAR* pSentence, POINT SenPoint, D3DCOLOR pARGB);
 
 
 private :
@@ -25,7 +25,7 @@ private :
 	LPD3DXFONT		m_pFont;
 
 public :
-	static CFont* Create(LPDIRECT3DDEVICE9 pGraphicDev, int iHeight, unsigned int uiWidth, unsigned int uiWeight, TCHAR* pFaceName);
+	static CFont* Create(LPDIRECT3DDEVICE9 pGraphicDev, int iHeight, unsigned int uiWidth, unsigned int uiWeight, const TCHAR* pFaceName);
 	virtual void Free() override;
 
 };

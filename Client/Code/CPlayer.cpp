@@ -186,7 +186,7 @@ HRESULT CPlayer::Ready_Shader(const float& fTimedetla)
 	m_pShaderCom->Set_Object_Matrix("g_matView", &matView);
 	m_pShaderCom->Set_Object_Matrix("g_matProj", &matProj);
 
-	if (m_fTimeAcc >= 0.5f)
+	if (m_fTimeAcc >= 0.2f)
 	{
 		if (m_iCurIndex >= m_iMaxIndex) {
 			m_iCurIndex = m_iMinIndex;
