@@ -34,8 +34,6 @@ public :
 		const int iTextureMinIndex, const int iTextureMaxIndex);
 	virtual CComponent* Clone() override;
 	virtual void Free() override;
-
 };
-
 END
 #endif

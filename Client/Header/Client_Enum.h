@@ -9,5 +9,5 @@ enum eMonsterState { eLEFT_IDLE = 0, eUP_IDLE, eRIGHT_IDLE, eDOWN_IDLE,		//´ë±â
 					 eMState_Count };
 enum eMonsterAlignment { eGOOD, eEVIL, eMAlignmente_Count };
 
-
+enum e_UiNum { Card1 = 0, Card2, Card3, Card4, Card5, Card6, NumCount };
 #endif

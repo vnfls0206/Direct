@@ -6,12 +6,11 @@ CStatic_Camera::CStatic_Camera(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CCamera(pGraphic_Device)
 {
 }
+
 CStatic_Camera::CStatic_Camera(const CStatic_Camera & rhs)
 	: CCamera(rhs)
 {
 }
-
-
 
 HRESULT CStatic_Camera::Initialize_GameObject()
 {
@@ -23,9 +22,6 @@ HRESULT CStatic_Camera::Initialize_Camera_Matrix(Engine::DESC_VIEW tmpDESC_VIEW,
 	CCamera::Calculate_View_Proj_Matrix();
 	return NOERROR;
 }
-
-
-
 
 void CStatic_Camera::Update_GameObject(const float & fTimeDelta)
 {
@@ -46,17 +42,17 @@ void CStatic_Camera::Render_GameObject()
 }
 
 Engine::CGameObject * CStatic_Camera::Create(LPDIRECT3DDEVICE9 pGraphic_Device, 
-	Engine::DESC_VIEW tmpDESC_VIEW, Engine::DESC_PROJ tmpDESC_PROJ)
+	Engine::DESC_VIEW tmpDESC_VIEW, Engine::DESC_PROJ tmpDESC_PROJ )
 {
 	CStatic_Camera* pCamera = new CStatic_Camera(pGraphic_Device);
 	if (FAILED(pCamera->Initialize_GameObject()))
 	{
-		MSG_BOX("Ä«¸Þ¶ó ¿ÀºêÁ§Æ®¸¦ ÃÊ±âÈ­ÇÏ´Âµ¥ ½ÇÆÐÇß½À´Ï´Ù.");
+		MSG_BOX("Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½Ï´Âµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
 		Engine::Safe_Release(pCamera);
 	}
 	if (FAILED(pCamera->Initialize_Camera_Matrix(tmpDESC_VIEW, tmpDESC_PROJ)))
 	{
-		MSG_BOX("Ä«¸Þ¶ó ¿ÀºêÁ§Æ®ÀÇ Çà·ÄÀ» ÃÊ±âÈ­ÇÏ´Âµ¥ ½ÇÆÐÇß½À´Ï´Ù.");
+		MSG_BOX("Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½Ï´Âµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
 		Engine::Safe_Release(pCamera);
 	}
 	return pCamera;
@@ -75,7 +71,7 @@ void CStatic_Camera::Free()
 void CStatic_Camera::Get_Player_Transform(Engine::CTransform * vTransform)
 {
 	if (vTransform == nullptr)
-		MSG_BOX("ÇØ´ç Æ®·£½ºÆûÀº ³ÎÆ÷ÀÎÅÍÀÔ´Ï´Ù.");
+		MSG_BOX("ï¿½Ø´ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
 	m_pPlayerTransform = vTransform;
 }
 

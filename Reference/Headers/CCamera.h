@@ -5,6 +5,8 @@
 
 BEGIN(Engine)
 
+
+
 class ENGINE_DLL CCamera
 	: public Engine::CGameObject
 {
@@ -23,6 +25,7 @@ private :
 	D3DXMATRIX matProj;		// 투영행렬
 
 	float m_fZoomRatio = 1.f;
+	D3DXMATRIX matWorld;	//
 public :
 	DESC_VIEW& Get_View_DESC();
 

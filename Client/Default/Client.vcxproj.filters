@@ -57,9 +57,6 @@
     <Filter Include="소스 파일\03. GameObject">
       <UniqueIdentifier>{1acd4642-8b7a-4c4a-ab11-169cdecc164d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\03. GameObject\00. Static_Camera">
-      <UniqueIdentifier>{e73599cc-9a19-4e61-a167-7c2d67d646bf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\03. GameObject\01. Player">
       <UniqueIdentifier>{ced1fcf1-bb03-436f-8d3b-bf7aab82a15b}</UniqueIdentifier>
     </Filter>
@@ -87,6 +84,9 @@
     </Filter>
     <Filter Include="소스 파일\03. GameObject\99. UI">
       <UniqueIdentifier>{9b8a1c71-6f0a-41fa-b978-b79f78f7fef6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03. GameObject\00. Static_Camera">
+      <UniqueIdentifier>{e73599cc-9a19-4e61-a167-7c2d67d646bf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -156,7 +156,10 @@
     <ClInclude Include="..\Header\Enemy.h">
       <Filter>소스 파일\03. GameObject\03. Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CUI.h">
+    <ClInclude Include="..\Header\CUI_Card.h">
+      <Filter>소스 파일\03. GameObject\99. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_Bar.h">
       <Filter>소스 파일\03. GameObject\99. UI</Filter>
     </ClInclude>
   </ItemGroup>
@@ -200,7 +203,10 @@
     <ClCompile Include="..\Code\Enemy.cpp">
       <Filter>소스 파일\03. GameObject\03. Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CUI.cpp">
+    <ClCompile Include="..\Code\CUI_Card.cpp">
+      <Filter>소스 파일\03. GameObject\99. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_Bar.cpp">
       <Filter>소스 파일\03. GameObject\99. UI</Filter>
     </ClCompile>
   </ItemGroup>

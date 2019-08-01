@@ -40,8 +40,6 @@ void CCamera::Calculate_ViewSpaceMatrix()
 	// D3DXMatrixInverse( , nullptr, );
 
 	//D3DXMatrixLookAtRH();		// 오른손좌표계
-
-
 }
 
 DESC_VIEW& CCamera::Get_View_DESC()
@@ -49,18 +47,18 @@ DESC_VIEW& CCamera::Get_View_DESC()
 	return stView;
 }
 
-
-
 void CCamera::Calculate_ProjectionSpaceMatrix()
 {
 	D3DXMatrixOrthoLH(&matProj, ((float)WINCX / m_fZoomRatio), ((float)WINCY / m_fZoomRatio), stProj.m_fNear, stProj.m_fFar);
 	Get_Graphic_Device()->SetTransform(D3DTS_PROJECTION, &matProj);
 }
+
 void CCamera::Initialize_View_Proj_Matrix(DESC_VIEW pDESC_VIEW, DESC_PROJ pDESC_PROJ)
 {
 	memcpy(&stView, &pDESC_VIEW, sizeof(pDESC_VIEW));
 	memcpy(&stProj, &pDESC_PROJ, sizeof(pDESC_PROJ));
 }
+
 void CCamera::Calculate_View_Proj_Matrix()
 {
 	Calculate_ViewSpaceMatrix();

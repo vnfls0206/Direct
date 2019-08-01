@@ -61,8 +61,6 @@ void Engine::CTransform::Make_LocalSpace_Matrix()
 																						// 부(모이동값)
 }
 
-
-
 D3DXVECTOR3 Engine::CTransform::Get_Position()
 {
 	return m_vecPosition;
@@ -71,6 +69,11 @@ D3DXVECTOR3 Engine::CTransform::Get_Position()
 D3DXMATRIX*	Engine::CTransform::Get_m_matLocal()
 { 
 	return &m_matLocal;
+}
+
+void Engine::CTransform::set_Parent(D3DXMATRIX * Parent)
+{
+	m_pmatParent = Parent;
 }
 
 void Engine::CTransform::Set_Scale(D3DXVECTOR3 vScale)
@@ -111,7 +114,6 @@ POINT Engine::CTransform::Set_ObjectPoint(D3DXVECTOR3 vPos, POINT MousePoint)
 	return MousePoint;
 }
 
-
 void Engine::CTransform::MoveToMouse(POINT MousePoint, float movespeed, const float& fDeltaTime)
 {
 	m_vecMousePosition = { (float)MousePoint.x ,(float)MousePoint.y, -5.0f };
@@ -124,7 +126,6 @@ void Engine::CTransform::MoveToMouse(POINT MousePoint, float movespeed, const fl
 		m_vecPosition.y += m_vecDist.y * fDeltaTime * movespeed;
 	}
 }
-
 
 D3DXVECTOR3	Engine::CTransform::Get_Scale() {
 	D3DXVECTOR3 vScale;

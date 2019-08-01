@@ -113,20 +113,7 @@ void Enemy::Update_GameObject(const float & fTimeDelta)
 		vPos.y -= 5000.f * fTimeDelta;
 	}*/
 
-
-
 	m_pTransform->Set_Position(vPos);
-
-	if (Engine::CKeyManager::GetInstance()->KeyDown(VK_LBUTTON))
-	{
-		GetCursorPos(&m_pCursor);
-		ScreenToClient(g_hWnd, &m_pCursor);
-		m_pCursor.x = m_pCursor.x - WINCX / 2;
-		m_pCursor.y = WINCY / 2 - m_pCursor.y;
-	}
-
-
-	m_pTransform->MoveToMouse(m_pCursor, m_fMoveSpeed, fTimeDelta);
 	m_pCollider->Set_ColliderPos(m_pTransform->Get_m_matLocal());
 }
 
@@ -160,6 +147,7 @@ Engine::CGameObject * Enemy::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 	}
 	return pInstance;
 }
+
 Engine::CGameObject * Enemy::Clone()
 {
 	Enemy* pInstance = new Enemy(*this);

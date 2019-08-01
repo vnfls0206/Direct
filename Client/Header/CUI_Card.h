@@ -1,9 +1,7 @@
-#ifndef CUI_h__
-#define CUI_h__
+#ifndef CUI_Card_h__
+#define CUI_Card_h__
 
 #include "CGameObject.h"
-
-enum e_UiNum { Card1=0, Card2 , Card3, Card4, Card5, Card6, NumCount};
 
 BEGIN(Engine)
 class CTransform;
@@ -13,13 +11,13 @@ class CShader;
 class CRenderCom;
 END
 
-class CUI final:
+class CUI_Card final:
 	public Engine::CGameObject
 {
 public:
-	explicit CUI(LPDIRECT3DDEVICE9 pGraphic_Device);
-	explicit CUI(const CUI& rhs);
-	virtual ~CUI()=default;
+	explicit CUI_Card(LPDIRECT3DDEVICE9 pGraphic_Device);
+	explicit CUI_Card(const CUI_Card& rhs);
+	virtual ~CUI_Card()=default;
 
 	// CGameObject을(를) 통해 상속됨
 public:
@@ -31,7 +29,6 @@ public:
 	virtual void LastUpdate_GameObject(const float & fTimeDelta) override;
 	virtual void Render_GameObject() override;
 	
-
 public:
 	static CGameObject * Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	CGameObject * Clone() override;
@@ -48,19 +45,16 @@ private:
 
 private:
 	float m_fTimeAcc;
-
-	unsigned int m_iMinIndex = 0;
-	unsigned int m_iMaxIndex = 6;
-	unsigned int m_iCurIndex = 0;
+	unsigned int m_iCard = 0;
+	D3DXVECTOR3				m_vUiPosition;
+	bool					m_bActivie = true;
 
 protected:
 	virtual void Free() override;
-
-private:
-	Engine::CTransform*		m_pPlayerTransform;
-
+	
 public:
-	void					Get_Player_Transform(Engine::CTransform* vTransform);
+	void					Set_CardInfo(D3DXVECTOR3 vec,int cardstate);
+	void					Set_Activie(bool b);
 };
 
 #endif

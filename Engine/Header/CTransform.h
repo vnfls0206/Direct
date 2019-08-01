@@ -32,6 +32,7 @@ private :
 	D3DXVECTOR3					m_vecDist;				//���콺-�÷��̾��� �Ÿ�����
 
 public :
+	void						set_Parent(D3DXMATRIX* Parent);
 	void						Set_Scale(D3DXVECTOR3 vScale);
 	void						Set_Rotation(D3DXVECTOR3 vRot);
 	void						Set_Position(D3DXVECTOR3 vPos);

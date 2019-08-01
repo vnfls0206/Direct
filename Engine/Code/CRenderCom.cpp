@@ -54,9 +54,6 @@ Engine::CGameObject * Engine::CRenderCom::Check_GameObject_In_List_Overlapped(
 	return nullptr;
 }
 
-
-
-
 void Engine::CRenderCom::Clear_List()
 {
 	for (auto& pArray : m_pList_Object)
