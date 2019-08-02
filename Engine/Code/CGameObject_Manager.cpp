@@ -74,7 +74,7 @@ void Engine::CGameObject_Manager::Update_Layers(int iSceneID, const float & fTim
 	}
 }
 
-void Engine::CGameObject_Manager::Copy_Proto_GameObject_To_Layer(int iProtoSceneID,  
+Engine::CGameObject* Engine::CGameObject_Manager::Copy_Proto_GameObject_To_Layer(int iProtoSceneID,  
 	const TCHAR * pProtoObjectTag, int iLayerSceneID,  const TCHAR * pLayerObjectTag)
 {
 	Engine::CGameObject* pProtoGameObject = Find_GameObejct_In_ProtoMap(iProtoSceneID, pProtoObjectTag);
@@ -82,7 +82,7 @@ void Engine::CGameObject_Manager::Copy_Proto_GameObject_To_Layer(int iProtoScene
 	if (pProtoGameObject == nullptr)
 	{
 		MSG_BOX("해당 게임오브젝트가 프로토타입 맵에서 발견되지 않았습니다!");
-		return;
+		return nullptr;
 	}
 
 	Engine::CGameObject* pCloneObject = pProtoGameObject->Clone();
@@ -90,7 +90,7 @@ void Engine::CGameObject_Manager::Copy_Proto_GameObject_To_Layer(int iProtoScene
 	{
 		MSG_BOX("프로토타입 객체에서 제대로 복사되지 않았습니다!");
 		Engine::Safe_Release(pCloneObject);
-		return;
+		return pCloneObject;
 	}
 
 	Engine::CLayer* pLayer = Find_Layer(iLayerSceneID, pLayerObjectTag);
@@ -103,6 +103,7 @@ void Engine::CGameObject_Manager::Copy_Proto_GameObject_To_Layer(int iProtoScene
 	else if (pLayer != nullptr) {
 		pLayer->Insert_GameObject_To_Layer(pCloneObject);
 	}
+	return pCloneObject;
 }
 
 Engine::CLayer * Engine::CGameObject_Manager::Find_Layer(int iLayerSceneID, const TCHAR * pLayerObjectTag)

@@ -7,7 +7,7 @@
 
 // 저수준 입출력
 #include <io.h>
-
+#include "Client_Include.h"
 #include "CBase.h"
 
 class CSound_Manager final :
@@ -22,6 +22,8 @@ private :
 	explicit CSound_Manager();
 	virtual ~CSound_Manager() = default;
 
+	std::queue<pair<const TCHAR*, CHANNEL_ID>> m_quePlaylist;
+
 public:
 	void Update();
 	void PlaySound(const TCHAR* pSoundKey, CHANNEL_ID eID);
@@ -30,7 +32,8 @@ public:
 	void StopAll();
 	void PauseSound(CHANNEL_ID eID, BOOL bPause = TRUE);
 	void PauseAll(CHANNEL_ID eID, BOOL bPause = TRUE);
-
+	void Add_Playlist_In_Queue(const TCHAR* pSoundKey, CHANNEL_ID eID);
+	void Play_Sound_In_Queue();
 private:
 	void Initialize();
 	void ReleaseAll();

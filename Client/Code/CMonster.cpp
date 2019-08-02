@@ -149,6 +149,21 @@ void CMonster::Render_GameObject()
 	m_pShaderCom->Get_Effect()->End();
 }
 
+Engine::CGameObject * CMonster::Get_Target()
+{
+	return nullptr;
+}
+
+bool CMonster::Is_Can_Attack()
+{
+	return false;
+}
+
+eMonsterState CMonster::Get_State()
+{
+	return eMonsterState();
+}
+
 
 
 Engine::CGameObject * CMonster::Create(LPDIRECT3DDEVICE9 pGraphic_Device, MON_INFO m_mon_info)

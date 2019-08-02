@@ -96,6 +96,28 @@ void Engine::CTransform::Set_Scale(D3DXVECTOR3 vScale)
 
 void Engine::CTransform::Set_Rotation(D3DXVECTOR3 vRot) {
 	m_vecRotation = vRot;
+	/*D3DXMATRIX matRot;
+	D3DXMatrixIdentity(&matRot);
+	matRot._22 = cosf(vRot.x);
+	matRot._23 = sinf(vRot.x);
+	matRot._32 = -sinf(vRot.x);
+	matRot._33 = cosf(vRot.x);
+	m_matLocal *= matRot;
+
+	D3DXMatrixIdentity(&matRot);
+	matRot._11 = cosf(vRot.y);
+	matRot._13 = -sinf(vRot.y);
+	matRot._31 = sinf(vRot.y);
+	matRot._33 = cosf(vRot.y);
+	m_matLocal *= matRot;
+
+	D3DXMatrixIdentity(&matRot);
+	matRot._11 = cosf(vRot.z);
+	matRot._12 = sinf(vRot.z);
+	matRot._21 = -sinf(vRot.z);
+	matRot._22 = cosf(vRot.z);
+	m_matLocal *= matRot;*/
+
 }
 
 void Engine::CTransform::Set_Position(D3DXVECTOR3 vPos) {
