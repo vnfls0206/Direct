@@ -1,0 +1,20 @@
+Idle
+0 back
+1 front
+2 leftside
+3 rightside
+
+Move
+4 - 9	back
+10 - 15 	front
+16 - 21	leftside
+22 - 27 	rightside
+
+Attack
+28 - 31 back
+32 - 35 front
+36 - 39 leftside
+40 - 43 rightside
+
+Death
+44 - 48

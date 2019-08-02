@@ -78,6 +78,27 @@ void CSound_Manager::PauseAll(CHANNEL_ID eID, BOOL bPause/* = TRUE*/)
 		FMOD_Channel_SetPaused(m_pChannel[i], bPause);
 }
 
+void CSound_Manager::Add_Playlist_In_Queue(const TCHAR * pSoundKey, CHANNEL_ID eID)
+{
+	if ((pSoundKey == nullptr) || !lstrcmp(pSoundKey, L""))
+	{
+		MSG_BOX("사운드 키의 값이 nullptr이거나 비어있습니다.");
+		return;
+	}
+
+	m_quePlaylist.emplace(pSoundKey, eID);
+}
+
+void CSound_Manager::Play_Sound_In_Queue()
+{
+	while (!m_quePlaylist.empty())
+	{
+		PlaySound(m_quePlaylist.front().first, m_quePlaylist.front().second);
+		m_quePlaylist.pop();
+	}
+
+}
+
 void CSound_Manager::LoadSoundFile()
 {
 	_finddata_t	fd;
@@ -131,6 +152,11 @@ void CSound_Manager::ReleaseAll()
 		FMOD_Sound_Release(MyPair.second);	// 사운드 객체 해제
 	}
 
+	while (!m_quePlaylist.empty())
+	{
+		delete[] m_quePlaylist.front().first;
+		m_quePlaylist.pop();
+	}
 	m_MapSound.clear();
 
 	FMOD_System_Release(m_pSystem);

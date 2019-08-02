@@ -12,6 +12,7 @@ Engine::CLayer * Engine::CLayer::Create()
 void Engine::CLayer::Insert_GameObject_To_Layer(Engine::CGameObject* pGameObject)
 {
 	m_pList_GameObject.push_back(pGameObject);
+	m_uiListSize++;
 }
 bool Engine::CLayer::Find_OverLapped_GameObject_In_Layer(const Engine::CGameObject* pGameObject)
 {
@@ -27,10 +28,13 @@ void Engine::CLayer::Delete_GameObject_In_Layer(const int iObjectIndex)
 	{
 		if (iStartIndex == iObjectIndex) {
 			iter_begin = m_pList_GameObject.erase(iter_begin);
+			m_uiListSize--;
 			return;
 		}
 	}
 }
+
+UINT Engine::CLayer::Get_List_Size(){return m_uiListSize;}
 
 Engine::CGameObject * Engine::CLayer::Get_GameObject_In_List(const int iIndex)
 {
