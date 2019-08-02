@@ -22,9 +22,6 @@
     <ClCompile Include="..\Code\CScene_Stage.cpp">
       <Filter>소스 파일\02. Scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CStatic_Camera.cpp">
-      <Filter>소스 파일\03. GameObject\00. Static</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CPlayer.cpp">
       <Filter>소스 파일\03. GameObject\01. Player</Filter>
     </ClCompile>
@@ -85,9 +82,9 @@
     <Filter Include="소스 파일\03. GameObject\99. UI">
       <UniqueIdentifier>{9b8a1c71-6f0a-41fa-b978-b79f78f7fef6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\03. GameObject\00. Static_Camera">
-      <UniqueIdentifier>{e73599cc-9a19-4e61-a167-7c2d67d646bf}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="..\Code\CStatic_Camera.cpp">
+      <Filter>소스 파일\03. GameObject\00. Static</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CBack.h">

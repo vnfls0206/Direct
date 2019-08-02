@@ -119,6 +119,21 @@ void CPlayer::Update_GameObject(const float & fTimeDelta)
 
 	m_pTransform->Set_Position(vPos);
 
+	if(Engine::CKeyManager::GetInstance()->KeyDown(VK_LBUTTON))
+	{
+		GetCursorPos(&m_pCursor);
+		ScreenToClient(g_hWnd, &m_pCursor);
+		m_pCursor.x = m_pCursor.x - WINCX / 2 + vPos.x;
+		m_pCursor.y = WINCY / 2 - m_pCursor.y + vPos.y;
+		if (m_pCursor.x <= -250.f)
+		{
+			m_pCursor.x = -250.f;
+		}
+		else if (m_pCursor.x >= 250.f)
+		{
+			m_pCursor.x = 250.f;
+		}
+	}
 
 
 

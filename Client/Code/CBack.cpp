@@ -40,7 +40,7 @@ HRESULT CBack::Initialize_CloneObject()
 	m_mapComponent.emplace(L"Com_Transform", m_pTransform);
 
 	m_pTransform->Set_Position(D3DXVECTOR3(0.f, -10.f, 0.f));
-	m_pTransform->Set_Scale(D3DXVECTOR3(600.f, 800.f, 1.f));
+	m_pTransform->Set_Scale(D3DXVECTOR3(1000.f, 3000.f, 1.f));
 	m_pTransform->Set_Rotation(D3DXVECTOR3(D3DXToRadian(0.f), D3DXToRadian(180.f), D3DXToRadian(0.f)));
 
 	m_pTextureCom = dynamic_cast<Engine::CTexture*>

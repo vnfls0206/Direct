@@ -45,19 +45,19 @@ HRESULT CMonster::Initialize_CloneObject()
 	m_pTransform = dynamic_cast<Engine::CTransform*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Transform"));
 	if (m_pTransform == nullptr) {
-		MSG_BOX("Æ®·£½ºÆû ÄÄÆ÷³ÍÆ®°¡ NULLPTR ·Î ¹ÝÈ¯");
+		MSG_BOX("Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ NULLPTR ï¿½ï¿½ ï¿½ï¿½È¯");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Transform", m_pTransform);
 
-	m_pTransform->Set_Position(D3DXVECTOR3(0.f, -10.f, 0.f));
+	m_pTransform->Set_Position(D3DXVECTOR3(0.f, -20.f, 0.f));
 	m_pTransform->Set_Scale(D3DXVECTOR3(100.f, 100.f, 1.f));
 	m_pTransform->Set_Rotation(D3DXVECTOR3(D3DXToRadian(0.f), D3DXToRadian(180.f), D3DXToRadian(0.f)));
 
 	m_pTextureCom = dynamic_cast<Engine::CTexture*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Texture_Rinel"));
 	if (m_pTextureCom == nullptr) {
-		MSG_BOX("ÅØ½ºÃ³ ÄÄÆ÷³ÍÆ®°¡ NULLPTR ·Î ¹ÝÈ¯");
+		MSG_BOX("ï¿½Ø½ï¿½Ã³ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ NULLPTR ï¿½ï¿½ ï¿½ï¿½È¯");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Texture", m_pTextureCom);
@@ -65,7 +65,7 @@ HRESULT CMonster::Initialize_CloneObject()
 	m_pRenderCom = dynamic_cast<Engine::CRenderCom*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Proto(L"Component_RenderCom"));
 	if (m_pRenderCom == nullptr) {
-		MSG_BOX("·»´õ·¯ ÄÄÆ÷³ÍÆ®°¡ NULLPTR ·Î ¹ÝÈ¯");
+		MSG_BOX("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ NULLPTR ï¿½ï¿½ ï¿½ï¿½È¯");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Renderer", m_pRenderCom);
@@ -73,7 +73,7 @@ HRESULT CMonster::Initialize_CloneObject()
 	m_pShaderCom = dynamic_cast<Engine::CShader*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Shader_Default"));
 	if (m_pShaderCom == nullptr) {
-		MSG_BOX("½¦ÀÌ´õ ÄÄÆ÷³ÍÆ®°¡ NULLPTR ·Î ¹ÝÈ¯");
+		MSG_BOX("ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ NULLPTR ï¿½ï¿½ ï¿½ï¿½È¯");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Shader", m_pShaderCom);
@@ -81,18 +81,12 @@ HRESULT CMonster::Initialize_CloneObject()
 	m_pBufferCom = dynamic_cast<Engine::CBuffer*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Buffer_RcTex"));
 	if (m_pBufferCom == nullptr) {
-		MSG_BOX("¹öÆÛ ÄÄÆ÷³ÍÆ®°¡ NULLPTR ·Î ¹ÝÈ¯");
+		MSG_BOX("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ NULLPTR ï¿½ï¿½ ï¿½ï¿½È¯");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Buffer", m_pBufferCom);
 
-	// ¸¯À» Àâ°í =->...
-	// ÇÃ·¹ÀÌ¾î°´Ã¼¸¦ ¶ç¿öº¼²¨¾ß...-> Ä«¸Þ¶ó¸¦ ÇÃ·¹ÀÌ¾î¿¡ °íÁ¤½ÃÅ°°í,
-	// ¿òÁ÷ÀÏ°Å¾ß....
-	// °´Ã¼¸¦ ÇÏ³ª ´õ¸¸¤§¸£¾î¼­, ¾ê¸¦ ¹è°æÀ¸·Î.... // ³»ÀÏÇÏÀÚ..
-
-
-	Update_Current_State();	//½ÃÀÛ½ÃÇÑ¹ø »óÅÂ¸¦ °»½ÅÇØÁØ´Ù.
+	Update_Current_State();	//ï¿½ï¿½ï¿½Û½ï¿½ï¿½Ñ¹ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
 
 	return NOERROR;
 }
@@ -142,7 +136,7 @@ void CMonster::Render_GameObject()
 
 	if (FAILED(m_pBufferCom->Draw_Buffer()))
 	{
-		MSG_BOX("½¦ÀÌ´õ ³»¿¡¼­ Á¤Á¡À» ±×¸®·Á´Â µ¥ ½ÇÆÐÇß½À´Ï´Ù.");
+		MSG_BOX("ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
 	}
 
 	m_pShaderCom->Get_Effect()->EndPass();
@@ -168,7 +162,7 @@ Engine::CGameObject * CMonster::Create(LPDIRECT3DDEVICE9 pGraphic_Device, MON_IN
 	CMonster* pInstance = new CMonster(pGraphic_Device, m_mon_info);
 	if (FAILED(pInstance->Initialize_GameObject()))
 	{
-		MSG_BOX("pInstance°¡ ³ÎÆ÷ÀÎÅÍ ÀÔ´Ï´Ù");
+		MSG_BOX("pInstanceï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½");
 		Engine::Safe_Release(pInstance);
 	}
 	return pInstance;
@@ -178,7 +172,7 @@ Engine::CGameObject * CMonster::Clone()
 	CMonster* pInstance = new CMonster(*this, this->m_Info);
 	if (FAILED(pInstance->Initialize_CloneObject()))
 	{
-		MSG_BOX("ÇØ´ç Å¬·Ð ½Ã ÃÊ±âÈ­¿¡ ½ÇÆÐ");
+		MSG_BOX("ï¿½Ø´ï¿½ Å¬ï¿½ï¿½ ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		Engine::Safe_Release(pInstance);
 	}
 	return pInstance;

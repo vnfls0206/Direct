@@ -13,7 +13,7 @@ class CShader;
 class CRenderCom;
 END
 
-class CMonster final :
+class CMonster  :
 	public Engine::CGameObject
 {
 public:
@@ -22,7 +22,7 @@ public:
 	virtual ~CMonster() = default;
 
 public:
-	// CGameObjectÀ»(¸¦) ÅëÇØ »ó¼ÓµÊ
+	// CGameObjectï¿½ï¿½(ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Óµï¿½
 	virtual HRESULT Initialize_GameObject() override;
 	virtual HRESULT Initialize_CloneObject();
 
@@ -38,7 +38,7 @@ public:
 	virtual CGameObject * Clone() override;
 
 private:
-	// ÄÄÆ÷³ÍÆ® ¸ñ·Ï
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½
 	Engine::CTransform* m_pTransform;
 	Engine::CBuffer* m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;
@@ -48,10 +48,10 @@ private:
 	Engine::CGameObject* pPlayer = nullptr;
 	Engine::CTransform* m_pPlayer_Transform;
 
-	//¸ó½ºÅÍ Á¤º¸ & »óÅÂ
-	MON_INFO m_Info;						//¸ó½ºÅÍÀÇ Á¤º¸
-	eMonsterAlignment m_Alignment = eGOOD;	//¸ó½ºÅÍÀÇ ¼ºÇâ, Good(¼±)À¸·Î ÃÊ±âÈ­ ÇØÁØ´Ù
-	eMonsterState m_Current_State = eLEFT_IDLE;	//¸ó½ºÅÍÀÇ »óÅÂ, Idle(´ë±â)À¸·Î ÃÊ±âÈ­ ÇØÁØ´Ù
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ & ï¿½ï¿½ï¿½ï¿½
+	MON_INFO m_Info;						//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	eMonsterAlignment m_Alignment = eGOOD;	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, Good(ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ ï¿½ï¿½ï¿½Ø´ï¿½
+	eMonsterState m_Current_State = eLEFT_IDLE;	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, Idle(ï¿½ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ ï¿½ï¿½ï¿½Ø´ï¿½
 	CGameObject* Target = nullptr;
 	bool IsCanAttack = false;
 
@@ -73,7 +73,7 @@ private:
 	unsigned int m_iMaxIndex = 2;
 	unsigned int m_iCurIndex = 0;
 
-private:
+protected:
 	float	m_fMoveSpeed = 20.f;
 	float	m_fAttackDelay = 2.f;
 };

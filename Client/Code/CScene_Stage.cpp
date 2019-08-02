@@ -25,6 +25,7 @@
 CScene_Stage::CScene_Stage(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CScene(pGraphic_Device)
 	, m_pTimerMgr(Engine::CTimerMgr::GetInstance())
+	, m_pGameObjectMgr(Engine::CGameObject_Manager::GetInstance())
 {
 }
 
@@ -133,12 +134,11 @@ void CScene_Stage::Check_Attack()
 
 HRESULT CScene_Stage::Initialize_Scene()
 {
-	Engine::CGameObject_Manager* pObjMgr = Engine::CGameObject_Manager::GetInstance();
-	if (pObjMgr == nullptr) {
+	if (m_pGameObjectMgr == nullptr) {
 		return E_FAIL;
 	}
 
-	pObjMgr->AddRef();
+	m_pGameObjectMgr->AddRef();
 
 	Engine::CGameObject* pCamera = pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_StaticCamera",
 		(int)eScene_Stage1, L"Layer_StaticCamera");
@@ -190,7 +190,7 @@ HRESULT CScene_Stage::Initialize_Scene()
 	dynamic_cast<CStatic_Camera*>(pCamera)->Get_Player_Transform
 	(dynamic_cast<Engine::CTransform*>(pPlayer->Get_Component_In_Map(L"Com_Transform")));
 	
-	Engine::Safe_Release(pObjMgr);
+	Engine::Safe_Release(m_pGameObjectMgr);
 
 	CSound_Manager::GetInstance()->PlayBGM(L"Adam Levine - Lost Stars Lyrics.mp3");
 
@@ -248,7 +248,7 @@ void CScene_Stage::Update_Scene(const float & fTimeDelta)
 	Engine::CGameObject* pPlayer = pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_Player")->Get_GameObject_In_List(0);
 	Engine::CGameObject* pPlayer1 = pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_Enemy")->Get_GameObject_In_List(0);
 	CStatic_Camera* pCamera = static_cast<CStatic_Camera*>(
-		pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_StaticCamera")->Get_GameObject_In_List(0));
+		m_pGameObjectMgr->Find_Layer((int)eScene_Stage1, L"Layer_StaticCamera")->Get_GameObject_In_List(0));
 	Engine::CCollider* pCollider = static_cast<Engine::CCollider*>(pPlayer->Get_Component_In_Map(L"Com_Collider"));
 	Engine::CCollider* pCollider1 = static_cast<Engine::CCollider*>(pPlayer1->Get_Component_In_Map(L"Com_Collider"));
 	Engine::CTransform* pTransform= static_cast<Engine::CTransform*>(pPlayer->Get_Component_In_Map(L"Com_Transform"));
