@@ -45,8 +45,6 @@ HRESULT CScene_Stage::Initialize_Scene()
 		(int)eScene_Stage1, L"Layer_Back");
 	pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Rinel",
 		(int)eScene_Stage1, L"Layer_Monster");
-	pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_UI",
-		(int)eScene_Stage1, L"Layer_UI");
 
 
 

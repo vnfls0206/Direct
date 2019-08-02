@@ -97,7 +97,6 @@ HRESULT CMainGame::Initialize_CMainGame()
 
 	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
 		L"GameObject_Proto_StaticCamera", CStatic_Camera::Create(m_pDevice, tagView, tagProj));
-
 	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
 		L"GameObject_Proto_Player", CPlayer::Create(m_pDevice));
 	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
