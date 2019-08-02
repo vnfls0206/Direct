@@ -123,12 +123,15 @@ void CScene_Stage::Update_Scene(const float & fTimeDelta)
 
 		if (Target_ != nullptr)
 		{
-			MSG_BOX("오브젝트가 클릭되었습니다");
+			MSG_BOX("clicked Enemy object");
 		}
 		else if (Target__ != nullptr)
 		{
-			if(Target__->Tag == L"Layer_UI_Card")
-				MSG_BOX("UI 오브젝트가 클릭되었습니다");
+			if (Target__->Tag == L"Layer_UI_Card")
+			{
+				MSG_BOX("UI object clicked");
+
+			}
 		}
 		else
 		{
@@ -171,7 +174,7 @@ CScene_Stage * CScene_Stage::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 	CScene_Stage* pInstance = new CScene_Stage(pGraphic_Device);
 	if (FAILED(pInstance->Initialize_Scene()))
 	{
-		MSG_BOX("占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙");
+		MSG_BOX("null print here");
 		Engine::Safe_Release(pInstance);
 	}
 	return pInstance;
