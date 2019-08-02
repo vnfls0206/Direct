@@ -45,7 +45,6 @@ LPD3DXEFFECT CShader::Get_Effect()
 	return m_pEffectShader; 
 }
 
-
 void CShader::Set_Object_Matrix(const CHAR * pConstantKey, const D3DXMATRIX * pMatrix)
 {
 	m_pEffectShader->SetMatrix(pConstantKey, pMatrix);
@@ -54,9 +53,6 @@ void CShader::Set_Object_Texture(const CHAR * pConstantKey, const LPDIRECT3DTEXT
 {
 	m_pEffectShader->SetTexture(pConstantKey, pTexture);
 }
-
-
-
 
 CComponent * CShader::Create(LPDIRECT3DDEVICE9 pGraphic_Device, const TCHAR* pShaderPath)
 {

@@ -15,7 +15,6 @@ protected :
 	explicit CBuffer(const CBuffer& rhs);
 	virtual ~CBuffer() = default;
 
-
 public  :
 	HRESULT Make_Buffer();
 	HRESULT Draw_Buffer();

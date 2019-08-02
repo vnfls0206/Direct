@@ -31,7 +31,7 @@ public:
 
 	// ≈ÿΩ∫√≥
 public:
-	void						Set_Object_Texture(const CHAR* pConstantKey, const LPDIRECT3DTEXTURE9 pTexture);
+	void					Set_Object_Texture(const CHAR* pConstantKey, const LPDIRECT3DTEXTURE9 pTexture);
 
 
 public :

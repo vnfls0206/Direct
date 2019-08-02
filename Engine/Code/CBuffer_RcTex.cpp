@@ -60,8 +60,6 @@ HRESULT CBuffer_RcTex::Create_Buffer_RcTex()
 	pVertices[3].vPosition = D3DXVECTOR3(-0.5f, 0.5f, 0.f);
 	pVertices[3].vTexUV = D3DXVECTOR2(1.0f, 0.0f);*/
 	m_pVertexBuffer->Unlock();
-
-
 	m_pIndexBuffer->Lock(0, 0, (void**)&pIndexes, 0);
 
 	// 반시계방향으로 그릴거냐

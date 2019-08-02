@@ -25,7 +25,7 @@
 #include "CMonster.h"
 #include "CBack.h"
 #include "Enemy.h"
-
+#include "CUI_Card.h"
 
 #include "CScene_Logo.h"
 #include "CScene_Stage.h"
@@ -53,11 +53,11 @@ HRESULT CMainGame::Initialize_CMainGame()
 {
 	if (FAILED(m_pGraphic_Device->Intialize_CGraphic_Device(g_hWnd, m_pGraphic_Device->eWInMode, WINCX, WINCY, &m_pDevice)))
 	{
-		MSG_BOX("µð¹ÙÀÌ½º ÃÊ±âÈ­°¡ ½ÇÆÐÇÏ¿´½À´Ï´Ù!");
+		MSG_BOX("ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½Ê±ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½!");
 		return E_FAIL;
 	}
 	
-	m_pFontMgr->Add_Font(m_pDevice, 10, 10, FW_LIGHT, L"±¼¸²");
+	m_pFontMgr->Add_Font(m_pDevice, 10, 10, FW_LIGHT, L"ï¿½ï¿½ï¿½ï¿½");
 
 	m_pGameObject->Reserve_Proto_Layer_Array(eScene_Count);
 
@@ -75,6 +75,9 @@ HRESULT CMainGame::Initialize_CMainGame()
 
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_Back",
 		Engine::CTexture::Create(m_pDevice, L"../../Resource/Back/", L".dds", 0, 0));
+
+	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_UI_Card",
+		Engine::CTexture::Create(m_pDevice, L"../../Resource/UI/Card/", L".png", 0, 6));
 
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Buffer_RcTex",
 		Engine::CBuffer_RcTex::Create(m_pDevice));
@@ -94,7 +97,6 @@ HRESULT CMainGame::Initialize_CMainGame()
 
 	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
 		L"GameObject_Proto_StaticCamera", CStatic_Camera::Create(m_pDevice, tagView, tagProj));
-
 	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
 		L"GameObject_Proto_Player", CPlayer::Create(m_pDevice));
 	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
@@ -110,6 +112,8 @@ HRESULT CMainGame::Initialize_CMainGame()
 
 	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
 		L"GameObject_Proto_Back", CBack::Create(m_pDevice));
+	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
+		L"GameObject_Proto_UI_Card", CUI_Card::Create(m_pDevice));
 
 	Engine::Safe_Release(m_pGameObject);
 	Engine::Safe_Release(m_pComponentMgr);
@@ -161,7 +165,7 @@ void CMainGame::Render()
 		m_pManagement->Render_CurrentScene();
 
 		POINT pt = { 0,20 };
-		m_pFontMgr->Render_Font(L"±¼¸²", m_szFPS, pt, D3DCOLOR_ARGB(255, 83, 223, 214));
+		m_pFontMgr->Render_Font(L"ï¿½ï¿½ï¿½ï¿½", m_szFPS, pt, D3DCOLOR_ARGB(255, 83, 223, 214));
 
 		m_pDevice->EndScene();
 		m_pDevice->Present(nullptr, nullptr, g_hWnd, nullptr);
@@ -191,7 +195,7 @@ CMainGame * CMainGame::Create()
 	CMainGame* pInstance = new CMainGame();
 	if (FAILED(pInstance->Initialize_CMainGame()))
 	{
-		MSG_BOX("µð¹ÙÀÌ½º »ý¼º½ÇÆÐ!");
+		MSG_BOX("ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!");
 		Engine::Safe_Release(pInstance);
 	}
 	return pInstance;
