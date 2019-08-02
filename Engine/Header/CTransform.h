@@ -22,14 +22,14 @@ public :
 public:
 	D3DXMATRIX*					Get_m_matLocal();
 private :
-	D3DXMATRIX					m_matLocal;				// �ڱ��ڽ��� ���
-	D3DXMATRIX*					m_pmatParent;			// �θ��� ��� 
+	D3DXMATRIX					m_matLocal;				
+	D3DXMATRIX*					m_pmatParent;			
 
 	D3DXVECTOR3					m_vecScale;
 	D3DXVECTOR3					m_vecRotation;
 	D3DXVECTOR3					m_vecPosition;
-	D3DXVECTOR3					m_vecMousePosition;		//���콺�� ��ġ����
-	D3DXVECTOR3					m_vecDist;				//���콺-�÷��̾��� �Ÿ�����
+	D3DXVECTOR3					m_vecMousePosition;		
+	D3DXVECTOR3					m_vecDist;				
 
 public :
 	void						set_Parent(D3DXMATRIX* Parent);
@@ -37,7 +37,7 @@ public :
 	void						Set_Rotation(D3DXVECTOR3 vRot);
 	void						Set_Position(D3DXVECTOR3 vPos);
 	POINT					    Set_ObjectPoint(D3DXVECTOR3 vPos, POINT MousePoint);
-	void						MoveToMouse(POINT MousePoint, float movespeed, const float& fDeltaTime); //���콺 ��ǥ�� �̵�
+	void						MoveToMouse(POINT MousePoint, float movespeed, const float& fDeltaTime);
 
 public :
 	D3DXVECTOR3					Get_Scale();

@@ -8,4 +8,12 @@
 #include "Client_Funtion.h"
 #include "Client_Struct.h"
 
+#include <vector>
+#include <queue>
+#include <list>
+#include <map>
+#include <algorithm>
+#include <functional>
+
+
 #endif

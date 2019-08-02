@@ -1,11 +1,13 @@
 #ifndef CScene_Stage_h__
 #define CScene_Stage_h__
 
+#include "Client_Include.h"
 #include "CScene.h"
 
 BEGIN(Engine)
 class CTimerMgr;
 class CGameObject;
+class CLayer;
 END
 
 class CScene_Stage final :
@@ -16,8 +18,22 @@ private:
 	virtual ~CScene_Stage() = default;
 
 	Engine::CTimerMgr* m_pTimerMgr;
-	// CSceneÀ»(¸¦) ÅëÇØ »ó¼ÓµÊ
+	float m_fTimeAcc = 0.f;
+	float m_fZoomRatio = 1.f;
+
+	Engine::CLayer* m_vecAllylist;
+	Engine::CLayer* m_vecEnemylist;
+	Engine::CLayer* m_vecEtclist;
+		   
+
 private:
+	//ï¿½Ò¸ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	void Delete_Empty_GameObject_In_vector();
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½æµ¹ï¿½ï¿½ï¿½ï¿½ 
+	void Check_Attack();
+
+
+
 	virtual HRESULT Initialize_Scene() override;
 	vector<Engine::CGameObject*> Good_GameObject_List;
 	vector<Engine::CGameObject*> Evil_GameObject_List;
@@ -31,7 +47,6 @@ private:
 
 
 public:
-	// CSceneÀ»(¸¦) ÅëÇØ »ó¼ÓµÊ
 	virtual void Update_Scene(const float & fTimeDelta) override;
 	virtual void Render_Scene() override;
 

@@ -29,6 +29,9 @@ public:
 	virtual void Update_GameObject(const float & fTimeDelta) override;
 	virtual void LastUpdate_GameObject(const float & fTimeDelta) override;
 	virtual void Render_GameObject() override;
+	Engine::CGameObject* Get_Target();
+	bool Is_Can_Attack();
+	eMonsterState Get_State();
 
 public:
 	static CGameObject * Create(LPDIRECT3DDEVICE9 pGraphic_Device, MON_INFO m_mon_info);
@@ -72,6 +75,7 @@ private:
 
 private:
 	float	m_fMoveSpeed = 20.f;
+	float	m_fAttackDelay = 2.f;
 };
 
 

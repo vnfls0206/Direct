@@ -25,6 +25,9 @@ private :
 protected :
 	LPDIRECT3DDEVICE9 Get_Graphic_Device();
 
+public:
+	virtual void Free() override;
+
 };
 
 END

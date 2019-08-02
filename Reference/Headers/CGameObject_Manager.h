@@ -39,7 +39,11 @@ public :
 	void				Update_Layers(int iSceneID, const float& fTimeDelta);
 
 	// 레이어로 프로토타입 객체를 복사하는 기능
+<<<<<<< HEAD
 	Engine::CGameObject* Copy_Proto_GameObject_To_Layer(int iProtoSceneID,  const TCHAR* pProtoObjectTag,
+=======
+	Engine::CGameObject* Copy_Proto_GameObject_To_Layer(int iProtoSceneID,  const TCHAR* pProtoObjectTag, 
+>>>>>>> master
 													int iLayerSceneID,  const TCHAR* pLayerObjectTag);
 
 	//  레이어를 찾아주는 기능

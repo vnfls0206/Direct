@@ -18,12 +18,12 @@ void Engine::CGameObject_Manager::Reserve_Proto_Layer_Array(const int iNumScene)
 	m_mapLayer = nullptr;
 
 	if (m_mapProto == nullptr || m_mapLayer == nullptr) {
-		// »ý¼ºÇÏÁö ¾Ê¾ÒÀ» ‹š, °ø°£À» ¿¹¾à.
-		// »ý¼ºµÇÀÖ´Â »óÅÂ¶ó¸é?
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Â¶ï¿½ï¿½?
 
 		m_mapProto = new MAPPROTO[iNumScene];
 		m_mapLayer = new MAPLAYER[iNumScene];
-		// new...? => ¸Þ¸ð¸® ´©¼ö(leak) => ¸ø Ã£¾Æ => ±× ÁÖ¼Ò¸¦ °¡¸®Å°´Â Æ÷ÀÎÅÍ°¡ ÃÊ±âÈ­, ¸øÃ£¾Æ...¹Ýµå½Ã ¸¯ ¹ß»ý, ÄÄÇ»ÅÍ¸¦ ²°´ÙÄÑ¾ßÇÔ.		
+		// new...? => ï¿½Þ¸ï¿½ ï¿½ï¿½ï¿½ï¿½(leak) => ï¿½ï¿½ Ã£ï¿½ï¿½ => ï¿½ï¿½ ï¿½Ö¼Ò¸ï¿½ ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ ï¿½Ê±ï¿½È­, ï¿½ï¿½Ã£ï¿½ï¿½...ï¿½Ýµï¿½ï¿½ ï¿½ï¿½ ï¿½ß»ï¿½, ï¿½ï¿½Ç»ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½.		
 	}
 }
 
@@ -31,11 +31,11 @@ void Engine::CGameObject_Manager::Insert_Prototype_GameObject_To_ProtoMap(int iS
 	const TCHAR * pProtoTag, Engine::CGameObject * pGameObject)
 {
 	if (pGameObject == nullptr) {
-		MSG_BOX("NULLPTR ÀÎ °ÔÀÓ¿ÀºêÁ§Æ®°¡ ÇÁ·ÎÅäÅ¸ÀÔ ¸Ê º¯¼ö ¾È¿¡ Á¢±ÙÇß½À´Ï´Ù!");
+		MSG_BOX("NULLPTR ï¿½ï¿½ ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½È¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½!");
 		return;
 	}
 	if (Find_GameObejct_In_ProtoMap(iSceneID, pProtoTag) != nullptr) {
-		MSG_BOX("Áßº¹µÈ ÇÁ·ÎÅäÅ¸ÀÔ ¿ÀºêÁ§Æ®°¡ ÀÖ½À´Ï´Ù! [¿ÀºêÁ§Æ®¸Å´ÏÀú]");
+		MSG_BOX("ï¿½ßºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½! [ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½Å´ï¿½ï¿½ï¿½]");
 		return;
 	}
 	m_mapProto[iSceneID].emplace(pProtoTag, pGameObject);
@@ -78,17 +78,17 @@ Engine::CGameObject* Engine::CGameObject_Manager::Copy_Proto_GameObject_To_Layer
 	const TCHAR * pProtoObjectTag, int iLayerSceneID,  const TCHAR * pLayerObjectTag)
 {
 	Engine::CGameObject* pProtoGameObject = Find_GameObejct_In_ProtoMap(iProtoSceneID, pProtoObjectTag);
-	// À§ ±¸¹®Àº, ÇÁ·ÎÅäÅ¸ÀÔ ¸Ê¿¡¼­, ³»°¡ Ã£°í ½ÍÀº °´Ã¼¸¦ Ã£¾Æ¿À´Â ¿ªÇÒÀ» ÇÕ´Ï´Ù!
+	// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ Ã£ï¿½Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Õ´Ï´ï¿½!
 	if (pProtoGameObject == nullptr)
 	{
-		MSG_BOX("ÇØ´ç °ÔÀÓ¿ÀºêÁ§Æ®°¡ ÇÁ·ÎÅäÅ¸ÀÔ ¸Ê¿¡¼­ ¹ß°ßµÇÁö ¾Ê¾Ò½À´Ï´Ù!");
+		MSG_BOX("ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ß°ßµï¿½ï¿½ï¿½ ï¿½Ê¾Ò½ï¿½ï¿½Ï´ï¿½!");
 		return nullptr;
 	}
 
 	Engine::CGameObject* pCloneObject = pProtoGameObject->Clone();
 	if (pCloneObject == nullptr)
 	{
-		MSG_BOX("ÇÁ·ÎÅäÅ¸ÀÔ °´Ã¼¿¡¼­ Á¦´ë·Î º¹»çµÇÁö ¾Ê¾Ò½À´Ï´Ù!");
+		MSG_BOX("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Ò½ï¿½ï¿½Ï´ï¿½!");
 		Engine::Safe_Release(pCloneObject);
 		return nullptr;
 	}
