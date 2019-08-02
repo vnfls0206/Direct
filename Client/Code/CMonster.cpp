@@ -149,10 +149,7 @@ void CMonster::Render_GameObject()
 	m_pShaderCom->Get_Effect()->End();
 }
 
-Engine::CGameObject * CMonster::Get_Target()
-{
-	return nullptr;
-}
+
 
 bool CMonster::Is_Can_Attack()
 {

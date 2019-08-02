@@ -22,35 +22,31 @@ private :
 
 
 public :
-	// ¿¹¾à±â´É => ³»°¡ ¾ó¸¶¸¸Å­ÀÇ ÇÁ·ÎÅäÅ¸ÀÔ ÀúÀå°ø°£°ú, ·¹ÀÌ¾î ÀúÀå°ø°£À» ÇÒ´çÇØ³õ±âÀ§ÇÔ.
-	void				Reserve_Proto_Layer_Array(const int iNumScene);	// ¸Å°³º¯¼ö : ¾À °³¼ö
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ => ï¿½ï¿½ï¿½ï¿½ ï¿½ó¸¶¸ï¿½Å­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò´ï¿½ï¿½Ø³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
+	void				Reserve_Proto_Layer_Array(const int iNumScene);	// ï¿½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ : ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-	// ÇÁ·ÎÅäÅ¸ÀÔ ¸Ê º¯¼ö¿¡ ³Ö´Â±â´É	
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Â±ï¿½ï¿½	
 	void				Insert_Prototype_GameObject_To_ProtoMap(int iSceneID,  
 		const TCHAR* pProtoTag, Engine::CGameObject* pGameObject = nullptr);
 
-	// ÇÁ·ÎÅäÅ¸ÀÔ ³»¿¡¼­, Áßº¹Å°¸¦ Ã£´Â ±â´É
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ßºï¿½Å°ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½
 	Engine::CGameObject* Find_GameObejct_In_ProtoMap(int iSceneID,  const TCHAR* pProtoTag);
 
-	// ÇØ´ç ÀÎµ¦½ºÀÇ ¸Ê¿¡ ÀÖ´Â °´Ã¼µéÀ» ¸ðµÎ »èÁ¦ÇØÁÖ´Â ±â´É => ·¹ÀÌ¾î¿Í, ÇÁ·ÎÅäÅ¸ÀÔ ¸ðµÎ ³¯·Á¾ßÇÔ...
+	// ï¿½Ø´ï¿½ ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ => ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½...
 	void				Release_Map_All_Object(int iSceneID);
 
-	// ·¹ÀÌ¾î¿¡¼­, ¾÷µ¥ÀÌÆ®¸¦ µ¹·ÁÁÖ´Â ±â´É
+	// ï¿½ï¿½ï¿½Ì¾î¿¡ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½
 	void				Update_Layers(int iSceneID, const float& fTimeDelta);
 
-	// ·¹ÀÌ¾î·Î ÇÁ·ÎÅäÅ¸ÀÔ °´Ã¼¸¦ º¹»çÇÏ´Â ±â´É
-<<<<<<< HEAD
+	// ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½
 	Engine::CGameObject* Copy_Proto_GameObject_To_Layer(int iProtoSceneID,  const TCHAR* pProtoObjectTag,
-=======
-	Engine::CGameObject* Copy_Proto_GameObject_To_Layer(int iProtoSceneID,  const TCHAR* pProtoObjectTag, 
->>>>>>> master
 													int iLayerSceneID,  const TCHAR* pLayerObjectTag);
 
-	//  ·¹ÀÌ¾î¸¦ Ã£¾ÆÁÖ´Â ±â´É
+	//  ï¿½ï¿½ï¿½Ì¾î¸¦ Ã£ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½
 	Engine::CLayer*		Find_Layer(int iLayerSceneID, const TCHAR* pLayerObjectTag);
 
 private :
-	int												m_iSceneNum;			// ¾ÀÀÇ °³¼ö ÀúÀå
+	int												m_iSceneNum;			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	typedef map<const TCHAR*, Engine::CGameObject*>	MAPPROTO;
 	typedef map<const TCHAR*, Engine::CLayer*>		MAPLAYER;
 
@@ -58,7 +54,7 @@ private :
 	MAPLAYER*										m_mapLayer;
 
 public :
-	// CBaseÀ»(¸¦) ÅëÇØ »ó¼ÓµÊ
+	// CBaseï¿½ï¿½(ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Óµï¿½
 	virtual void Free() override;
 };
 

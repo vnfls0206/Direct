@@ -29,7 +29,7 @@ public:
 	virtual void Update_GameObject(const float & fTimeDelta) override;
 	virtual void LastUpdate_GameObject(const float & fTimeDelta) override;
 	virtual void Render_GameObject() override;
-	Engine::CGameObject* Get_Target();
+
 	bool Is_Can_Attack();
 	eMonsterState Get_State();
 
