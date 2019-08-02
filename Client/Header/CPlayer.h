@@ -42,6 +42,10 @@ private :
 	Engine::CRenderCom* m_pRenderCom;
 	Engine::CCollider* m_pCollider;
 
+
+public:
+	void Set_pCursor(POINT m_cursor);
+
 private :
 	HRESULT Ready_Shader(const float& fTimeDelta);
 

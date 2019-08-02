@@ -172,6 +172,21 @@ Engine::CGameObject * CMonster::Clone()
 	return pInstance;
 }
 
+eMonsterState CMonster::Get_Current_State()
+{
+	return m_Current_State;
+}
+
+Engine::CGameObject * CMonster::Get_Target()
+{
+	return Target;
+}
+
+bool CMonster::Get_Attack_Able()
+{
+	return IsCanAttack;
+}
+
 HRESULT CMonster::Ready_Shader(const float& fTimedetla)
 {
 	D3DXMATRIX matView, matProj;
@@ -247,6 +262,8 @@ void CMonster::Update_Current_State()
 			m_Current_State = eRIGHT_ATTACK;
 		else if (direction == eDOWN)
 			m_Current_State = eDOWN_ATTACK;
+
+		IsCanAttack = true;
 	}
 
 	m_iCurIndex = m_Info.m_State_Info[m_Current_State].Min_Texture_Num;

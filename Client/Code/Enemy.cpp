@@ -38,7 +38,7 @@ HRESULT Enemy::Initialize_CloneObject()
 	m_pTransform = dynamic_cast<Engine::CTransform*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Transform"));
 	if (m_pTransform == nullptr) {
-		MSG_BOX("Æ®·£½ºÆû ÄÄÆ÷³ÍÆ®°¡ NULLPTR ·Î ¹ÝÈ¯");
+		MSG_BOX("Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ NULLPTR ï¿½ï¿½ ï¿½ï¿½È¯");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Transform", m_pTransform);
@@ -50,7 +50,7 @@ HRESULT Enemy::Initialize_CloneObject()
 	m_pTextureCom = dynamic_cast<Engine::CTexture*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Texture_Enemy"));
 	if (m_pTextureCom == nullptr) {
-		MSG_BOX("ÅØ½ºÃ³ ÄÄÆ÷³ÍÆ®°¡ NULLPTR ·Î ¹ÝÈ¯");
+		MSG_BOX("ï¿½Ø½ï¿½Ã³ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ NULLPTR ï¿½ï¿½ ï¿½ï¿½È¯");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Texture", m_pTextureCom);
@@ -58,7 +58,7 @@ HRESULT Enemy::Initialize_CloneObject()
 	m_pRenderCom = dynamic_cast<Engine::CRenderCom*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Proto(L"Component_RenderCom"));
 	if (m_pRenderCom == nullptr) {
-		MSG_BOX("·»´õ·¯ ÄÄÆ÷³ÍÆ®°¡ NULLPTR ·Î ¹ÝÈ¯");
+		MSG_BOX("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ NULLPTR ï¿½ï¿½ ï¿½ï¿½È¯");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Renderer", m_pRenderCom);
@@ -66,7 +66,7 @@ HRESULT Enemy::Initialize_CloneObject()
 	m_pShaderCom = dynamic_cast<Engine::CShader*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Shader_Default"));
 	if (m_pShaderCom == nullptr) {
-		MSG_BOX("½¦ÀÌ´õ ÄÄÆ÷³ÍÆ®°¡ NULLPTR ·Î ¹ÝÈ¯");
+		MSG_BOX("ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ NULLPTR ï¿½ï¿½ ï¿½ï¿½È¯");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Shader", m_pShaderCom);
@@ -74,7 +74,7 @@ HRESULT Enemy::Initialize_CloneObject()
 	m_pBufferCom = dynamic_cast<Engine::CBuffer*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Buffer_RcTex"));
 	if (m_pBufferCom == nullptr) {
-		MSG_BOX("¹öÆÛ ÄÄÆ÷³ÍÆ®°¡ NULLPTR ·Î ¹ÝÈ¯");
+		MSG_BOX("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ NULLPTR ï¿½ï¿½ ï¿½ï¿½È¯");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Buffer", m_pBufferCom);
@@ -82,7 +82,7 @@ HRESULT Enemy::Initialize_CloneObject()
 	m_pCollider = dynamic_cast<Engine::CCollider*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Collider"));
 	if (m_pCollider == nullptr) {
-		MSG_BOX("ÄÝ¶óÀÌ´õ ÄÄÆ÷³ÍÆ®°¡ NULLPTR ·Î ¹ÝÈ¯");
+		MSG_BOX("ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ NULLPTR ï¿½ï¿½ ï¿½ï¿½È¯");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Collider", m_pCollider);
@@ -114,6 +114,11 @@ void Enemy::Update_GameObject(const float & fTimeDelta)
 	}*/
 
 	m_pTransform->Set_Position(vPos);
+
+
+
+
+	m_pTransform->MoveToMouse(m_pCursor, m_fMoveSpeed, fTimeDelta);
 	m_pCollider->Set_ColliderPos(m_pTransform->Get_m_matLocal());
 }
 
@@ -130,7 +135,7 @@ void Enemy::Render_GameObject()
 
 	if (FAILED(m_pBufferCom->Draw_Buffer()))
 	{
-		MSG_BOX("½¦ÀÌ´õ ³»¿¡¼­ Á¤Á¡À» ±×¸®·Á´Â µ¥ ½ÇÆÐÇß½À´Ï´Ù.");
+		MSG_BOX("ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
 	}
 
 	m_pShaderCom->Get_Effect()->EndPass();
@@ -153,7 +158,7 @@ Engine::CGameObject * Enemy::Clone()
 	Enemy* pInstance = new Enemy(*this);
 	if (FAILED(pInstance->Initialize_CloneObject()))
 	{
-		MSG_BOX("ÇØ´ç Å¬·Ð ½Ã ÃÊ±âÈ­¿¡ ½ÇÆÐ");
+		MSG_BOX("ï¿½Ø´ï¿½ Å¬ï¿½ï¿½ ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		Engine::Safe_Release(pInstance);
 	}
 	return pInstance;

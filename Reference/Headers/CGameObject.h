@@ -33,6 +33,7 @@ protected :
 	CComponent_Manager*								m_pComponentMgr;			//하위 객체에 컴포넌트들을 추가하기 위해 상위객체인 여기에 추가해놓음
 public :
 	Engine::CComponent*						Get_Component_In_Map(const TCHAR* pKey);
+	const TCHAR*							Tag;
 
 public :
 	virtual CGameObject* Clone() = 0;

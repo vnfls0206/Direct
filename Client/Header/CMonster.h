@@ -49,8 +49,13 @@ private:
 	MON_INFO m_Info;						//몬스터의 정보
 	eMonsterAlignment m_Alignment = eGOOD;	//몬스터의 성향, Good(선)으로 초기화 해준다
 	eMonsterState m_Current_State = eLEFT_IDLE;	//몬스터의 상태, Idle(대기)으로 초기화 해준다
+	CGameObject* Target = nullptr;
+	bool IsCanAttack = false;
 
-
+public:
+	eMonsterState Get_Current_State();
+	CGameObject* Get_Target();
+	bool Get_Attack_Able();
 
 private:
 	HRESULT Ready_Shader(const float& fTimeDelta);
