@@ -26,6 +26,9 @@
 #include "CBack.h"
 #include "Enemy.h"
 #include "CUI_Card.h"
+#include "CUI_HpBar.h"
+#include "CUI_ManaBar.h"
+
 
 #include "CScene_Logo.h"
 #include "CScene_Stage.h"
@@ -79,6 +82,9 @@ HRESULT CMainGame::Initialize_CMainGame()
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_UI_Card",
 		Engine::CTexture::Create(m_pDevice, L"../../Resource/UI/Card/", L".png", 0, 6));
 
+	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_UI_Bar",
+		Engine::CTexture::Create(m_pDevice, L"../../Resource/UI/Bar/", L".png", 0, 1));
+
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Buffer_RcTex",
 		Engine::CBuffer_RcTex::Create(m_pDevice));
 
@@ -114,6 +120,10 @@ HRESULT CMainGame::Initialize_CMainGame()
 		L"GameObject_Proto_Back", CBack::Create(m_pDevice));
 	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
 		L"GameObject_Proto_UI_Card", CUI_Card::Create(m_pDevice));
+	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
+		L"GameObject_Proto_UI_HpBar", CUI_HpBar::Create(m_pDevice));
+	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
+		L"GameObject_Proto_UI_ManaBar", CUI_ManaBar::Create(m_pDevice));
 
 	Engine::Safe_Release(m_pGameObject);
 	Engine::Safe_Release(m_pComponentMgr);

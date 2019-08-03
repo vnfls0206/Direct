@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "CUI_Bar.h"
+#include "CUI_ManaBar.h"
 
 #include "CComponent_Manager.h"
 
@@ -9,21 +9,21 @@
 #include "CRenderCom.h"
 #include "CBuffer_RcTex.h"
 
-CUI_Bar::CUI_Bar(LPDIRECT3DDEVICE9 pGraphic_Device)
+CUI_ManaBar::CUI_ManaBar(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: Engine::CGameObject(pGraphic_Device)
 {
 }
-CUI_Bar::CUI_Bar(const CUI_Bar & rhs)
+CUI_ManaBar::CUI_ManaBar(const CUI_ManaBar & rhs)
 	: Engine::CGameObject(rhs)
 {
 }
 
-HRESULT CUI_Bar::Initialize_GameObject()
+HRESULT CUI_ManaBar::Initialize_GameObject()
 {
 	return NOERROR;;
 }
 
-HRESULT CUI_Bar::Initialize_CloneObject()
+HRESULT CUI_ManaBar::Initialize_CloneObject()
 {
 	m_fTimeAcc = 0.f;
 
@@ -40,7 +40,7 @@ HRESULT CUI_Bar::Initialize_CloneObject()
 	m_pTransform->Set_Rotation(D3DXVECTOR3(D3DXToRadian(0.f), D3DXToRadian(-180.f), D3DXToRadian(0.f)));
 
 	m_pTextureCom = dynamic_cast<Engine::CTexture*>
-		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Texture_UI_Card"));
+		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Texture_UI_Bar"));
 	if (m_pTextureCom == nullptr) {
 		MSG_BOX("텍스처 컴포넌트가 NULLPTR 로 반환");
 		return E_FAIL;
@@ -79,22 +79,25 @@ HRESULT CUI_Bar::Initialize_CloneObject()
 	return NOERROR;
 }
 
-void CUI_Bar::Update_GameObject(const float & fTimeDelta)
+void CUI_ManaBar::Update_GameObject(const float & fTimeDelta)
 {
 	m_pTransform->Make_LocalSpace_Matrix();
 
 	D3DXVECTOR3 vPos = m_pTransform->Get_Position();
+	if (*m_fPlayerMana <= 0)
+		*m_fPlayerMana = 0;
 
-	m_pTransform->Set_Position(vPos);
+	m_pTransform->Set_Scale(D3DXVECTOR3(790.f * (*m_fPlayerMana / 100), 15.f, 1.f));
+	m_pTransform->Set_Position(D3DXVECTOR3(-395.f + (790.f * (*m_fPlayerMana / 100))/2, -165.f, vPos.z));
 }
 
-void CUI_Bar::LastUpdate_GameObject(const float & fTimeDelta)
+void CUI_ManaBar::LastUpdate_GameObject(const float & fTimeDelta)
 {
 	m_pRenderCom->Add_GameObject_To_List(Engine::CRenderCom::eRender_10, this);
 	Ready_Shader(fTimeDelta);
 }
 
-void CUI_Bar::Render_GameObject()
+void CUI_ManaBar::Render_GameObject()
 {
 	m_pShaderCom->Get_Effect()->Begin(0, 0);
 	m_pShaderCom->Get_Effect()->BeginPass(1);
@@ -108,9 +111,9 @@ void CUI_Bar::Render_GameObject()
 	m_pShaderCom->Get_Effect()->End();
 }
 
-Engine::CGameObject * CUI_Bar::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
+Engine::CGameObject * CUI_ManaBar::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
-	CUI_Bar* pInstance = new CUI_Bar(pGraphic_Device);
+	CUI_ManaBar* pInstance = new CUI_ManaBar(pGraphic_Device);
 	if (FAILED(pInstance->Initialize_GameObject()))
 	{
 		MSG_BOX("???");
@@ -119,9 +122,9 @@ Engine::CGameObject * CUI_Bar::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 	return pInstance;
 }
 
-Engine::CGameObject * CUI_Bar::Clone()
+Engine::CGameObject * CUI_ManaBar::Clone()
 {
-	CUI_Bar* pInstance = new CUI_Bar(*this);
+	CUI_ManaBar* pInstance = new CUI_ManaBar(*this);
 	if (FAILED(pInstance->Initialize_CloneObject()))
 	{
 		MSG_BOX("해당 클론 시 초기화에 실패");
@@ -130,9 +133,10 @@ Engine::CGameObject * CUI_Bar::Clone()
 	return pInstance;
 }
 
-HRESULT CUI_Bar::Ready_Shader(const float& fTimedetla)
+HRESULT CUI_ManaBar::Ready_Shader(const float& fTimedetla)
 {
 	D3DXMATRIX matView, matProj;
+
 	D3DXMatrixIdentity(&matView);
 	D3DXMatrixIdentity(&matProj);
 
@@ -143,11 +147,17 @@ HRESULT CUI_Bar::Ready_Shader(const float& fTimedetla)
 	m_pShaderCom->Set_Object_Matrix("g_matProj", &matProj);
 
 	m_pShaderCom->Get_Effect()->SetTexture("g_texture",
-		m_pTextureCom->Get_Texture_From_Array_In_Vector(0));
+		m_pTextureCom->Get_Texture_From_Array_In_Vector(1));
+
 
 	return NOERROR;
 }
 
-void CUI_Bar::Free()
+void CUI_ManaBar::Free()
 {
+}
+
+void CUI_ManaBar::Get_PlayMana(float* Mana)
+{
+	m_fPlayerMana = Mana;
 }

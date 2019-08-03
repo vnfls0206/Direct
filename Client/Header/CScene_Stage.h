@@ -22,6 +22,7 @@ private:
 	Engine::CTimerMgr* m_pTimerMgr;
 	float m_fTimeAcc = 0.f;
 	float m_fZoomRatio = 1.f;
+	int m_fUiCheck;
 
 	Engine::CLayer* m_vecAllylist;
 	Engine::CLayer* m_vecEnemylist;
