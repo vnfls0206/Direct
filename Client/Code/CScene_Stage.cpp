@@ -68,7 +68,7 @@ void CScene_Stage::Check_Attack()
 
 		//������ų� ���ݵ����� ���� ��ü�� ���ؼ�, ���� ���°� �ƴ� ��� �ƹ��͵� ���� ����
 		if (pGameObject == nullptr) { continue; }	
-		if(AllyMonster->Is_Can_Attack()) { continue; }
+		if(!(AllyMonster->Is_Can_Attack() && (pGameObject->Tag == L"Layer_Ranger"))) { continue; }
 		if (!((AllyMonster->Get_State() == eLEFT_ATTACK) || (AllyMonster->Get_State() == eUP_ATTACK) || 
 			(AllyMonster->Get_State() == eRIGHT_ATTACK) || (AllyMonster->Get_State() == eDOWN_ATTACK)))	{continue; }
 
@@ -140,22 +140,22 @@ HRESULT CScene_Stage::Initialize_Scene()
 
 	m_pGameObjectMgr->AddRef();
 
-	Engine::CGameObject* pCamera = pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_StaticCamera",
+	Engine::CGameObject* pCamera = m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_StaticCamera",
 		(int)eScene_Stage1, L"Layer_StaticCamera");
 	ETC_GameObject_List.push_back(pCamera);
 
-	pPlayer = pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Player",
+	pPlayer = m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Player",
 		(int)eScene_Stage1, L"Layer_Player");
 	Good_GameObject_List.push_back(pPlayer);
 
-	Engine::CGameObject* pPlayer1 = pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Enemy",
+	Engine::CGameObject* pPlayer1 = m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Enemy",
 		(int)eScene_Stage1, L"Layer_Enemy");
 	Evil_GameObject_List.push_back(pPlayer1);
 
 
-	ETC_GameObject_List.push_back((pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Back",
+	ETC_GameObject_List.push_back((m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Back",
 		(int)eScene_Stage1, L"Layer_Back")));
-	Evil_GameObject_List.push_back((pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Rinel",
+	Evil_GameObject_List.push_back((m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Rinel",
 		(int)eScene_Stage1, L"Layer_Monster")));
 
 
@@ -164,9 +164,9 @@ HRESULT CScene_Stage::Initialize_Scene()
 
 	for (int a = 0; a < 6; a++)
 	{
-		ETC_GameObject_List.push_back(pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_UI_Card",
+		ETC_GameObject_List.push_back(m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_UI_Card",
 			(int)eScene_Stage1, L"Layer_UI_Card"));
-		Engine::CGameObject* pUI_Card = pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_UI_Card")->Get_GameObject_In_List(a);
+		Engine::CGameObject* pUI_Card = m_pGameObjectMgr->Find_Layer((int)eScene_Stage1, L"Layer_UI_Card")->Get_GameObject_In_List(a);
 		dynamic_cast<CUI_Card*>(pUI_Card)->Set_CardInfo(D3DXVECTOR3(-350.0f + (100 * a), -230.0f, 0.5f), a);
 	}
 
@@ -238,15 +238,21 @@ void CScene_Stage::Update_Scene(const float & fTimeDelta)
 		}
 		else
 		{
+			if (temp_pCursor.x <= -250.f)
+			{
+				temp_pCursor.x = -250.f;
+			}
+			else if (temp_pCursor.x >= 250.f)
+			{
+				temp_pCursor.x = 250.f;
+			}
 			dynamic_cast<CPlayer*>(pPlayer)->Set_pCursor(temp_pCursor);
 		}
 
 	}
 
-
-	Engine::CGameObject_Manager* pObjMgr = Engine::CGameObject_Manager::GetInstance();
-	Engine::CGameObject* pPlayer = pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_Player")->Get_GameObject_In_List(0);
-	Engine::CGameObject* pPlayer1 = pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_Enemy")->Get_GameObject_In_List(0);
+	Engine::CGameObject* pPlayer = m_pGameObjectMgr->Find_Layer((int)eScene_Stage1, L"Layer_Player")->Get_GameObject_In_List(0);
+	Engine::CGameObject* pPlayer1 = m_pGameObjectMgr->Find_Layer((int)eScene_Stage1, L"Layer_Enemy")->Get_GameObject_In_List(0);
 	CStatic_Camera* pCamera = static_cast<CStatic_Camera*>(
 		m_pGameObjectMgr->Find_Layer((int)eScene_Stage1, L"Layer_StaticCamera")->Get_GameObject_In_List(0));
 	Engine::CCollider* pCollider = static_cast<Engine::CCollider*>(pPlayer->Get_Component_In_Map(L"Com_Collider"));
