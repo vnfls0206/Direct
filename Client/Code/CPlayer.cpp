@@ -33,6 +33,8 @@ HRESULT CPlayer::Initialize_GameObject()
 HRESULT CPlayer::Initialize_CloneObject()
 {
 	m_fTimeAcc = 0.f;
+	m_fHp = 100.f;
+	m_fMana = 100.f;
 
 
 	m_pTransform = dynamic_cast<Engine::CTransform*>
@@ -172,6 +174,26 @@ Engine::CGameObject * CPlayer::Clone()
 void CPlayer::Set_pCursor(POINT m_cursor)
 {
 	m_pCursor = m_cursor;
+}
+
+void CPlayer::Play_Damage(float damage)
+{
+	m_fHp -= damage;
+}
+
+void CPlayer::Play_Use_Skill(float ManaCost)
+{
+	m_fMana -= ManaCost;
+}
+
+float * CPlayer::Get_Play_Hp()
+{
+	return &m_fHp;
+}
+
+float * CPlayer::Get_Play_Mana()
+{
+	return &m_fMana;
 }
 
 HRESULT CPlayer::Ready_Shader(const float& fTimedetla)

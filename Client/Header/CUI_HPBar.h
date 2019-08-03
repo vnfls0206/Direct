@@ -1,5 +1,5 @@
-#ifndef CUI_Bar_h__
-#define CUI_Bar_h__
+#ifndef CUI_HpBar_h__
+#define CUI_HpBar_h__
 
 #include "CGameObject.h"
 
@@ -11,13 +11,13 @@ class CShader;
 class CRenderCom;
 END
 
-class CUI_Bar final :
+class CUI_HpBar final :
 	public Engine::CGameObject
 {
 public:
-	explicit CUI_Bar(LPDIRECT3DDEVICE9 pGraphic_Device);
-	explicit CUI_Bar(const CUI_Bar& rhs);
-	virtual ~CUI_Bar() = default;
+	explicit CUI_HpBar(LPDIRECT3DDEVICE9 pGraphic_Device);
+	explicit CUI_HpBar(const CUI_HpBar& rhs);
+	virtual ~CUI_HpBar() = default;
 
 	// CGameObject을(를) 통해 상속됨
 public:
@@ -45,14 +45,16 @@ private:
 
 private:
 	float m_fTimeAcc;
-	unsigned int m_iMinIndex = 0;
-	unsigned int m_iMaxIndex = 6;
-	unsigned int m_iCurIndex = 0;
 
 protected:
 	virtual void Free() override;
 
+private:
+	Engine::CTransform*		m_pObjectTransform;
+	float*					m_fObjectHp;
 public:
+	void					Get_Object_Transform(Engine::CTransform* vTransform,float* HP);
+
 };
 
 #endif

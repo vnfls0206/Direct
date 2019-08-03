@@ -27,7 +27,6 @@ void CScene_Logo::Update_Scene(const float & fTimeDelta)
 	{
 		Is_End_Scene = true;
 	}
-
 	return;
 }
 

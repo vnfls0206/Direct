@@ -22,9 +22,6 @@
     <ClCompile Include="..\Code\CScene_Stage.cpp">
       <Filter>소스 파일\02. Scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CStatic_Camera.cpp">
-      <Filter>소스 파일\03. GameObject\00. Static</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CPlayer.cpp">
       <Filter>소스 파일\03. GameObject\01. Player</Filter>
     </ClCompile>
@@ -85,9 +82,15 @@
     <Filter Include="소스 파일\03. GameObject\99. UI">
       <UniqueIdentifier>{9b8a1c71-6f0a-41fa-b978-b79f78f7fef6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\03. GameObject\00. Static_Camera">
-      <UniqueIdentifier>{e73599cc-9a19-4e61-a167-7c2d67d646bf}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="..\Code\CUI_HpBar.cpp">
+      <Filter>소스 파일\03. GameObject\99. UI\Bar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_ManaBar.cpp">
+      <Filter>소스 파일\03. GameObject\99. UI\Bar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CStatic_Camera.cpp">
+      <Filter>소스 파일\03. GameObject\00. Static</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CBack.h">
@@ -159,8 +162,11 @@
     <ClInclude Include="..\Header\CUI_Card.h">
       <Filter>소스 파일\03. GameObject\99. UI</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CUI_Bar.h">
-      <Filter>소스 파일\03. GameObject\99. UI</Filter>
+    <ClInclude Include="..\Header\CUI_HPBar.h">
+      <Filter>소스 파일\03. GameObject\99. UI\Bar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_ManaBar.h">
+      <Filter>소스 파일\03. GameObject\99. UI\Bar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -204,9 +210,6 @@
       <Filter>소스 파일\03. GameObject\03. Enemy</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CUI_Card.cpp">
-      <Filter>소스 파일\03. GameObject\99. UI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CUI_Bar.cpp">
       <Filter>소스 파일\03. GameObject\99. UI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -258,6 +261,9 @@
     </Filter>
     <Filter Include="소스 파일\04. Manager\01. VideoManager">
       <UniqueIdentifier>{77e91669-7aa7-4bcb-93ff-5a4d922afeae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03. GameObject\99. UI\Bar">
+      <UniqueIdentifier>{d72b2bdf-97a0-4111-95e3-3b2f1217e186}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
