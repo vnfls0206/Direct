@@ -25,6 +25,7 @@
 CScene_Stage::CScene_Stage(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CScene(pGraphic_Device)
 	, m_pTimerMgr(Engine::CTimerMgr::GetInstance())
+	, m_pGameObjectMgr(Engine::CGameObject_Manager::GetInstance())
 {
 }
 
@@ -67,7 +68,7 @@ void CScene_Stage::Check_Attack()
 
 		//������ų� ���ݵ����� ���� ��ü�� ���ؼ�, ���� ���°� �ƴ� ��� �ƹ��͵� ���� ����
 		if (pGameObject == nullptr) { continue; }	
-		if(AllyMonster->Is_Can_Attack()) { continue; }
+		if(!(AllyMonster->Is_Can_Attack() && (pGameObject->Tag == L"Layer_Ranger"))) { continue; }
 		if (!((AllyMonster->Get_State() == eLEFT_ATTACK) || (AllyMonster->Get_State() == eUP_ATTACK) || 
 			(AllyMonster->Get_State() == eRIGHT_ATTACK) || (AllyMonster->Get_State() == eDOWN_ATTACK)))	{continue; }
 
@@ -133,20 +134,19 @@ void CScene_Stage::Check_Attack()
 
 HRESULT CScene_Stage::Initialize_Scene()
 {
-	Engine::CGameObject_Manager* pObjMgr = Engine::CGameObject_Manager::GetInstance();
-	if (pObjMgr == nullptr) {
+	if (m_pGameObjectMgr == nullptr) {
 		return E_FAIL;
 	}
 
-	pObjMgr->AddRef();
+	m_pGameObjectMgr->AddRef();
 
-	Engine::CGameObject* pCamera = pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_StaticCamera",
+	Engine::CGameObject* pCamera = m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_StaticCamera",
 		(int)eScene_Stage1, L"Layer_StaticCamera");
 
-	pPlayer = pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Player",
+	pPlayer = m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Player",
 		(int)eScene_Stage1, L"Layer_Player");
 
-	Engine::CGameObject* pPlayer1 = pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Enemy",
+	Engine::CGameObject* pPlayer1 = m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Enemy",
 		(int)eScene_Stage1, L"Layer_Enemy");
 
 	(pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Back",
@@ -186,7 +186,7 @@ HRESULT CScene_Stage::Initialize_Scene()
 	dynamic_cast<CStatic_Camera*>(pCamera)->Get_Player_Transform
 	(dynamic_cast<Engine::CTransform*>(pPlayer->Get_Component_In_Map(L"Com_Transform")));
 	
-	Engine::Safe_Release(pObjMgr);
+	Engine::Safe_Release(m_pGameObjectMgr);
 
 	CSound_Manager::GetInstance()->PlayBGM(L"Adam Levine - Lost Stars Lyrics.mp3");
 
@@ -231,17 +231,23 @@ void CScene_Stage::Update_Scene(const float & fTimeDelta)
 		}
 		else
 		{
+			if (temp_pCursor.x <= -250.f)
+			{
+				temp_pCursor.x = -250.f;
+			}
+			else if (temp_pCursor.x >= 250.f)
+			{
+				temp_pCursor.x = 250.f;
+			}
 			dynamic_cast<CPlayer*>(pPlayer)->Set_pCursor(temp_pCursor);
 		}
 
 	}
 
-
-	Engine::CGameObject_Manager* pObjMgr = Engine::CGameObject_Manager::GetInstance();
-	Engine::CGameObject* pPlayer = pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_Player")->Get_GameObject_In_List(0);
-	Engine::CGameObject* pPlayer1 = pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_Enemy")->Get_GameObject_In_List(0);
+	Engine::CGameObject* pPlayer = m_pGameObjectMgr->Find_Layer((int)eScene_Stage1, L"Layer_Player")->Get_GameObject_In_List(0);
+	Engine::CGameObject* pPlayer1 = m_pGameObjectMgr->Find_Layer((int)eScene_Stage1, L"Layer_Enemy")->Get_GameObject_In_List(0);
 	CStatic_Camera* pCamera = static_cast<CStatic_Camera*>(
-		pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_StaticCamera")->Get_GameObject_In_List(0));
+		m_pGameObjectMgr->Find_Layer((int)eScene_Stage1, L"Layer_StaticCamera")->Get_GameObject_In_List(0));
 	Engine::CCollider* pCollider = static_cast<Engine::CCollider*>(pPlayer->Get_Component_In_Map(L"Com_Collider"));
 	Engine::CCollider* pCollider1 = static_cast<Engine::CCollider*>(pPlayer1->Get_Component_In_Map(L"Com_Collider"));
 	Engine::CTransform* pTransform= static_cast<Engine::CTransform*>(pPlayer->Get_Component_In_Map(L"Com_Transform"));

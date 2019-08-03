@@ -12,6 +12,7 @@
 #include "CCollider.h"
 
 #include "CSound_Manager.h"
+#include "CKeyManager.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: Engine::CGameObject(pGraphic_Device)
@@ -118,8 +119,15 @@ void CPlayer::Update_GameObject(const float & fTimeDelta)
 
 
 	m_pTransform->Set_Position(vPos);
-
-
+	/*
+	if(Engine::CKeyManager::GetInstance()->KeyDown(VK_LBUTTON))
+	{
+		GetCursorPos(&m_pCursor);
+		ScreenToClient(g_hWnd, &m_pCursor);
+		m_pCursor.x = m_pCursor.x - WINCX / 2 + vPos.x;
+		m_pCursor.y = WINCY / 2 - m_pCursor.y + vPos.y;
+	}
+	*/
 
 
 	m_pTransform->MoveToMouse(m_pCursor, m_fMoveSpeed, fTimeDelta);

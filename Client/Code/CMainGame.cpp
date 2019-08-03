@@ -57,7 +57,7 @@ HRESULT CMainGame::Initialize_CMainGame()
 		return E_FAIL;
 	}
 	
-	m_pFontMgr->Add_Font(m_pDevice, 10, 10, FW_LIGHT, L"����");
+	m_pFontMgr->Add_Font(m_pDevice, 10, 10, FW_LIGHT, L"굴림");
 
 	m_pGameObject->Reserve_Proto_Layer_Array(eScene_Count);
 

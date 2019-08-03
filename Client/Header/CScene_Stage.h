@@ -7,6 +7,7 @@
 BEGIN(Engine)
 class CTimerMgr;
 class CGameObject;
+class CGameObject_Manager;
 class CLayer;
 END
 
@@ -17,6 +18,7 @@ private:
 	explicit CScene_Stage(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual ~CScene_Stage() = default;
 
+	Engine::CGameObject_Manager* m_pGameObjectMgr;
 	Engine::CTimerMgr* m_pTimerMgr;
 	float m_fTimeAcc = 0.f;
 	float m_fZoomRatio = 1.f;
