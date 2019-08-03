@@ -149,9 +149,9 @@ HRESULT CScene_Stage::Initialize_Scene()
 	Engine::CGameObject* pPlayer1 = m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Enemy",
 		(int)eScene_Stage1, L"Layer_Enemy");
 
-	(pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Back",
+	(m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Back",
 		(int)eScene_Stage1, L"Layer_Back"));
-	(pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Rinel",
+	(m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Rinel",
 		(int)eScene_Stage1, L"Layer_Enemy"));
 
 
@@ -160,9 +160,9 @@ HRESULT CScene_Stage::Initialize_Scene()
 
 	for (int a = 0; a < 6; a++)
 	{
-		pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_UI_Card",
+		m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_UI_Card",
 			(int)eScene_Stage1, L"Layer_UI_Card");
-		Engine::CGameObject* pUI_Card = pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_UI_Card")->Get_GameObject_In_List(a);
+		Engine::CGameObject* pUI_Card = m_pGameObjectMgr->Find_Layer((int)eScene_Stage1, L"Layer_UI_Card")->Get_GameObject_In_List(a);
 		dynamic_cast<CUI_Card*>(pUI_Card)->Set_CardInfo(D3DXVECTOR3(-350.0f + (100 * a), -230.0f, 0.5f), a);
 	}
 
@@ -297,12 +297,8 @@ CScene_Stage * CScene_Stage::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 
 Engine::CGameObject* CScene_Stage::Get_GameObject_From_List_By_Position(D3DXVECTOR3 Positon, const TCHAR* tag)
 {
-	Engine::CGameObject_Manager* pObjMgr = Engine::CGameObject_Manager::GetInstance();
-	if (pObjMgr == nullptr) {
-		return nullptr;
-	}
 
-	Engine::CLayer* Checked_Layer = pObjMgr->Find_Layer((int)eScene_Stage1, tag);
+	Engine::CLayer* Checked_Layer = m_pGameObjectMgr->Find_Layer((int)eScene_Stage1, tag);
 
 	for (int i = 0; i < Checked_Layer->Get_List_Size(); i++)
 	{
