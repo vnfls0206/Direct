@@ -142,21 +142,17 @@ HRESULT CScene_Stage::Initialize_Scene()
 
 	Engine::CGameObject* pCamera = pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_StaticCamera",
 		(int)eScene_Stage1, L"Layer_StaticCamera");
-	ETC_GameObject_List.push_back(pCamera);
 
 	pPlayer = pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Player",
 		(int)eScene_Stage1, L"Layer_Player");
-	Good_GameObject_List.push_back(pPlayer);
 
 	Engine::CGameObject* pPlayer1 = pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Enemy",
 		(int)eScene_Stage1, L"Layer_Enemy");
-	Evil_GameObject_List.push_back(pPlayer1);
 
-
-	ETC_GameObject_List.push_back((pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Back",
-		(int)eScene_Stage1, L"Layer_Back")));
-	Evil_GameObject_List.push_back((pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Rinel",
-		(int)eScene_Stage1, L"Layer_Monster")));
+	(pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Back",
+		(int)eScene_Stage1, L"Layer_Back"));
+	(pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Rinel",
+		(int)eScene_Stage1, L"Layer_Enemy"));
 
 
 
@@ -164,8 +160,8 @@ HRESULT CScene_Stage::Initialize_Scene()
 
 	for (int a = 0; a < 6; a++)
 	{
-		ETC_GameObject_List.push_back(pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_UI_Card",
-			(int)eScene_Stage1, L"Layer_UI_Card"));
+		pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_UI_Card",
+			(int)eScene_Stage1, L"Layer_UI_Card");
 		Engine::CGameObject* pUI_Card = pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_UI_Card")->Get_GameObject_In_List(a);
 		dynamic_cast<CUI_Card*>(pUI_Card)->Set_CardInfo(D3DXVECTOR3(-350.0f + (100 * a), -230.0f, 0.5f), a);
 	}
@@ -210,18 +206,18 @@ void CScene_Stage::Update_Scene(const float & fTimeDelta)
 		temp_pCursor.x = temp_pCursor.x - WINCX / 2 + pPlayer_Tr->Get_Position().x;
 		temp_pCursor.y = WINCY / 2 - temp_pCursor.y + pPlayer_Tr->Get_Position().y;
 
-		D3DXVECTOR3 ETC_List_Vector, Evil_List_Vector;
+		D3DXVECTOR3 UI_List_Vector, Evil_List_Vector;
 
-		ETC_List_Vector.x = temp_pCursor.x - pPlayer_Tr->Get_Position().x;
-		ETC_List_Vector.y = temp_pCursor.y - pPlayer_Tr->Get_Position().y;
-		ETC_List_Vector.z = 1.f;
+		UI_List_Vector.x = temp_pCursor.x - pPlayer_Tr->Get_Position().x;
+		UI_List_Vector.y = temp_pCursor.y - pPlayer_Tr->Get_Position().y;
+		UI_List_Vector.z = 1.f;
 
 		Evil_List_Vector.x = temp_pCursor.x;
 		Evil_List_Vector.y = temp_pCursor.y;
 		Evil_List_Vector.z = 1.f;
 
-		Engine::CGameObject* Target_ = Get_GameObject_From_List_By_Position(Evil_List_Vector, Evil_GameObject_List, 0);
-		Engine::CGameObject* Target__ = Get_GameObject_From_List_By_Position(ETC_List_Vector, ETC_GameObject_List, 2);
+		Engine::CGameObject* Target_ = Get_GameObject_From_List_By_Position(Evil_List_Vector, L"Layer_Enemy");
+		Engine::CGameObject* Target__ = Get_GameObject_From_List_By_Position(UI_List_Vector, L"Layer_UI_Card");
 
 
 		if (Target_ != nullptr)
@@ -230,11 +226,8 @@ void CScene_Stage::Update_Scene(const float & fTimeDelta)
 		}
 		else if (Target__ != nullptr)
 		{
-			if (Target__->Tag == L"Layer_UI_Card")
-			{
-				MSG_BOX("UI object clicked");
+			MSG_BOX("UI object clicked");
 
-			}
 		}
 		else
 		{
@@ -296,14 +289,21 @@ CScene_Stage * CScene_Stage::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 	return pInstance;
 }
 
-Engine::CGameObject* CScene_Stage::Get_GameObject_From_List_By_Position(D3DXVECTOR3 Positon, vector<Engine::CGameObject*> p_List, int Begin)
+Engine::CGameObject* CScene_Stage::Get_GameObject_From_List_By_Position(D3DXVECTOR3 Positon, const TCHAR* tag)
 {
+	Engine::CGameObject_Manager* pObjMgr = Engine::CGameObject_Manager::GetInstance();
+	if (pObjMgr == nullptr) {
+		return nullptr;
+	}
 
-	Engine::CGameObject* Return_GameObject = nullptr;
+	Engine::CLayer* Checked_Layer = pObjMgr->Find_Layer((int)eScene_Stage1, tag);
 
-	for (int i = Begin; i < p_List.size(); i++)
+	for (int i = 0; i < Checked_Layer->Get_List_Size(); i++)
 	{
-		Engine::CTransform* pTransform = dynamic_cast<Engine::CTransform*>(p_List[i]->Get_Component_In_Map(L"Com_Transform"));
+		Engine::CGameObject* pObj = Checked_Layer->Get_GameObject_In_List(i);
+
+		Engine::CTransform* pTransform = 
+			dynamic_cast<Engine::CTransform*>(pObj->Get_Component_In_Map(L"Com_Transform"));
 
 		if (pTransform != nullptr)
 		{
@@ -329,7 +329,7 @@ Engine::CGameObject* CScene_Stage::Get_GameObject_From_List_By_Position(D3DXVECT
 
 			if ((position.x - scale.x / 2) <= Positon.x && Positon.x <= (position.x + scale.x / 2) && (position.y - scale.y / 2) <= Positon.y && Positon.y <= (position.y + scale.y / 2))
 			{
-				Return_GameObject = p_List[i];
+				return Checked_Layer->Get_GameObject_In_List(i);
 
 			}
 		}
@@ -337,7 +337,7 @@ Engine::CGameObject* CScene_Stage::Get_GameObject_From_List_By_Position(D3DXVECT
 	}
 
 
-	return Return_GameObject;
+	return nullptr;
 
 }
 

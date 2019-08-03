@@ -35,15 +35,11 @@ private:
 
 
 	virtual HRESULT Initialize_Scene() override;
-	vector<Engine::CGameObject*> Good_GameObject_List;
-	vector<Engine::CGameObject*> Evil_GameObject_List;
-	vector<Engine::CGameObject*> ETC_GameObject_List;
-
 	Engine::CGameObject* pPlayer = nullptr;
 
 
 	Engine::CGameObject * Get_GameObject_From_List_By_Position
-	(D3DXVECTOR3 Positon, vector<Engine::CGameObject*> p_List, int Begin);
+	(D3DXVECTOR3 Positon, const TCHAR* tag);
 
 
 public:
