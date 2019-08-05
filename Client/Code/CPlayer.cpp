@@ -41,12 +41,12 @@ HRESULT CPlayer::Initialize_CloneObject()
 	m_pTransform = dynamic_cast<Engine::CTransform*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Transform"));
 	if (m_pTransform == nullptr) {
-		MSG_BOX("Ʈ������ ������Ʈ�� NULLPTR �� ��ȯ");
+		MSG_BOX("Transform return NULLPTR ");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Transform", m_pTransform);
 
-	m_pTransform->Set_Position(D3DXVECTOR3(0.f, 0.f, -5.f));
+	m_pTransform->Set_Position(D3DXVECTOR3(200.f, 0.f, -5.f));
 	m_pTransform->Set_Scale(D3DXVECTOR3(100.f, 100.f, 1.f));
 	m_pTransform->Set_Rotation(D3DXVECTOR3(D3DXToRadian(0.f), D3DXToRadian(180.f), D3DXToRadian(0.f)));
 
@@ -55,7 +55,7 @@ HRESULT CPlayer::Initialize_CloneObject()
 	m_pTextureCom = dynamic_cast<Engine::CTexture*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Texture_Player"));
 	if (m_pTextureCom == nullptr) {
-		MSG_BOX("�ؽ�ó ������Ʈ�� NULLPTR �� ��ȯ");
+		MSG_BOX("Texture return NULLPTR ");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Texture", m_pTextureCom);
@@ -63,7 +63,7 @@ HRESULT CPlayer::Initialize_CloneObject()
 	m_pRenderCom = dynamic_cast<Engine::CRenderCom*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Proto(L"Component_RenderCom"));
 	if (m_pRenderCom == nullptr) {
-		MSG_BOX("������ ������Ʈ�� NULLPTR �� ��ȯ");
+		MSG_BOX("Render return NULLPTR ");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Renderer", m_pRenderCom);
@@ -71,7 +71,7 @@ HRESULT CPlayer::Initialize_CloneObject()
 	m_pShaderCom = dynamic_cast<Engine::CShader*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Shader_Default"));
 	if (m_pShaderCom == nullptr) {
-		MSG_BOX("���̴� ������Ʈ�� NULLPTR �� ��ȯ");
+		MSG_BOX("Shader return NULLPTR ");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Shader", m_pShaderCom);
@@ -79,7 +79,7 @@ HRESULT CPlayer::Initialize_CloneObject()
 	m_pBufferCom = dynamic_cast<Engine::CBuffer*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Buffer_RcTex"));
 	if (m_pBufferCom == nullptr) {
-		MSG_BOX("���� ������Ʈ�� NULLPTR �� ��ȯ");
+		MSG_BOX("Buffer return NULLPTR ");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Buffer", m_pBufferCom);
@@ -87,11 +87,11 @@ HRESULT CPlayer::Initialize_CloneObject()
 	m_pCollider = dynamic_cast<Engine::CCollider*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Collider"));
 	if (m_pCollider == nullptr) {
-		MSG_BOX("�ݶ��̴� ������Ʈ�� NULLPTR �� ��ȯ");
+		MSG_BOX("Collider return NULLPTR");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Collider", m_pCollider);
-	m_pCollider->Initialize_Collider(m_pTransform->Get_m_matLocal(), m_pTransform->Get_Scale());
+	m_pCollider->Initialize_Collider(m_pTransform->Get_m_matLocal());
 
 
 	return NOERROR;
@@ -99,9 +99,7 @@ HRESULT CPlayer::Initialize_CloneObject()
 
 void CPlayer::Update_GameObject(const float & fTimeDelta)
 {
-	m_pTransform->Make_LocalSpace_Matrix();
-
-	D3DXVECTOR3 vPos = m_pTransform->Get_Position();
+	//D3DXVECTOR3 vPos = m_pTransform->Get_Position();
 
 	/*if (Engine::CKeyManager::GetInstance()->KeyPressing(VK_LEFT)) {
 		vPos.x -= m_fMoveSpeed * fTimeDelta;
@@ -118,9 +116,7 @@ void CPlayer::Update_GameObject(const float & fTimeDelta)
 		vPos.y -= 5000.f * fTimeDelta;
 	}*/
 
-
-
-	m_pTransform->Set_Position(vPos);
+	//m_pTransform->Set_Position(vPos);
 	/*
 	if(Engine::CKeyManager::GetInstance()->KeyDown(VK_LBUTTON))
 	{
@@ -133,6 +129,7 @@ void CPlayer::Update_GameObject(const float & fTimeDelta)
 
 
 	m_pTransform->MoveToMouse(m_pCursor, m_fMoveSpeed, fTimeDelta);
+	m_pTransform->Make_LocalSpace_Matrix();
 	m_pCollider->Set_ColliderPos(m_pTransform->Get_m_matLocal());
 }
 
@@ -149,13 +146,13 @@ void CPlayer::Render_GameObject()
 
 	if (FAILED(m_pBufferCom->Draw_Buffer()))
 	{
-		MSG_BOX("���̴� ������ ������ �׸����� �� �����߽��ϴ�.");
+		MSG_BOX("Draw_Buffer failed in Player.");
 	}
 
 	m_pShaderCom->Get_Effect()->EndPass();
 	m_pShaderCom->Get_Effect()->End();
 
-	m_pCollider->Render_Collider();
+	m_pCollider->Render_Collider(255, 0, 255, 0);
 }
 
 Engine::CGameObject * CPlayer::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -173,7 +170,7 @@ Engine::CGameObject * CPlayer::Clone()
 	CPlayer* pInstance = new CPlayer(*this);
 	if (FAILED(pInstance->Initialize_CloneObject()))
 	{
-		MSG_BOX("�ش� Ŭ�� �� �ʱ�ȭ�� ����");
+		MSG_BOX("Player failed Clone Initialization");
 		Engine::Safe_Release(pInstance);
 	}
 	return pInstance;

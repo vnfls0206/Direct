@@ -12,7 +12,7 @@ Engine::CCollider::CCollider(const CCollider & rhs)
 {
 }
 
-void Engine::CCollider::Initialize_Collider(D3DXMATRIX* matLocal, D3DXVECTOR3 vecScale)
+void Engine::CCollider::Initialize_Collider(D3DXMATRIX* matLocal)
 {
 	D3DXCreateLine(Get_Graphic_Device(), &m_pLine);
 	m_pLine->SetWidth(2);
@@ -50,19 +50,20 @@ void Engine::CCollider::Initialize_Collider(D3DXMATRIX* matLocal, D3DXVECTOR3 ve
 
 void Engine::CCollider::Set_ColliderPos(D3DXMATRIX* matLocal)
 {
-	
-	D3DXVECTOR3 vecRight, vecUp, vecLook, vecPos;
+	/*
+	D3DXVECTOR3 vPos;
+	memcpy(&vPos, &matLocal->_41, sizeof(D3DXVECTOR3));
+	Center = vPos;
+	*/
+	D3DXVECTOR3 vecRight, vecUp, vecLook;
 	memcpy(&vecRight, &matLocal->_11, sizeof(D3DXVECTOR3));
 	memcpy(&vecUp, &matLocal->_21, sizeof(D3DXVECTOR3));
 	memcpy(&vecLook, &matLocal->_31, sizeof(D3DXVECTOR3));
-	memcpy(&vecPos, &matLocal->_41, sizeof(D3DXVECTOR3));
+	memcpy(&Center, &matLocal->_41, sizeof(D3DXVECTOR3));
 
-	vecMax = ((vecRight + vecUp + vecLook) / 2.f) + vecPos;
-	vecMin = vecPos - (vecRight + vecUp + vecLook) / 2;
+	vecMax = (vecRight + vecUp + vecLook) / 2.f + Center;
+	vecMin = Center - (vecRight + vecUp + vecLook) / 2.f;
 
-	Center.x = vecPos.x;
-	Center.y = vecPos.y;
-	Center.z = vecPos.z;
 }
 
 bool Engine::CCollider::Check_Collision_OBB(Engine::CCollider* targetCollider)
@@ -243,7 +244,7 @@ bool Engine::CCollider::Check_Collision_AABB(Engine::CCollider* targetCollider)
 	return false;
 }
 
-void Engine::CCollider::Render_Collider()
+void Engine::CCollider::Render_Collider(int A, int R, int G, int B)
 {
 	//
 	D3DXVECTOR3 vPoint_1[5];
@@ -269,7 +270,7 @@ void Engine::CCollider::Render_Collider()
 	Get_Graphic_Device()->GetTransform(D3DTS_PROJECTION, &matProj);
 
 	m_pLine->Begin();
-	m_pLine->DrawTransform(vPoint_1, 5, &(matView * matProj), D3DCOLOR_ARGB(255, 0, 255, 0));
+	m_pLine->DrawTransform(vPoint_1, 5, &(matView * matProj), D3DCOLOR_ARGB(A, R, G, B));
 	m_pLine->End();
 }
 
