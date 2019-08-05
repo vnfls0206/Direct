@@ -27,16 +27,12 @@ private:
 	Engine::CLayer* m_vecAllylist;
 	Engine::CLayer* m_vecEnemylist;
 	Engine::CLayer* m_vecEtclist;
+	void Delete_Empty_GameObject_In_vector();
+	void Check_Attack();
+	*/
 		   
 
 private:
-	//�Ҹ�� ��ü�� ���Ϳ��� ����
-	void Delete_Empty_GameObject_In_vector();
-	//���� �浹���� 
-	void Check_Attack();
-
-
-
 	virtual HRESULT Initialize_Scene() override;
 	Engine::CGameObject* pPlayer = nullptr;
 
@@ -44,6 +40,7 @@ private:
 	Engine::CGameObject * Get_GameObject_From_List_By_Position
 	(D3DXVECTOR3 Positon, const TCHAR* tag);
 
+	void Summon_Monster(Engine::CGameObject* pGameObject, int iSummonNum);
 
 public:
 	virtual void Update_Scene(const float & fTimeDelta) override;
@@ -51,9 +48,8 @@ public:
 
 public:
 	static CScene_Stage* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
-
-public:
 	virtual void Free() override;
+
 };
 
 #endif

@@ -15,5 +15,6 @@
 #include <algorithm>
 #include <functional>
 
+#include <math.h>
 
 #endif

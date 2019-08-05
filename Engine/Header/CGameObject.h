@@ -27,7 +27,7 @@ public :
 	virtual void Render_GameObject() = 0;
 
 
-protected :
+public :
 	typedef map<const TCHAR*, Engine::CComponent*>		MAPCOMPONENT;
 	MAPCOMPONENT										m_mapComponent;
 	CComponent_Manager*								m_pComponentMgr;			//하위 객체에 컴포넌트들을 추가하기 위해 상위객체인 여기에 추가해놓음

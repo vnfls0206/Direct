@@ -23,8 +23,10 @@
 #include "CStatic_Camera.h"
 #include "CPlayer.h"
 #include "CMonster.h"
+#include "CSwordMonster.h"
+#include "CBowMonster.h"
+#include "CArrow.h"
 #include "CBack.h"
-#include "Enemy.h"
 #include "CUI_Card.h"
 #include "CUI_HpBar.h"
 #include "CUI_ManaBar.h"
@@ -68,13 +70,13 @@ HRESULT CMainGame::Initialize_CMainGame()
 		Engine::CTransform::Create(m_pDevice));
 
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_Player",
-		Engine::CTexture::Create(m_pDevice, L"../../Resource/Player/Move/Back/", L".png", 0, 5));
-
-	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_Enemy",
-		Engine::CTexture::Create(m_pDevice, L"../../Resource/Player/", L".png", 0, 0));
+		Engine::CTexture::Create(m_pDevice, L"../../Resource/Player/", L".png", 0, 88));
 
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_Rinel",
 		Engine::CTexture::Create(m_pDevice, L"../../Resource/Rinel/", L".png", 0, 82));
+
+	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_SwordMonster",
+		Engine::CTexture::Create(m_pDevice, L"../../Resource/SwordMonster/", L".png", 0, 48));
 
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_Back",
 		Engine::CTexture::Create(m_pDevice, L"../../Resource/Back/", L".dds", 0, 0));
@@ -105,17 +107,14 @@ HRESULT CMainGame::Initialize_CMainGame()
 		L"GameObject_Proto_StaticCamera", CStatic_Camera::Create(m_pDevice, tagView, tagProj));
 	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
 		L"GameObject_Proto_Player", CPlayer::Create(m_pDevice));
-	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
-		L"GameObject_Proto_Enemy", Enemy::Create(m_pDevice));
-
-	MON_INFO Rinel_Info = { {{ 0.5f, 8, 15 }, { 0.5f, 24, 31 }, { 0.5f, 16, 23 }, { 0.5f, 0, 7 },
-							 { 0.5f, 37, 41 }, { 0.5f, 47, 51 }, { 0.5f, 42, 46 }, { 0.5f, 32, 36 },
-							 { 0.5f, 60, 66 }, { 0.5f, 75, 82 }, { 0.5f, 67, 74 }, { 0.5f, 52, 59 }}, 300, 150 };
 
 
 	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
-		L"GameObject_Proto_Rinel", CMonster::Create(m_pDevice, Rinel_Info));
-
+		L"GameObject_Proto_SwordMonster", CSwordMonster::Create(m_pDevice));
+	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
+		L"GameObject_Proto_BowMonster", CBowMonster::Create(m_pDevice));
+	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
+		L"GameObject_Proto_Arrow", CArrow::Create(m_pDevice));
 	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
 		L"GameObject_Proto_Back", CBack::Create(m_pDevice));
 	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
@@ -175,7 +174,7 @@ void CMainGame::Render()
 		m_pManagement->Render_CurrentScene();
 
 		POINT pt = { 0,20 };
-		m_pFontMgr->Render_Font(L"����", m_szFPS, pt, D3DCOLOR_ARGB(255, 83, 223, 214));
+		m_pFontMgr->Render_Font(L"굴림", m_szFPS, pt, D3DCOLOR_ARGB(255, 83, 223, 214));
 
 		m_pDevice->EndScene();
 		m_pDevice->Present(nullptr, nullptr, g_hWnd, nullptr);
@@ -205,7 +204,7 @@ CMainGame * CMainGame::Create()
 	CMainGame* pInstance = new CMainGame();
 	if (FAILED(pInstance->Initialize_CMainGame()))
 	{
-		MSG_BOX("����̽� ��������!");
+		MSG_BOX("MainGame failed initialization!");
 		Engine::Safe_Release(pInstance);
 	}
 	return pInstance;

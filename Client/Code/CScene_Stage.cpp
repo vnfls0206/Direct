@@ -13,6 +13,8 @@
 #include "CTimer.h"
 
 #include "CMonster.h"
+#include "CSwordMonster.h"
+#include "CBowMonster.h"
 
 #include "CTransform.h"
 #include "CCollider.h"
@@ -32,6 +34,7 @@ CScene_Stage::CScene_Stage(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
 }
 
+/*
 void CScene_Stage::Delete_Empty_GameObject_In_vector()
 {
 	for (int i = 0; i < m_vecAllylist->Get_List_Size(); i++)
@@ -59,21 +62,20 @@ void CScene_Stage::Delete_Empty_GameObject_In_vector()
 	}
 
 }
-
 void CScene_Stage::Check_Attack()
 {
 	Engine::CGameObject* pGameObject;
 	for (int i = 0; i < m_vecAllylist->Get_List_Size(); i++)
 	{
 		pGameObject = m_vecAllylist->Get_GameObject_In_List(i);
-		Engine::CCollider* AllyCollider = dynamic_cast<Engine::CCollider*>((pGameObject)->Get_Component_In_Map(L"Com_Collider"));
+		Engine::CCollider* AllyCollider = dynamic_cast<Engine::CCollider*>((pGameObject)->Get_Component_In_Map(L"Com_Collider_AttackRange"));
 		CMonster* AllyMonster = dynamic_cast<CMonster*>(pGameObject);
 
 		//������ų� ���ݵ����� ���� ��ü�� ���ؼ�, ���� ���°� �ƴ� ��� �ƹ��͵� ���� ����
 		if (pGameObject == nullptr) { continue; }	
-		if(!(AllyMonster->Is_Can_Attack() && (pGameObject->Tag == L"Layer_Ranger"))) { continue; }
-		if (!((AllyMonster->Get_State() == eLEFT_ATTACK) || (AllyMonster->Get_State() == eUP_ATTACK) || 
-			(AllyMonster->Get_State() == eRIGHT_ATTACK) || (AllyMonster->Get_State() == eDOWN_ATTACK)))	{continue; }
+		if(!(AllyMonster->Get_Attack_Able() && (pGameObject->Tag == L"Layer_Ranger"))) { continue; }
+		if (!((AllyMonster->Get_Current_State() == eLEFT_ATTACK) || (AllyMonster->Get_Current_State() == eUP_ATTACK) ||
+			(AllyMonster->Get_Current_State() == eRIGHT_ATTACK) || (AllyMonster->Get_Current_State() == eDOWN_ATTACK)))	{continue; }
 
 		//���� ���� ����
 		//����� �ݶ��̴� ���� �浹, ���Ŀ� ���� ������ �ݶ��̴� ���� �浹�� ���� ���
@@ -90,7 +92,7 @@ void CScene_Stage::Check_Attack()
 			EnemyMonster = dynamic_cast<CMonster*>(m_vecEnemylist->Get_GameObject_In_List(j));
 			//��ü�� ���ų� ��Ȱ��ȭ�� ��� �ƹ��͵� ��������
 			if(EnemyMonster == nullptr) { continue; }
-			if(EnemyMonster->Get_State() == eInactive) { continue; }
+			if(EnemyMonster->Get_Current_State() == eInactive) { continue; }
 
 			if (AllyCollider->Check_Collision_OBB(dynamic_cast<Engine::CCollider*>(EnemyMonster->Get_Component_In_Map(L"Com_Collider"))))
 			{
@@ -103,13 +105,13 @@ void CScene_Stage::Check_Attack()
 	for (int i = 0; i < m_vecEnemylist->Get_List_Size(); i++)
 	{
 		pGameObject = m_vecEnemylist->Get_GameObject_In_List(i);
-		Engine::CCollider* EnemyCollider = dynamic_cast<Engine::CCollider*>((pGameObject)->Get_Component_In_Map(L"Com_Collider"));
+		Engine::CCollider* EnemyCollider = dynamic_cast<Engine::CCollider*>((pGameObject)->Get_Component_In_Map(L"Com_Collider_AttackRange"));
 		CMonster* EnemyMonster = dynamic_cast<CMonster*>(pGameObject);
 
 		if (pGameObject == nullptr) { continue; }
-		if (!EnemyMonster->Is_Can_Attack()) { continue; }
-		if (!((EnemyMonster->Get_State() == eLEFT_ATTACK) || (EnemyMonster->Get_State() == eUP_ATTACK) || 
-			(EnemyMonster->Get_State() == eRIGHT_ATTACK) || (EnemyMonster->Get_State() == eDOWN_ATTACK))) { continue; }
+		if (!EnemyMonster->Get_Attack_Able()) { continue; }
+		if (!((EnemyMonster->Get_Current_State() == eLEFT_ATTACK) || (EnemyMonster->Get_Current_State() == eUP_ATTACK) ||
+			(EnemyMonster->Get_Current_State() == eRIGHT_ATTACK) || (EnemyMonster->Get_Current_State() == eDOWN_ATTACK))) { continue; }
 
 		//���� ���� ����
 		//����� �ݶ��̴� ���� �浹, ���Ŀ� ���� ������ �ݶ��̴� ���� �浹�� ���� ���
@@ -126,7 +128,7 @@ void CScene_Stage::Check_Attack()
 			AllyMonster = dynamic_cast<CMonster*>(m_vecAllylist->Get_GameObject_In_List(j));
 			//��ü�� ���ų� ��Ȱ��ȭ�� ��� �ƹ��͵� ��������
 			if (AllyMonster == nullptr) { continue; }
-			if (AllyMonster->Get_State() == eInactive) { continue; }
+			if (AllyMonster->Get_Current_State() == eInactive) { continue; }
 			if (EnemyCollider->Check_Collision_OBB(dynamic_cast<Engine::CCollider*>(AllyMonster->Get_Component_In_Map(L"Com_Collider"))))
 			{
 				//�浿 ���� ��(���� ���� ��)������ ó�� ex)hp ����
@@ -134,6 +136,7 @@ void CScene_Stage::Check_Attack()
 		}
 	}
 }
+*/
 
 HRESULT CScene_Stage::Initialize_Scene()
 {
@@ -151,14 +154,23 @@ HRESULT CScene_Stage::Initialize_Scene()
 
 	Engine::CGameObject* pPlayer1 = m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Enemy",
 		(int)eScene_Stage1, L"Layer_Enemy");
+	Evil_GameObject_List.push_back(pPlayer1);
 
-	(m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Back",
-		(int)eScene_Stage1, L"Layer_Back"));
-	(m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Rinel",
-		(int)eScene_Stage1, L"Layer_Enemy"));
+	ETC_GameObject_List.push_back(
+		(m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Back",
+		(int)eScene_Stage1, L"Layer_Back")));
+	
+	Engine::CGameObject* monster = (m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_SwordMonster",
+		(int)eScene_Stage1, L"Layer_Monster"));
+	Evil_GameObject_List.push_back(monster);
+	Engine::CTransform* pTransform = dynamic_cast<Engine::CTransform*>(monster->Get_Component_In_Map(L"Com_Transform"));
+	pTransform->Set_Position(D3DXVECTOR3(200.f, 180.f, 0.f));
 
-
-
+	monster = (m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_BowMonster",
+		(int)eScene_Stage1, L"Layer_Monster"));
+	Evil_GameObject_List.push_back(monster);
+	pTransform = dynamic_cast<Engine::CTransform*>(monster->Get_Component_In_Map(L"Com_Transform"));
+	pTransform->Set_Position(D3DXVECTOR3(0.f, 0.f, 0.f));
 	
 
 	for (int a = 0; a < 6; a++)
@@ -187,14 +199,12 @@ HRESULT CScene_Stage::Initialize_Scene()
 	dynamic_cast<CStatic_Camera*>(pCamera)->Get_Player_Transform
 	(dynamic_cast<Engine::CTransform*>(pPlayer->Get_Component_In_Map(L"Com_Transform")));
 
-	//D3DXVECTOR3 vecCameraPos = pCameraTransform->Get_Position();
-	//vecCameraPos.z -= 50.f;
-	//pCameraTransform->Set_Position(vecCameraPos);
+	pTransform = dynamic_cast<Engine::CTransform*>(pPlayer->Get_Component_In_Map(L"Com_Transform"));
+	pTransform->Set_Position(D3DXVECTOR3(-200.f, 400.f, 0.f));
 
-	Engine::CTransform* pTransform = dynamic_cast<Engine::CTransform*>(pPlayer->Get_Component_In_Map(L"Com_Transform"));
-	Engine::CTransform* pTransform1 = dynamic_cast<Engine::CTransform*>(pPlayer1->Get_Component_In_Map(L"Com_Transform"));
-	pTransform->Set_Position({-200.f, 180.f, 0.f});
-	pTransform1->Set_Position({200.f, 180.f, 0.f});
+
+
+
 
 	dynamic_cast<CStatic_Camera*>(pCamera)->Get_Player_Transform
 	(dynamic_cast<Engine::CTransform*>(pPlayer->Get_Component_In_Map(L"Com_Transform")));
@@ -208,6 +218,8 @@ HRESULT CScene_Stage::Initialize_Scene()
 
 void CScene_Stage::Update_Scene(const float & fTimeDelta)
 {
+	Engine::CGameObject* pCamera = m_pGameObjectMgr->Find_Layer((int)eScene_Stage1, L"Layer_StaticCamera")->Get_GameObject_In_List(0);
+
 	if (Engine::CKeyManager::GetInstance()->KeyDown(VK_LBUTTON))
 	{
 		Engine::CTransform* pPlayer_Tr = dynamic_cast<Engine::CTransform*>(pPlayer->Get_Component_In_Map(L"Com_Transform"));
@@ -283,17 +295,41 @@ void CScene_Stage::Update_Scene(const float & fTimeDelta)
 			dynamic_cast<CPlayer*>(pPlayer)->Set_pCursor(temp_pCursor);
 		}
 	}
+	if (Engine::CKeyManager::GetInstance()->KeyDown(0x51)) //q
+	{
+		m_pTimerMgr->Get_Timer_Info(L"Timer_60")->Set_BulletTime(.3f);
+	}
 
-	Engine::CGameObject* pPlayer = m_pGameObjectMgr->Find_Layer((int)eScene_Stage1, L"Layer_Player")->Get_GameObject_In_List(0);
-	Engine::CGameObject* pPlayer1 = m_pGameObjectMgr->Find_Layer((int)eScene_Stage1, L"Layer_Enemy")->Get_GameObject_In_List(0);
-	CStatic_Camera* pCamera = static_cast<CStatic_Camera*>(
-		m_pGameObjectMgr->Find_Layer((int)eScene_Stage1, L"Layer_StaticCamera")->Get_GameObject_In_List(0));
-	Engine::CCollider* pCollider = static_cast<Engine::CCollider*>(pPlayer->Get_Component_In_Map(L"Com_Collider"));
-	Engine::CCollider* pCollider1 = static_cast<Engine::CCollider*>(pPlayer1->Get_Component_In_Map(L"Com_Collider"));
-	Engine::CTransform* pTransform= static_cast<Engine::CTransform*>(pPlayer->Get_Component_In_Map(L"Com_Transform"));
+	if (Engine::CKeyManager::GetInstance()->KeyPressing(0x57)) //w
+	{
+		if (m_fTimeAcc >= 0.001f)
+		{
+			dynamic_cast<Engine::CCamera*>(pCamera)->Set_Camera_Zoom(m_fZoomRatio);
+			if (m_fZoomRatio < 3.f)
+			{
+				m_fZoomRatio += 0.01f;
+			}
+			m_fTimeAcc = 0.f;
+		}
+		m_fTimeAcc += fTimeDelta;
+	}
+
+	if (Engine::CKeyManager::GetInstance()->KeyDown(0x45)) //e
+	{
+	}
+
+	if (Engine::CKeyManager::GetInstance()->KeyDown(0x52)) //r
+	{
+		m_fZoomRatio = 1.f;
+		dynamic_cast<Engine::CCamera*>(pCamera)->Set_Camera_Zoom(m_fZoomRatio); dynamic_cast<Engine::CCamera*>(pCamera)->Set_Camera_Zoom(m_fZoomRatio);
+		m_pTimerMgr->Get_Timer_Info(L"Timer_60")->Set_BulletTime(1.f);
+	}
+
+	//CStatic_Camera* pCamera = static_cast<CStatic_Camera*>(
+	//	m_pGameObjectMgr->Find_Layer((int)eScene_Stage1, L"Layer_StaticCamera")->Get_GameObject_In_List(0));
 
 
-
+	/*
 	if (pCollider->Check_Collision_OBB(pCollider1))
 	{
 		//MSG_BOX("1");
@@ -316,7 +352,7 @@ void CScene_Stage::Update_Scene(const float & fTimeDelta)
 		}
 		m_fTimeAcc += fTimeDelta;
 	}
-	
+	*/
 	return;
 }
 
@@ -383,6 +419,15 @@ Engine::CGameObject* CScene_Stage::Get_GameObject_From_List_By_Position(D3DXVECT
 	return nullptr;
 
 }
+
+void CScene_Stage::Summon_Monster(Engine::CGameObject * pGameObject, int iSummonNum)
+{
+
+}
+
+
+
+
 
 void CScene_Stage::Free()
 {

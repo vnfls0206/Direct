@@ -11,41 +11,53 @@ class CBuffer;
 class CTexture;
 class CShader;
 class CRenderCom;
+class CCollider;
+class CGameObject_Manager;
 END
 
 class CMonster  :
 	public Engine::CGameObject
 {
-public:
-	explicit CMonster(LPDIRECT3DDEVICE9 pGraphic_Device, MON_INFO m_mon_info);
-	explicit CMonster(const CMonster& rhs, MON_INFO m_mon_info);
+protected:
+	explicit CMonster(LPDIRECT3DDEVICE9 pGraphic_Device);
+	explicit CMonster(const CMonster& rhs);
 	virtual ~CMonster() = default;
 
-public:
+protected:
 	// CGameObject��(��) ���� ��ӵ�
-	virtual HRESULT Initialize_GameObject() override;
-	virtual HRESULT Initialize_CloneObject();
-
-	virtual void Update_GameObject(const float & fTimeDelta) override;
-	virtual void LastUpdate_GameObject(const float & fTimeDelta) override;
-	virtual void Render_GameObject() override;
-
-	bool Is_Can_Attack();
-	eMonsterState Get_State();
+	virtual HRESULT Initialize_GameObject() = 0;
+	virtual HRESULT Initialize_CloneObject() = 0;
 
 public:
-	static CGameObject * Create(LPDIRECT3DDEVICE9 pGraphic_Device, MON_INFO m_mon_info);
-	virtual CGameObject * Clone() override;
+	virtual void Update_GameObject(const float & fTimeDelta) = 0;
+	virtual void LastUpdate_GameObject(const float & fTimeDelta) = 0;
+	virtual void Render_GameObject() = 0;
 
-private:
+public:
+	virtual void Attack(const float& fTimeDelta) = 0;
+	eMonsterState Get_Current_State();
+	Engine::CGameObject* Get_Target();
+	void Set_Target(Engine::CGameObject* pTarget);
+	bool Get_Attack_Able();
+
+protected:
+	HRESULT Ready_Shader(const float& fTimeDelta);
+	void Update_Current_State();
+
+public:
+	virtual CGameObject * Clone() = 0;
+
+protected:
+	Engine::CGameObject_Manager* m_pObjMgr;
 	// ������Ʈ ���
 	Engine::CTransform* m_pTransform;
 	Engine::CBuffer* m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;
 	Engine::CShader* m_pShaderCom;
 	Engine::CRenderCom* m_pRenderCom;
+	Engine::CCollider* m_pCollider;
+	Engine::CCollider* m_pCollider_AttackRange;
 
-	Engine::CGameObject* pPlayer = nullptr;
 	Engine::CTransform* m_pPlayer_Transform;
 
 	//���� ���� & ����
@@ -55,27 +67,15 @@ private:
 	CGameObject* Target = nullptr;
 	bool IsCanAttack = false;
 
-public:
-	eMonsterState Get_Current_State();
-	CGameObject* Get_Target();
-	bool Get_Attack_Able();
-
-private:
-	HRESULT Ready_Shader(const float& fTimeDelta);
-	void Update_Current_State();
-
-private:
-	float m_fTimeAcc;
+protected:
+	float m_fTimeAcc = 0.f;
+	float m_fAttackTime = 0.f;					//공격모션과 공격타이밍의 싱크를 맞추는 용도
+	float m_fMoveSpeed = 20.f;
 	
-
-
 	unsigned int m_iMinIndex = 0;
 	unsigned int m_iMaxIndex = 2;
 	unsigned int m_iCurIndex = 0;
 
-protected:
-	float	m_fMoveSpeed = 20.f;
-	float	m_fAttackDelay = 2.f;
 };
 
 

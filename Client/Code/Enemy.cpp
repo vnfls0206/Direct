@@ -119,7 +119,7 @@ void Enemy::Update_GameObject(const float & fTimeDelta)
 
 
 	m_pTransform->MoveToMouse(m_pCursor, m_fMoveSpeed, fTimeDelta);
-	m_pCollider->Set_ColliderPos(m_pTransform->Get_m_matLocal());
+	m_pCollider->Set_ColliderPos(m_pTransform->Get_Position());
 }
 
 void Enemy::LastUpdate_GameObject(const float & fTimeDelta)
