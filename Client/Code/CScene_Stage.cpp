@@ -151,27 +151,23 @@ HRESULT CScene_Stage::Initialize_Scene()
 
 	pPlayer = m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Player",
 		(int)eScene_Stage1, L"Layer_Player");
-
-	Engine::CGameObject* pPlayer1 = m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Enemy",
-		(int)eScene_Stage1, L"Layer_Enemy");
-	Evil_GameObject_List.push_back(pPlayer1);
-
-	ETC_GameObject_List.push_back(
-		(m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Back",
-		(int)eScene_Stage1, L"Layer_Back")));
+	m_pPlayer_Transform = dynamic_cast<Engine::CTransform*>(pPlayer->Get_Component_In_Map(L"Com_Transform"));
+	(m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Back",
+		(int)eScene_Stage1, L"Layer_Back"));
 	
-	Engine::CGameObject* monster = (m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_SwordMonster",
-		(int)eScene_Stage1, L"Layer_Monster"));
-	Evil_GameObject_List.push_back(monster);
+
+	Engine::CGameObject* monster = (m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_BowMonster",
+		(int)eScene_Stage1, L"Layer_Enemy"));
+	CMonster* mon = dynamic_cast<CMonster*>(monster);
 	Engine::CTransform* pTransform = dynamic_cast<Engine::CTransform*>(monster->Get_Component_In_Map(L"Com_Transform"));
-	pTransform->Set_Position(D3DXVECTOR3(200.f, 180.f, 0.f));
-
-	monster = (m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_BowMonster",
-		(int)eScene_Stage1, L"Layer_Monster"));
-	Evil_GameObject_List.push_back(monster);
-	pTransform = dynamic_cast<Engine::CTransform*>(monster->Get_Component_In_Map(L"Com_Transform"));
-	pTransform->Set_Position(D3DXVECTOR3(0.f, 0.f, 0.f));
+	pTransform->Set_Position(D3DXVECTOR3(200.f, 40.f, 0.f));
 	
+	monster = (m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_SwordMonster",
+		(int)eScene_Stage1, L"Layer_Enemy"));
+
+	pTransform = dynamic_cast<Engine::CTransform*>(monster->Get_Component_In_Map(L"Com_Transform"));
+	pTransform->Set_Position(D3DXVECTOR3(200.f, 180.f, 0.f));
+	mon->Set_Target(monster);
 
 	for (int a = 0; a < 6; a++)
 	{
@@ -181,17 +177,17 @@ HRESULT CScene_Stage::Initialize_Scene()
 		dynamic_cast<CUI_Card*>(pUI_Card)->Set_CardInfo(D3DXVECTOR3(-350.0f + (100 * a), -230.0f, 0.5f), a);
 	}
 
-	ETC_GameObject_List.push_back(pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_UI_HpBar",
-		(int)eScene_Stage1, L"Layer_UI_HpBar"));
-	Engine::CGameObject* pUI_HpBar = pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_UI_HpBar")->Get_GameObject_In_List(0);
+	m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_UI_HpBar",
+		(int)eScene_Stage1, L"Layer_UI_HpBar");
+	Engine::CGameObject* pUI_HpBar = m_pGameObjectMgr->Find_Layer((int)eScene_Stage1, L"Layer_UI_HpBar")->Get_GameObject_In_List(0);
 	dynamic_cast<CUI_HpBar*>(pUI_HpBar)->Get_Object_Transform
 	(dynamic_cast<Engine::CTransform*>(pPlayer->Get_Component_In_Map(L"Com_Transform")), 
 		dynamic_cast<CPlayer*>(pPlayer)->Get_Play_Hp());
 
 
-	Engine::CGameObject* pUI_ManaBar = pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_UI_ManaBar",
+	Engine::CGameObject* pUI_ManaBar = m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_UI_ManaBar",
 		(int)eScene_Stage1, L"Layer_UI_ManaBar");
-	ETC_GameObject_List.push_back(pUI_ManaBar);
+
 	dynamic_cast<CUI_ManaBar*>(pUI_ManaBar)->Get_PlayMana(dynamic_cast<CPlayer*>(pPlayer)->Get_Play_Mana());
 
 	//Engine::CTransform* pCameraTransform = dynamic_cast<Engine::CTransform*>(pCamera->Get_Component_In_Map(L"Com_Transform"));
@@ -222,18 +218,16 @@ void CScene_Stage::Update_Scene(const float & fTimeDelta)
 
 	if (Engine::CKeyManager::GetInstance()->KeyDown(VK_LBUTTON))
 	{
-		Engine::CTransform* pPlayer_Tr = dynamic_cast<Engine::CTransform*>(pPlayer->Get_Component_In_Map(L"Com_Transform"));
-
 		POINT temp_pCursor = {0, 0};
 		GetCursorPos(&temp_pCursor);
 		ScreenToClient(g_hWnd, &temp_pCursor);
-		temp_pCursor.x = temp_pCursor.x - WINCX / 2 + pPlayer_Tr->Get_Position().x;
-		temp_pCursor.y = WINCY / 2 - temp_pCursor.y + pPlayer_Tr->Get_Position().y;
+		temp_pCursor.x = temp_pCursor.x - WINCX / 2 + m_pPlayer_Transform->Get_Position().x;
+		temp_pCursor.y = WINCY / 2 - temp_pCursor.y + m_pPlayer_Transform->Get_Position().y;
 
 		D3DXVECTOR3 UI_List_Vector, Evil_List_Vector;
 
-		UI_List_Vector.x = temp_pCursor.x - pPlayer_Tr->Get_Position().x;
-		UI_List_Vector.y = temp_pCursor.y - pPlayer_Tr->Get_Position().y;
+		UI_List_Vector.x = temp_pCursor.x - m_pPlayer_Transform->Get_Position().x;
+		UI_List_Vector.y = temp_pCursor.y - m_pPlayer_Transform->Get_Position().y;
 		UI_List_Vector.z = 1.f;
 
 		Evil_List_Vector.x = temp_pCursor.x;
@@ -420,8 +414,35 @@ Engine::CGameObject* CScene_Stage::Get_GameObject_From_List_By_Position(D3DXVECT
 
 }
 
-void CScene_Stage::Summon_Monster(Engine::CGameObject * pGameObject, int iSummonNum)
+void CScene_Stage::Summon_Monster(Engine::CGameObject * pGameObject, int iSummonNum, int iAttackType)
 {
+	
+	for (int i = iSummonNum / -2; i < iSummonNum; i++)
+	{
+		if ((iSummonNum%2 == 0) && (i == 0))
+		{
+			continue;
+		}
+		Engine::CTransform* pTransform = dynamic_cast<Engine::CTransform*>(
+		m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_SwordMonster", (int)eScene_Stage1, L"Layer_Ally"));
+		D3DXVECTOR3 vPos = m_pPlayer_Transform->Get_Position();
+		// 1근거리 -1원거리
+		vPos.x += (-20 * i);
+		vPos.y += (40 * iAttackType);
+		//vPos.z
+		while (Get_GameObject_From_List_By_Position(vPos, L"Layer_Ally") != nullptr)	//소환할 장소 vPos에 아군과 위치가 겹친다면 y값을 조정
+		{
+			vPos.y += (20 * iAttackType);
+		}
+		while (Get_GameObject_From_List_By_Position(vPos, L"Layer_Enemy") != nullptr)	//소환할 장소 vPos에 아군과 위치가 겹친다면 y값을 조정
+		{
+			vPos.y += (20 * iAttackType);
+		}
+		
+		pTransform->Set_Position(vPos);
+		
+	}
+
 
 }
 

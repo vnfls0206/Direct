@@ -39,6 +39,9 @@ public:
 	Engine::CGameObject* Get_Target();
 	void Set_Target(Engine::CGameObject* pTarget);
 	bool Get_Attack_Able();
+	void Hit(UINT Damage);
+	UINT Get_Hp();
+	void Die();
 
 protected:
 	HRESULT Ready_Shader(const float& fTimeDelta);
@@ -46,6 +49,7 @@ protected:
 
 public:
 	virtual CGameObject * Clone() = 0;
+	virtual void Free(); 
 
 protected:
 	Engine::CGameObject_Manager* m_pObjMgr;

@@ -9,6 +9,7 @@ class CTimerMgr;
 class CGameObject;
 class CGameObject_Manager;
 class CLayer;
+class CTransform;
 END
 
 class CScene_Stage final :
@@ -23,7 +24,7 @@ private:
 	float m_fTimeAcc = 0.f;
 	float m_fZoomRatio = 1.f;
 	int m_fUiCheck;
-
+	/*
 	Engine::CLayer* m_vecAllylist;
 	Engine::CLayer* m_vecEnemylist;
 	Engine::CLayer* m_vecEtclist;
@@ -35,12 +36,12 @@ private:
 private:
 	virtual HRESULT Initialize_Scene() override;
 	Engine::CGameObject* pPlayer = nullptr;
-
+	Engine::CTransform* m_pPlayer_Transform;
 
 	Engine::CGameObject * Get_GameObject_From_List_By_Position
 	(D3DXVECTOR3 Positon, const TCHAR* tag);
 
-	void Summon_Monster(Engine::CGameObject* pGameObject, int iSummonNum);
+	void Summon_Monster(Engine::CGameObject* pGameObject, int iSummonNum, int iAttackType);
 
 public:
 	virtual void Update_Scene(const float & fTimeDelta) override;

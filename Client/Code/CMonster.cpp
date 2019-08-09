@@ -25,14 +25,35 @@ eMonsterState CMonster::Get_Current_State() { return m_Current_State; }
 Engine::CGameObject * CMonster::Get_Target() { return Target; }
 void CMonster::Set_Target(Engine::CGameObject * pTarget)
 {
-	if (pTarget == nullptr)
-	{
-		return;
-	}
 	Target = pTarget;
 }
 
 bool CMonster::Get_Attack_Able() { return IsCanAttack; }
+
+void CMonster::Hit(UINT Damage)
+{
+	if (Damage < 0)
+	{
+		return;
+	}
+	if (m_Info.uiHP <= Damage)
+	{
+		m_Info.uiHP = 0;
+		m_Current_State = eDie;
+	}
+	else if (m_Info.uiHP >= Damage)
+	{
+		m_Info.uiHP -= Damage;
+	}
+}
+
+UINT CMonster::Get_Hp() { return m_Info.uiHP; }
+
+void CMonster::Die()
+{
+	//Á×À½¸ð¼Ç ¹× ¸÷ »èÁ¦
+	Free();
+}
 
 HRESULT CMonster::Ready_Shader(const float& fTimedetla)
 {
@@ -101,7 +122,7 @@ void CMonster::Update_Current_State()
 	}
 	else if (distance <= m_Info.Attack_Range)
 	{
-		D3DXMATRIX* vPos = m_pTransform->Get_m_matLocal();
+		//D3DXMATRIX* vPos = m_pTransform->Get_m_matLocal();
 		if (direction == eLEFT)
 		{
 			m_Current_State = eLEFT_ATTACK;
@@ -128,4 +149,17 @@ void CMonster::Update_Current_State()
 	m_iCurIndex = m_Info.m_State_Info[m_Current_State].Min_Texture_Num;
 
 
+}
+
+void CMonster::Free()
+{
+	 Engine::Safe_Release(m_pTransform);
+	 Engine::Safe_Release(m_pBufferCom);
+	 Engine::Safe_Release(m_pTextureCom);
+	 Engine::Safe_Release(m_pShaderCom);
+	 Engine::Safe_Release(m_pRenderCom);
+	 Engine::Safe_Release(m_pCollider);
+	 Engine::Safe_Release(m_pCollider_AttackRange);
+
+	Engine::CGameObject::Free();
 }

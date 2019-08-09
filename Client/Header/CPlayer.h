@@ -1,6 +1,7 @@
 #ifndef CPlayer_h__
 #define CPlayer_h__
 
+#include "Client_Include.h"
 #include "CGameObject.h"
 
 BEGIN(Engine)
@@ -10,6 +11,8 @@ class CTexture;
 class CShader;
 class CRenderCom;
 class CCollider;
+
+class CGameObject_Manager;
 END
 
 class CPlayer final :
@@ -47,20 +50,27 @@ public:
 	void Set_pCursor(POINT m_cursor);
 
 public:
-	void Play_Damage(float damage);
+	void Play_Damage(UINT damage);
 	void Play_Use_Skill(float ManaCost);
 
-	float* Get_Play_Hp();
+	UINT* Get_Play_Hp();
 	float* Get_Play_Mana();
+	void Set_Target(Engine::CGameObject* pTarget);
+	void Attack(const float& fTimeDelta);
+	void Hit(UINT uiDamage);
+	void Die();
 
 private :
 	HRESULT Ready_Shader(const float& fTimeDelta);
 
 private :
+	Engine::CGameObject_Manager* m_pObjMgr;
 	POINT m_pCursor = { 0,0 };
 	float m_fTimeAcc;
-	float m_fHp;
-	float m_fMana;
+	float m_fAttackTime = 0.4f;  //공격모션 싱크로용
+	PLAYER_INFO m_stInfo;
+	eMonsterState m_Current_State = eUP_IDLE;
+	Engine::CGameObject* m_pTarget = nullptr;
 	unsigned int m_iMinIndex = 0;
 	unsigned int m_iMaxIndex = 5;
 	unsigned int m_iCurIndex = 0;

@@ -153,7 +153,7 @@ void CUI_HpBar::Free()
 {
 }
 
-void CUI_HpBar::Get_Object_Transform(Engine::CTransform * vTransform, float* HP)
+void CUI_HpBar::Get_Object_Transform(Engine::CTransform * vTransform, UINT* HP)
 {
 	m_pObjectTransform = vTransform;
 	m_fObjectHp = HP;

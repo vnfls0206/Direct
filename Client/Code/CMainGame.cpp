@@ -58,7 +58,7 @@ HRESULT CMainGame::Initialize_CMainGame()
 {
 	if (FAILED(m_pGraphic_Device->Intialize_CGraphic_Device(g_hWnd, m_pGraphic_Device->eWInMode, WINCX, WINCY, &m_pDevice)))
 	{
-		MSG_BOX("����̽� �ʱ�ȭ�� �����Ͽ����ϴ�!");
+		MSG_BOX("Graphic Device failed Initialization!");
 		return E_FAIL;
 	}
 	
