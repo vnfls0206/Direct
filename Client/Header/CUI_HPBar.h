@@ -58,12 +58,12 @@ protected:
 private:
 	D3DXVECTOR3				vPos,fPos;
 	Engine::CTransform*		m_pObjectTransform;
-	float*					m_fObjectHp;
-	float					m_fObjectHp2;
+	UINT*					m_fObjectHp;
+	UINT					m_fObjectHp2;
 
 public:
 	void					Set_Object_DamageFont(int Damage);
-	void					Get_Object_Transform(Engine::CTransform* vTransform,float* HP);
+	void					Get_Object_Transform(Engine::CTransform* vTransform, UINT* HP);
 
 };
 

@@ -94,9 +94,6 @@ void CUI_HpBar::Update_GameObject(const float & fTimeDelta)
 	m_pTransform->Make_LocalSpace_Matrix();
 	
 	vPos = m_pObjectTransform->Get_Position();
-	
-	if (*m_fObjectHp <= 0)
-		*m_fObjectHp += 100;
 
 	m_pTransform->Set_Scale(D3DXVECTOR3(*m_fObjectHp, 15.f, 1.f));
 	m_pTransform->Set_Position(D3DXVECTOR3(vPos.x - ( (100-*m_fObjectHp) / 2), vPos.y+60.f, vPos.z));
@@ -231,7 +228,7 @@ void CUI_HpBar::Set_Object_DamageFont(int Damage)
 	}
 }
 
-void CUI_HpBar::Get_Object_Transform(Engine::CTransform * vTransform, float* HP)
+void CUI_HpBar::Get_Object_Transform(Engine::CTransform * vTransform, UINT* HP)
 {
 	m_pObjectTransform = vTransform;
 	m_fObjectHp = HP;

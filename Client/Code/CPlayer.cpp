@@ -194,7 +194,10 @@ void CPlayer::Set_pCursor(POINT m_cursor)
 
 void CPlayer::Play_Damage(UINT damage)
 {
-	m_stInfo.uiHP -= damage;
+	if (m_stInfo.uiHP < damage)
+		m_stInfo.uiHP = 0;
+	else
+		m_stInfo.uiHP -= damage;
 }
 
 void CPlayer::Play_Use_Skill(float ManaCost)
