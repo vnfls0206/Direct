@@ -93,19 +93,15 @@ void CUI_Card::LastUpdate_GameObject(const float & fTimeDelta)
 
 void CUI_Card::Render_GameObject()
 {
-	if (m_bActivie)
+	m_pShaderCom->Get_Effect()->Begin(0, 0);
+	m_pShaderCom->Get_Effect()->BeginPass(1);
+
+	if (FAILED(m_pBufferCom->Draw_Buffer()))
 	{
-		m_pShaderCom->Get_Effect()->Begin(0, 0);
-		m_pShaderCom->Get_Effect()->BeginPass(1);
-
-		if (FAILED(m_pBufferCom->Draw_Buffer()))
-		{
 			MSG_BOX("쉐이더 내에서 정점을 그리려는 데 실패했습니다.");
-		}
-
-		m_pShaderCom->Get_Effect()->EndPass();
-		m_pShaderCom->Get_Effect()->End();
 	}
+	m_pShaderCom->Get_Effect()->EndPass();
+	m_pShaderCom->Get_Effect()->End();
 }
 
 Engine::CGameObject * CUI_Card::Create(LPDIRECT3DDEVICE9 pGraphic_Device)

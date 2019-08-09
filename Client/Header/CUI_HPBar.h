@@ -37,10 +37,16 @@ private:
 	Engine::CTransform* m_pTransform;
 	Engine::CBuffer* m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;
+	Engine::CTexture* m_pTextureCom2;
 	Engine::CShader* m_pShaderCom;
 	Engine::CRenderCom* m_pRenderCom;
 
+	Engine::CGameObject* pFont = nullptr;
+	Engine::CTransform* m_pFont_Transform;
+	Engine::CShader* m_pFont_Shader;
+
 private:
+
 	HRESULT Ready_Shader(const float& fTimeDelta);
 
 private:
@@ -50,9 +56,13 @@ protected:
 	virtual void Free() override;
 
 private:
+	D3DXVECTOR3				vPos,fPos;
 	Engine::CTransform*		m_pObjectTransform;
 	float*					m_fObjectHp;
+	float					m_fObjectHp2;
+
 public:
+	void					Set_Object_DamageFont(int Damage);
 	void					Get_Object_Transform(Engine::CTransform* vTransform,float* HP);
 
 };

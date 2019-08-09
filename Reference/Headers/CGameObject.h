@@ -14,7 +14,7 @@ protected  :
 	explicit CGameObject(const CGameObject& rhs);					// 복사 생성자, new CGameObject(*this);
 	virtual ~CGameObject() = default;								// 기본 소멸자
 
-private :
+protected:
 	LPDIRECT3DDEVICE9 m_pDevice;
 protected :
 	LPDIRECT3DDEVICE9 Get_Graphic_Device();

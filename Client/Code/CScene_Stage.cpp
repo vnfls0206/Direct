@@ -169,17 +169,22 @@ HRESULT CScene_Stage::Initialize_Scene()
 		dynamic_cast<CUI_Card*>(pUI_Card)->Set_CardInfo(D3DXVECTOR3(-350.0f + (100 * a), -230.0f, 0.5f), a);
 	}
 
-	ETC_GameObject_List.push_back(pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_UI_HpBar",
-		(int)eScene_Stage1, L"Layer_UI_HpBar"));
-	Engine::CGameObject* pUI_HpBar = pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_UI_HpBar")->Get_GameObject_In_List(0);
+	for (int a = 0; a < 20; a++)
+	{
+		m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_UI_Font",
+			(int)eScene_Stage1, L"Layer_UI_Font");
+	}
+
+	m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_UI_HpBar",
+		(int)eScene_Stage1, L"Layer_UI_HpBar");
+	Engine::CGameObject* pUI_HpBar = m_pGameObjectMgr->Find_Layer((int)eScene_Stage1, L"Layer_UI_HpBar")->Get_GameObject_In_List(0);
 	dynamic_cast<CUI_HpBar*>(pUI_HpBar)->Get_Object_Transform
 	(dynamic_cast<Engine::CTransform*>(pPlayer->Get_Component_In_Map(L"Com_Transform")), 
 		dynamic_cast<CPlayer*>(pPlayer)->Get_Play_Hp());
 
 
-	Engine::CGameObject* pUI_ManaBar = pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_UI_ManaBar",
+	Engine::CGameObject* pUI_ManaBar = m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_UI_ManaBar",
 		(int)eScene_Stage1, L"Layer_UI_ManaBar");
-	ETC_GameObject_List.push_back(pUI_ManaBar);
 	dynamic_cast<CUI_ManaBar*>(pUI_ManaBar)->Get_PlayMana(dynamic_cast<CPlayer*>(pPlayer)->Get_Play_Mana());
 
 	//Engine::CTransform* pCameraTransform = dynamic_cast<Engine::CTransform*>(pCamera->Get_Component_In_Map(L"Com_Transform"));
@@ -193,8 +198,8 @@ HRESULT CScene_Stage::Initialize_Scene()
 
 	Engine::CTransform* pTransform = dynamic_cast<Engine::CTransform*>(pPlayer->Get_Component_In_Map(L"Com_Transform"));
 	Engine::CTransform* pTransform1 = dynamic_cast<Engine::CTransform*>(pPlayer1->Get_Component_In_Map(L"Com_Transform"));
-	pTransform->Set_Position({-200.f, 180.f, 0.f});
-	pTransform1->Set_Position({200.f, 180.f, 0.f});
+	pTransform->Set_Position({0.f, 0.f, 0.f});
+	pTransform1->Set_Position({100.f, 0.f, 0.f});
 
 	dynamic_cast<CStatic_Camera*>(pCamera)->Get_Player_Transform
 	(dynamic_cast<Engine::CTransform*>(pPlayer->Get_Component_In_Map(L"Com_Transform")));
@@ -232,43 +237,42 @@ void CScene_Stage::Update_Scene(const float & fTimeDelta)
 		Engine::CGameObject* Target__ = Get_GameObject_From_List_By_Position(UI_List_Vector, L"Layer_UI_Card");
 
 
-		if (Target__ != nullptr)
-		{
-			if (Target__->Tag  == L"Layer_UI_Card")
-			{
-				switch (m_fUiCheck)
-				{
-				case 1:
-					dynamic_cast<CPlayer*>(pPlayer)->Play_Use_Skill(1);
-					break;
-				case 2:
-					dynamic_cast<CPlayer*>(pPlayer)->Play_Use_Skill(13);
-					break;
-				case 3:
-					dynamic_cast<CPlayer*>(pPlayer)->Play_Use_Skill(5);
-					break;
-				case 4:
-					dynamic_cast<CPlayer*>(pPlayer)->Play_Use_Skill(10);
-					break;
-				case 5:
-					dynamic_cast<CPlayer*>(pPlayer)->Play_Use_Skill(25);
-					break;
-				case 6:
-					dynamic_cast<CPlayer*>(pPlayer)->Play_Use_Skill(50);
-					break;
-				default:
-					break;
-				}
-			}
-		}
-		else if (Target_ != nullptr)
+	
+		if (Target_ != nullptr)
 		{
 			MSG_BOX("clicked Enemy object");
 		}
 		else if (Target__ != nullptr)
 		{
-			MSG_BOX("UI object clicked");
-
+			switch (m_fUiCheck)
+			{
+			case 1:
+				dynamic_cast<CPlayer*>(pPlayer)->Play_Use_Skill(1);
+				dynamic_cast<CPlayer*>(pPlayer)->Play_Damage(1);
+				break;
+			case 2:
+				dynamic_cast<CPlayer*>(pPlayer)->Play_Use_Skill(5);
+				dynamic_cast<CPlayer*>(pPlayer)->Play_Damage(5);
+				break;
+			case 3:
+				dynamic_cast<CPlayer*>(pPlayer)->Play_Use_Skill(10);
+				dynamic_cast<CPlayer*>(pPlayer)->Play_Damage(10);
+				break;
+			case 4:
+				dynamic_cast<CPlayer*>(pPlayer)->Play_Use_Skill(25);
+				dynamic_cast<CPlayer*>(pPlayer)->Play_Damage(25);
+				break;
+			case 5:
+				dynamic_cast<CPlayer*>(pPlayer)->Play_Use_Skill(50);
+				dynamic_cast<CPlayer*>(pPlayer)->Play_Damage(50);
+				break;
+			case 6:
+				dynamic_cast<CPlayer*>(pPlayer)->Play_Use_Skill(13);
+				dynamic_cast<CPlayer*>(pPlayer)->Play_Damage(13);
+				break;
+			default:
+				break;
+			}
 		}
 		else
 		{
@@ -300,7 +304,6 @@ void CScene_Stage::Update_Scene(const float & fTimeDelta)
 		//pTransform->Set_Position(pTransform->Get_Position() - D3DXVECTOR3(100.f, 100.f, 0.f));
 		if (m_fTimeAcc >= 0.001f)
 		{
-			dynamic_cast<CPlayer*>(pPlayer)->Play_Damage(1);
 			pCamera->Set_Camera_Zoom(m_fZoomRatio);
 			if (m_fZoomRatio < 3.f)
 			{
@@ -369,11 +372,10 @@ Engine::CGameObject* CScene_Stage::Get_GameObject_From_List_By_Position(D3DXVECT
 			//memcpy(&position, &pTransform->Get_Position, sizeof(D3DXVECTOR3));
 			//memcpy(&scale, &pTransform->Get_Scale, sizeof(D3DXVECTOR3));
 
-
 			if ((position.x - scale.x / 2) <= Positon.x && Positon.x <= (position.x + scale.x / 2) && (position.y - scale.y / 2) <= Positon.y && Positon.y <= (position.y + scale.y / 2))
 			{
+				m_fUiCheck = i+1 ;
 				return Checked_Layer->Get_GameObject_In_List(i);
-
 			}
 		}
 

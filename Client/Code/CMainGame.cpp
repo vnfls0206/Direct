@@ -28,6 +28,7 @@
 #include "CUI_Card.h"
 #include "CUI_HpBar.h"
 #include "CUI_ManaBar.h"
+#include "ObejctPool.h"
 
 
 #include "CScene_Logo.h"
@@ -60,7 +61,7 @@ HRESULT CMainGame::Initialize_CMainGame()
 		return E_FAIL;
 	}
 	
-	m_pFontMgr->Add_Font(m_pDevice, 10, 10, FW_LIGHT, L"굴림");
+	m_pFontMgr->Add_Font(m_pDevice, 20, 20, FW_LIGHT, L"굴림");
 
 	m_pGameObject->Reserve_Proto_Layer_Array(eScene_Count);
 
@@ -84,6 +85,9 @@ HRESULT CMainGame::Initialize_CMainGame()
 
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_UI_Bar",
 		Engine::CTexture::Create(m_pDevice, L"../../Resource/UI/Bar/", L".png", 0, 1));
+
+	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_UI_Font",
+		Engine::CTexture::Create(m_pDevice, L"../../Resource/UI/Font/", L".png", 0, 9));
 
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Buffer_RcTex",
 		Engine::CBuffer_RcTex::Create(m_pDevice));
@@ -124,6 +128,8 @@ HRESULT CMainGame::Initialize_CMainGame()
 		L"GameObject_Proto_UI_HpBar", CUI_HpBar::Create(m_pDevice));
 	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
 		L"GameObject_Proto_UI_ManaBar", CUI_ManaBar::Create(m_pDevice));
+	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
+		L"GameObject_Proto_UI_Font", ObjectPool::Create(m_pDevice));
 
 	Engine::Safe_Release(m_pGameObject);
 	Engine::Safe_Release(m_pComponentMgr);
@@ -175,7 +181,7 @@ void CMainGame::Render()
 		m_pManagement->Render_CurrentScene();
 
 		POINT pt = { 0,20 };
-		m_pFontMgr->Render_Font(L"����", m_szFPS, pt, D3DCOLOR_ARGB(255, 83, 223, 214));
+		m_pFontMgr->Render_Font(L"굴림", m_szFPS, pt, D3DCOLOR_ARGB(255, 83, 223, 214));
 
 		m_pDevice->EndScene();
 		m_pDevice->Present(nullptr, nullptr, g_hWnd, nullptr);

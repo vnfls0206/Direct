@@ -28,12 +28,6 @@
     <ClCompile Include="..\Code\CMonster.cpp">
       <Filter>소스 파일\03. GameObject\04. Monster</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CSound_Manager.cpp">
-      <Filter>소스 파일\04. Manager\00. SoundManager</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CVideo_Manager.cpp">
-      <Filter>소스 파일\04. Manager\01. VideoManager</Filter>
-    </ClCompile>
     <Filter Include="소스 파일">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
@@ -90,6 +84,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\CStatic_Camera.cpp">
       <Filter>소스 파일\03. GameObject\00. Static</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CVideo_Manager.cpp">
+      <Filter>소스 파일\04. Manager\01. VideoMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSound_Manager.cpp">
+      <Filter>소스 파일\04. Manager\00. SoundMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_Card.cpp">
+      <Filter>소스 파일\03. GameObject\99. UI\Card</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ObejctPool.cpp">
+      <Filter>소스 파일\03. GameObject\99. UI\Bar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -148,24 +154,27 @@
       <Filter>소스 파일\03. GameObject\04. Monster</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CSound_Manager.h">
-      <Filter>소스 파일\04. Manager\00. SoundManager</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CVideo_Manager.h">
-      <Filter>소스 파일\04. Manager\01. VideoManager</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CSound_Manager.h">
       <Filter>소스 파일\04. Manager\00. SoundMgr</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Enemy.h">
       <Filter>소스 파일\03. GameObject\03. Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CUI_Card.h">
-      <Filter>소스 파일\03. GameObject\99. UI</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CUI_HPBar.h">
       <Filter>소스 파일\03. GameObject\99. UI\Bar</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CUI_ManaBar.h">
+      <Filter>소스 파일\03. GameObject\99. UI\Bar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CVideo_Manager.h">
+      <Filter>소스 파일\04. Manager\01. VideoMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSound_Manager.h">
+      <Filter>소스 파일\04. Manager\00. SoundMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_Card.h">
+      <Filter>소스 파일\03. GameObject\99. UI\Card</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ObejctPool.h">
       <Filter>소스 파일\03. GameObject\99. UI\Bar</Filter>
     </ClInclude>
   </ItemGroup>
@@ -208,9 +217,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\Enemy.cpp">
       <Filter>소스 파일\03. GameObject\03. Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CUI_Card.cpp">
-      <Filter>소스 파일\03. GameObject\99. UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -256,14 +262,11 @@
     <Filter Include="소스 파일\04. Manager">
       <UniqueIdentifier>{bb2447a9-6602-41a5-95ed-2e76ebd36989}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\04. Manager\00. SoundManager">
-      <UniqueIdentifier>{b61c9b22-9f60-43a2-a107-590412278f7a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\04. Manager\01. VideoManager">
-      <UniqueIdentifier>{77e91669-7aa7-4bcb-93ff-5a4d922afeae}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\03. GameObject\99. UI\Bar">
       <UniqueIdentifier>{d72b2bdf-97a0-4111-95e3-3b2f1217e186}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03. GameObject\99. UI\Card">
+      <UniqueIdentifier>{dc19b57d-bd2e-4c01-a71e-88df10e7dbff}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

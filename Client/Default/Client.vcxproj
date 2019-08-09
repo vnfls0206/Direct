@@ -182,6 +182,7 @@
     <ClInclude Include="..\Header\CUI_ManaBar.h" />
     <ClInclude Include="..\Header\CVideo_Manager.h" />
     <ClInclude Include="..\Header\Enemy.h" />
+    <ClInclude Include="..\Header\ObejctPool.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Client_Funtion.h" />
     <ClInclude Include="Client_Struct.h" />
@@ -203,6 +204,7 @@
     <ClCompile Include="..\Code\CUI_ManaBar.cpp" />
     <ClCompile Include="..\Code\CVideo_Manager.cpp" />
     <ClCompile Include="..\Code\Enemy.cpp" />
+    <ClCompile Include="..\Code\ObejctPool.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

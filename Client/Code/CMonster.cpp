@@ -27,9 +27,6 @@ CMonster::CMonster(const CMonster & rhs, MON_INFO m_mon_info)
 
 HRESULT CMonster::Initialize_GameObject()
 {
-
-
-
 	return NOERROR;
 }
 
