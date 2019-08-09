@@ -42,7 +42,7 @@ HRESULT CPlayer::Initialize_CloneObject()
 				{ 0.5f, 16, 21 }, { 0.5f, 4, 9 }, { 0.5f, 22, 27 }, { 0.5f, 10, 15 },
 				{ 0.5f, 36, 39 }, { 0.5f, 28, 31 }, { 0.5f, 40, 43 }, { 0.5f, 32, 35 }},
 				300, 30, 400, 25.f, 0.4f , L"Summoner" };
-			//°ø°Ý¹üÀ§ °ø°Ý·Â, Ã¼·Â, ¸¶³ª, °ø°Ýµô·¹ÀÌ, ÀÌ¸§
+			//ï¿½ï¿½ï¿½Ý¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý·ï¿½, Ã¼ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½Ýµï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½Ì¸ï¿½
 
 	m_fTimeAcc = 0.f;
 	m_stInfo.uiHP = 100;
@@ -224,7 +224,7 @@ void CPlayer::Attack(const float& fTimeDelta)
 {
 	if ((m_fAttackTime >= 0.4f) || (m_fAttackTime < 0.5f))
 	{
-		//È­»ì»ý¼º
+		//È­ï¿½ï¿½ï¿½ï¿½ï¿½
 		CArrow* arrow = dynamic_cast<CArrow*>(m_pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Arrow",
 			(int)eScene_Stage1, L"Layer_Arrow"));
 		arrow->Set_Damage(m_stInfo.uiAttackDamage);
