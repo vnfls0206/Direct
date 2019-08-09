@@ -107,6 +107,8 @@ HRESULT CSwordMonster::Initialize_CloneObject()
 	}
 	m_mapComponent.emplace(L"Com_Collider_AttackRange", m_pCollider_AttackRange);
 	
+	Dex_Position = m_pTransform->Get_Position();
+
 	Update_Current_State();
 
 	m_pCollider->Initialize_Collider(m_pTransform->Get_m_matLocal());

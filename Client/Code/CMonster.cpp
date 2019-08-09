@@ -58,13 +58,13 @@ void CMonster::Hit(UINT Damage)
 
 
 
-bool CMonster::Node_Check(Engine::CGameObject_Manager* GM, list<node*> checked_List, D3DXVECTOR3 t_Position)	//t_position = target_p
+bool CMonster::Node_Check(Engine::CGameObject_Manager* GM, list<NODE*> checked_List, D3DXVECTOR3 t_Position)	//t_position = target_p
 {
 	bool a;
 
 
 	for_each(checked_List.begin(), checked_List.end(),
-		[&](node* temp_node)
+		[&](NODE* temp_node)
 	{
 		if (t_Position == temp_node->position)
 			a =  false;
@@ -101,7 +101,8 @@ bool CMonster::Node_Check(Engine::CGameObject_Manager* GM, list<node*> checked_L
 
 			if (pTransform != nullptr)
 			{
-				D3DXVECTOR3 c_position = i != 0 ? dynamic_cast<CMonster*>(Target_obj)->Get_Dex_Position() : pTransform->Get_Position();
+				D3DXVECTOR3 c_position = pTransform->Get_Position();
+					//i != 0 ? dynamic_cast<CMonster*>(Target_obj)->Get_Dex_Position() : pTransform->Get_Position();
 	
 				D3DXVECTOR3 c_scale = pTransform->Get_Scale();
 

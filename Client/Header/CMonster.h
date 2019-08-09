@@ -48,8 +48,19 @@ public:
 
 
 protected:
+
+	typedef struct NODE
+	{
+		D3DXVECTOR3 position;
+		unsigned int G, H;
+		NODE* Parent_node;
+
+
+	};
 	HRESULT Ready_Shader(const float& fTimeDelta);
 	void Update_Current_State();
+	bool Node_Check(Engine::CGameObject_Manager* GM, list<NODE*> checked_List, D3DXVECTOR3 t_Position);
+
 
 
 public:
@@ -81,29 +92,20 @@ protected:
 protected:
 	float m_fTimeAcc = 0.f;
 	float m_fAttackTime = 0.f;					//공격모션과 공격타이밍의 싱크를 맞추는 용도
-	float m_fMoveSpeed = 20.f;
+	float m_fMoveSpeed = 60.f;
 	float	m_fAttackDelay = 2.f;
+	D3DXVECTOR3 Dex_Position;
+
 
 	
 
 
 private:
 
-	struct node
-	{
-		D3DXVECTOR3 position;
-		unsigned int G, H;
-		node *Parent_node;
-
-
-	};
-	bool Node_Check(Engine::CGameObject_Manager* GM, list<node*> checked_List, D3DXVECTOR3 t_Position);
-
 
 	unsigned int m_iMinIndex = 0;
 	unsigned int m_iMaxIndex = 2;
 	unsigned int m_iCurIndex = 0;
-	D3DXVECTOR3 Dex_Position;
 
 
 };

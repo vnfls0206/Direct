@@ -32,10 +32,10 @@ HRESULT CBowMonster::Initialize_GameObject()
 
 HRESULT CBowMonster::Initialize_CloneObject()
 {
-	m_Info = { {{ 0.5f, 8, 15 }, { 0.5f, 24, 31 }, { 0.5f, 16, 23 }, { 0.5f, 0, 7 },
-							 { 0.5f, 37, 41 }, { 0.5f, 47, 51 }, { 0.5f, 42, 46 }, { 0.5f, 32, 36 },
-							 { 0.5f, 60, 66 }, { 0.5f, 75, 82 }, { 0.5f, 67, 74 }, { 0.5f, 52, 59 }},
-							300, 250, 10, 120, 0.6f, -1, L"BowMon" };
+	m_Info = { {{ 0.1f, 8, 15 }, { 0.1f, 24, 31 }, { 0.1f, 16, 23 }, { 0.1f, 0, 7 },
+				{ 0.1f, 37, 41 }, { 0.1f, 47, 51 }, { 0.1f, 42, 46 }, { 0.1f, 32, 36 },
+				{ 0.1f, 60, 66 }, { 0.1f, 75, 82 }, { 0.1f, 67, 74 }, { 0.1f, 52, 59 }},
+				400, 250, 10, 120, 0.6f, -1, L"BowMon" };
 
 	m_pPlayer_Transform = dynamic_cast<Engine::CTransform*>(m_pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_Player")->Get_GameObject_In_List(0)->
 		Get_Component_In_Map(L"Com_Transform"));
@@ -105,6 +105,8 @@ HRESULT CBowMonster::Initialize_CloneObject()
 	}
 	m_mapComponent.emplace(L"Com_Collider_AttackRange", m_pCollider_AttackRange);
 
+	Dex_Position = m_pTransform->Get_Position();
+
 	Update_Current_State();
 
 	m_pCollider->Initialize_Collider(m_pTransform->Get_m_matLocal());
@@ -127,8 +129,115 @@ void CBowMonster::Update_GameObject(const float & fTimeDelta)
 	case 5:
 	case 6:
 	case 7:
+	{
+
+
+		Engine::CGameObject_Manager* GM = Engine::CGameObject_Manager::GetInstance();
+
+		std::list<NODE*> openlist;	////open list, add unchecked node
+		std::list<NODE*> closedlist;	//closed list, add checked node
+
+		D3DXVECTOR3 Current_P = m_pTransform->Get_Position();
+		D3DXVECTOR3 Target_P =
+			dynamic_cast<Engine::CTransform*>(Target->Get_Component_In_Map(L"Com_Transform"))->Get_Position();
+
+		//node Parent_node = { Current_P, 0, 0, nullptr };
+
+		NODE *Selected_node = (NODE *)malloc(sizeof(NODE));
+
+		Selected_node->position = Current_P;
+		Selected_node->G = 0;
+		Selected_node->H = 0;
+		Selected_node->Parent_node = nullptr;
+
+		openlist.push_back(Selected_node);
+
+
+		for (int Finding_Range = 0; Finding_Range < 2; Finding_Range++)
+		{
+			NODE* Low_Cost_List = nullptr;
+
+			//list<node*>::iterator iter = openlist.begin();
+
+			for_each(openlist.begin(), openlist.end(),
+				[&](NODE* temp_node)
+			{
+				if (Low_Cost_List == nullptr)
+					Low_Cost_List = temp_node;
+				else
+				{
+					if ((Low_Cost_List->G + Low_Cost_List->H) > (temp_node->G + temp_node->H))
+					{
+						Low_Cost_List = temp_node;
+					}
+				}
+
+			});
+
+			Selected_node = Low_Cost_List;	//select node, 
+
+			float scale = m_pTransform->Get_Scale().x + 10;
+
+
+			for (int i = -1; i <= 1; i++)
+			{
+				for (int j = -1; j <= 1; j++)
+				{
+					if (!(i == 0 && j == 0))
+					{
+						D3DXVECTOR3 Node_Position = D3DXVECTOR3((Selected_node->position.x) + i * scale, (Selected_node->position.y) + j * scale, 0.f);
+
+						if (Node_Check(GM, openlist, Node_Position))
+						{
+							NODE* m_node = (NODE *)malloc(sizeof(NODE));;
+
+							unsigned int cost = (i*j) == -1 ? 14 : 10;
+
+							m_node->position = Node_Position;
+							m_node->H = abs(Node_Position.x - Target_P.x) + abs(Node_Position.y - Target_P.y);
+							m_node->G = cost + Selected_node->G;
+							m_node->Parent_node = Selected_node;
+
+							openlist.push_back(m_node);
+
+						}
+
+					}
+
+
+				}
+
+			}
+
+			closedlist.push_back(Selected_node);
+			openlist.remove(Selected_node);	//Add self position, to closed list
+
+		}
+		Dex_Position = Selected_node->position;
+
+		m_pTransform->MoveToPosition(Dex_Position, m_fMoveSpeed, fTimeDelta);
+
+
+		while (!openlist.empty())
+		{
+			auto iter = openlist.begin();
+			delete[](*iter);
+			openlist.erase(iter);
+		}
+		while (!closedlist.empty())
+		{
+			auto iter = closedlist.begin();
+			delete[](*iter);
+			closedlist.erase(iter);
+		}
+
+
+
+		
 
 		break;
+	}
+
 	case 8:
 	case 9:
 	case 10:

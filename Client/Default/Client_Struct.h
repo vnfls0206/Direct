@@ -39,5 +39,4 @@ typedef struct tagPlayer_Infomation
 }PLAYER_INFO;
 
 
-
 #endif                  
