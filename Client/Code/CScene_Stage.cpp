@@ -169,17 +169,16 @@ HRESULT CScene_Stage::Initialize_Scene()
 		dynamic_cast<CUI_Card*>(pUI_Card)->Set_CardInfo(D3DXVECTOR3(-350.0f + (100 * a), -230.0f, 0.5f), a);
 	}
 
-	ETC_GameObject_List.push_back(pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_UI_HpBar",
-		(int)eScene_Stage1, L"Layer_UI_HpBar"));
-	Engine::CGameObject* pUI_HpBar = pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_UI_HpBar")->Get_GameObject_In_List(0);
+	m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_UI_HpBar",
+		(int)eScene_Stage1, L"Layer_UI_HpBar");
+	Engine::CGameObject* pUI_HpBar = m_pGameObjectMgr->Find_Layer((int)eScene_Stage1, L"Layer_UI_HpBar")->Get_GameObject_In_List(0);
 	dynamic_cast<CUI_HpBar*>(pUI_HpBar)->Get_Object_Transform
 	(dynamic_cast<Engine::CTransform*>(pPlayer->Get_Component_In_Map(L"Com_Transform")), 
 		dynamic_cast<CPlayer*>(pPlayer)->Get_Play_Hp());
 
 
-	Engine::CGameObject* pUI_ManaBar = pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_UI_ManaBar",
+	Engine::CGameObject* pUI_ManaBar = m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_UI_ManaBar",
 		(int)eScene_Stage1, L"Layer_UI_ManaBar");
-	ETC_GameObject_List.push_back(pUI_ManaBar);
 	dynamic_cast<CUI_ManaBar*>(pUI_ManaBar)->Get_PlayMana(dynamic_cast<CPlayer*>(pPlayer)->Get_Play_Mana());
 
 	//Engine::CTransform* pCameraTransform = dynamic_cast<Engine::CTransform*>(pCamera->Get_Component_In_Map(L"Com_Transform"));
