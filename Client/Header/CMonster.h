@@ -44,10 +44,13 @@ public:
 	void Hit(UINT Damage);
 	UINT Get_Hp();
 	void Die();
+	D3DXVECTOR3 Get_Dex_Position();
+
 
 protected:
 	HRESULT Ready_Shader(const float& fTimeDelta);
 	void Update_Current_State();
+
 
 public:
 	virtual CGameObject * Clone() = 0;
@@ -79,16 +82,10 @@ protected:
 	float m_fTimeAcc = 0.f;
 	float m_fAttackTime = 0.f;					//공격모션과 공격타이밍의 싱크를 맞추는 용도
 	float m_fMoveSpeed = 20.f;
-	
-public:
-	eMonsterState Get_Current_State();
-	CGameObject* Get_Target();
-	bool Get_Attack_Able();
-	D3DXVECTOR3 Get_Dex_Position();
+	float	m_fAttackDelay = 2.f;
 
-private:
-	HRESULT Ready_Shader(const float& fTimeDelta);
-	void Update_Current_State();
+	
+
 
 private:
 
@@ -108,9 +105,7 @@ private:
 	unsigned int m_iCurIndex = 0;
 	D3DXVECTOR3 Dex_Position;
 
-protected:
-	float	m_fMoveSpeed = 20.f;
-	float	m_fAttackDelay = 2.f;
+
 };
 
 

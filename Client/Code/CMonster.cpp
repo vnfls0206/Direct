@@ -53,15 +53,9 @@ void CMonster::Hit(UINT Damage)
 
 
 
-bool CMonster::Is_Can_Attack()
-{
-	return false;
-}
 
-eMonsterState CMonster::Get_State()
-{
-	return eMonsterState();
-}
+
+
 
 
 bool CMonster::Node_Check(Engine::CGameObject_Manager* GM, list<node*> checked_List, D3DXVECTOR3 t_Position)	//t_position = target_p
@@ -136,14 +130,7 @@ bool CMonster::Node_Check(Engine::CGameObject_Manager* GM, list<node*> checked_L
 }
 
 
-Engine::CGameObject * CMonster::Create(LPDIRECT3DDEVICE9 pGraphic_Device, MON_INFO m_mon_info)
-{
-	CMonster* pInstance = new CMonster(pGraphic_Device, m_mon_info);
-	if (FAILED(pInstance->Initialize_GameObject()))
-	{
-		m_Info.uiHP -= Damage;
-	}
-}
+
 
 UINT CMonster::Get_Hp() { return m_Info.uiHP; }
 
@@ -153,10 +140,7 @@ void CMonster::Die()
 	Free();
 }
 
-bool CMonster::Get_Attack_Able()
-{
-	return IsCanAttack;
-}
+
 
 D3DXVECTOR3 CMonster::Get_Dex_Position()
 {

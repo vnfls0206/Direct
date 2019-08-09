@@ -74,6 +74,7 @@ private :
 	unsigned int m_iMinIndex = 0;
 	unsigned int m_iMaxIndex = 5;
 	unsigned int m_iCurIndex = 0;
+	D3DXVECTOR3 m_Dex_p;
 
 private :
 	float	m_fMoveSpeed = 200.f;
