@@ -51,9 +51,9 @@ protected:
 
 private:
 	Engine::CTransform*		m_pObjectTransform;
-	float*					m_fObjectHp;
+	UINT*					m_fObjectHp;
 public:
-	void					Get_Object_Transform(Engine::CTransform* vTransform,float* HP);
+	void					Get_Object_Transform(Engine::CTransform* vTransform,UINT* HP);
 
 };
 

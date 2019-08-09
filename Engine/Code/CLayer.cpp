@@ -34,7 +34,7 @@ void Engine::CLayer::Delete_GameObject_In_Layer(const int iObjectIndex)
 	}
 }
 
-UINT Engine::CLayer::Get_List_Size(){return m_uiListSize;}
+int Engine::CLayer::Get_List_Size(){return m_uiListSize;}
 
 Engine::CGameObject * Engine::CLayer::Get_GameObject_In_List(const int iIndex)
 {

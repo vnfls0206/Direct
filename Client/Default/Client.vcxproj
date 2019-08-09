@@ -165,7 +165,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\CArrow.h" />
     <ClInclude Include="..\Header\CBack.h" />
+    <ClInclude Include="..\Header\CBowMonster.h" />
     <ClInclude Include="..\Header\Client_Define.h" />
     <ClInclude Include="..\Header\Client_Enum.h" />
     <ClInclude Include="..\Header\Client_Extern.h" />
@@ -177,11 +179,11 @@
     <ClInclude Include="..\Header\CScene_Stage.h" />
     <ClInclude Include="..\Header\CSound_Manager.h" />
     <ClInclude Include="..\Header\CStatic_Camera.h" />
+    <ClInclude Include="..\Header\CSwordMonster.h" />
     <ClInclude Include="..\Header\CUI_HPBar.h" />
     <ClInclude Include="..\Header\CUI_Card.h" />
     <ClInclude Include="..\Header\CUI_ManaBar.h" />
     <ClInclude Include="..\Header\CVideo_Manager.h" />
-    <ClInclude Include="..\Header\Enemy.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Client_Funtion.h" />
     <ClInclude Include="Client_Struct.h" />
@@ -190,7 +192,9 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\CArrow.cpp" />
     <ClCompile Include="..\Code\CBack.cpp" />
+    <ClCompile Include="..\Code\CBowMonster.cpp" />
     <ClCompile Include="..\Code\CMainGame.cpp" />
     <ClCompile Include="..\Code\CMonster.cpp" />
     <ClCompile Include="..\Code\CPlayer.cpp" />
@@ -198,11 +202,11 @@
     <ClCompile Include="..\Code\CScene_Stage.cpp" />
     <ClCompile Include="..\Code\CSound_Manager.cpp" />
     <ClCompile Include="..\Code\CStatic_Camera.cpp" />
+    <ClCompile Include="..\Code\CSwordMonster.cpp" />
     <ClCompile Include="..\Code\CUI_HpBar.cpp" />
     <ClCompile Include="..\Code\CUI_Card.cpp" />
     <ClCompile Include="..\Code\CUI_ManaBar.cpp" />
     <ClCompile Include="..\Code\CVideo_Manager.cpp" />
-    <ClCompile Include="..\Code\Enemy.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
