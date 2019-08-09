@@ -1,7 +1,9 @@
 #include "stdafx.h"
 #include "CUI_HpBar.h"
 
+#include "CGameObject_Manager.h"
 #include "CComponent_Manager.h"
+#include "Client_Include.h"
 
 #include "CTransform.h"
 #include "CTexture.h"
@@ -26,11 +28,10 @@ HRESULT CUI_HpBar::Initialize_GameObject()
 HRESULT CUI_HpBar::Initialize_CloneObject()
 {
 	m_fTimeAcc = 0.f;
-
 	m_pTransform = dynamic_cast<Engine::CTransform*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Transform"));
 	if (m_pTransform == nullptr) {
-		MSG_BOX("Æ®·£½ºÆû ÄÄÆ÷³ÍÆ®°¡ NULLPTR ·Î ¹ÝÈ¯");
+		MSG_BOX("Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ NULLPTR ï¿½ï¿½ ï¿½ï¿½È¯");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Transform", m_pTransform);
@@ -42,15 +43,24 @@ HRESULT CUI_HpBar::Initialize_CloneObject()
 	m_pTextureCom = dynamic_cast<Engine::CTexture*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Texture_UI_Bar"));
 	if (m_pTextureCom == nullptr) {
-		MSG_BOX("ÅØ½ºÃ³ ÄÄÆ÷³ÍÆ®°¡ NULLPTR ·Î ¹ÝÈ¯");
+		MSG_BOX("ï¿½Ø½ï¿½Ã³ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ NULLPTR ï¿½ï¿½ ï¿½ï¿½È¯");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Texture", m_pTextureCom);
 
+	m_pTextureCom2 = dynamic_cast<Engine::CTexture*>
+		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Texture_UI_Font"));
+	if (m_pTextureCom2 == nullptr) {
+		MSG_BOX("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ NULLPTR ï¿½ï¿½ ï¿½ï¿½È¯");
+		return E_FAIL;
+	}
+	
+	m_mapComponent.emplace(L"Com_Texture2", m_pTextureCom2);
+
 	m_pRenderCom = dynamic_cast<Engine::CRenderCom*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Proto(L"Component_RenderCom"));
 	if (m_pRenderCom == nullptr) {
-		MSG_BOX("·»´õ·¯ ÄÄÆ÷³ÍÆ®°¡ NULLPTR ·Î ¹ÝÈ¯");
+		MSG_BOX("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ NULLPTR ï¿½ï¿½ ï¿½ï¿½È¯");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Renderer", m_pRenderCom);
@@ -58,7 +68,7 @@ HRESULT CUI_HpBar::Initialize_CloneObject()
 	m_pShaderCom = dynamic_cast<Engine::CShader*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Shader_Default"));
 	if (m_pShaderCom == nullptr) {
-		MSG_BOX("½¦ÀÌ´õ ÄÄÆ÷³ÍÆ®°¡ NULLPTR ·Î ¹ÝÈ¯");
+		MSG_BOX("ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ NULLPTR ï¿½ï¿½ ï¿½ï¿½È¯");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Shader", m_pShaderCom);
@@ -66,15 +76,15 @@ HRESULT CUI_HpBar::Initialize_CloneObject()
 	m_pBufferCom = dynamic_cast<Engine::CBuffer*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Buffer_RcTex"));
 	if (m_pBufferCom == nullptr) {
-		MSG_BOX("¹öÆÛ ÄÄÆ÷³ÍÆ®°¡ NULLPTR ·Î ¹ÝÈ¯");
+		MSG_BOX("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ NULLPTR ï¿½ï¿½ ï¿½ï¿½È¯");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Buffer", m_pBufferCom);
 
-	// ¸¯À» Àâ°í =->...
-	// ÇÃ·¹ÀÌ¾î°´Ã¼¸¦ ¶ç¿öº¼²¨¾ß...-> Ä«¸Þ¶ó¸¦ ÇÃ·¹ÀÌ¾î¿¡ °íÁ¤½ÃÅ°°í,
-	// ¿òÁ÷ÀÏ°Å¾ß....
-	// °´Ã¼¸¦ ÇÏ³ª ´õ¸¸¤§¸£¾î¼­, ¾ê¸¦ ¹è°æÀ¸·Î.... // ³»ÀÏÇÏÀÚ..
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ =->...
+	// ï¿½Ã·ï¿½ï¿½Ì¾î°´Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½...-> Ä«ï¿½Þ¶ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½,
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ï°Å¾ï¿½....
+	// ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Ï³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½î¼­, ï¿½ê¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.... // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½..
 
 	return NOERROR;
 }
@@ -82,11 +92,9 @@ HRESULT CUI_HpBar::Initialize_CloneObject()
 void CUI_HpBar::Update_GameObject(const float & fTimeDelta)
 {
 	m_pTransform->Make_LocalSpace_Matrix();
+	
+	vPos = m_pObjectTransform->Get_Position();
 
-	if (*m_fObjectHp <= 0)
-		*m_fObjectHp = 0;
-
-	D3DXVECTOR3 vPos = m_pObjectTransform->Get_Position();
 	m_pTransform->Set_Scale(D3DXVECTOR3(*m_fObjectHp, 15.f, 1.f));
 	m_pTransform->Set_Position(D3DXVECTOR3(vPos.x - ( (100-*m_fObjectHp) / 2), vPos.y+60.f, vPos.z));
 }
@@ -100,15 +108,22 @@ void CUI_HpBar::LastUpdate_GameObject(const float & fTimeDelta)
 void CUI_HpBar::Render_GameObject()
 {
 	m_pShaderCom->Get_Effect()->Begin(0, 0);
-	m_pShaderCom->Get_Effect()->BeginPass(1);
+	m_pShaderCom->Get_Effect()->BeginPass(0);
 
 	if (FAILED(m_pBufferCom->Draw_Buffer()))
 	{
-		MSG_BOX("½¦ÀÌ´õ ³»¿¡¼­ Á¤Á¡À» ±×¸®·Á´Â µ¥ ½ÇÆÐÇß½À´Ï´Ù.");
+		MSG_BOX("ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
 	}
 
 	m_pShaderCom->Get_Effect()->EndPass();
 	m_pShaderCom->Get_Effect()->End();
+
+	if (*m_fObjectHp != m_fObjectHp2)
+	{
+		int Damage = m_fObjectHp2 - *m_fObjectHp;
+		Set_Object_DamageFont(Damage);
+		m_fObjectHp2 = *m_fObjectHp;
+	}
 }
 
 Engine::CGameObject * CUI_HpBar::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -125,9 +140,10 @@ Engine::CGameObject * CUI_HpBar::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 Engine::CGameObject * CUI_HpBar::Clone()
 {
 	CUI_HpBar* pInstance = new CUI_HpBar(*this);
+
 	if (FAILED(pInstance->Initialize_CloneObject()))
 	{
-		MSG_BOX("ÇØ´ç Å¬·Ð ½Ã ÃÊ±âÈ­¿¡ ½ÇÆÐ");
+		MSG_BOX("ï¿½Ø´ï¿½ Å¬ï¿½ï¿½ ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		Engine::Safe_Release(pInstance);
 	}
 	return pInstance;
@@ -145,7 +161,7 @@ HRESULT CUI_HpBar::Ready_Shader(const float& fTimedetla)
 
 	m_pShaderCom->Get_Effect()->SetTexture("g_texture",
 		m_pTextureCom->Get_Texture_From_Array_In_Vector(0));
-
+	 
 	return NOERROR;
 }
 
@@ -153,8 +169,68 @@ void CUI_HpBar::Free()
 {
 }
 
-void CUI_HpBar::Get_Object_Transform(Engine::CTransform * vTransform, float* HP)
+void CUI_HpBar::Set_Object_DamageFont(int Damage)
+{
+	Engine::CGameObject_Manager* pObjMgr = Engine::CGameObject_Manager::GetInstance();
+	
+	if (Damage < 10)
+	{
+		for (int i = 0; i < 20; i++)
+		{
+			pFont = pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_UI_Font")->Get_GameObject_In_List(i);
+			m_pFont_Transform = dynamic_cast<Engine::CTransform*>(pFont->Get_Component_In_Map(L"Com_Transform"));
+			fPos = m_pFont_Transform->Get_Position();
+			if (fPos.z == -50.f)
+			{
+				m_pFont_Transform->Set_Position(D3DXVECTOR3(vPos.x + 40.f, vPos.y + 80.f, vPos.z));
+				m_pFont_Shader = dynamic_cast<Engine::CShader*>(pFont->Get_Component_In_Map(L"Com_Shader"));
+				m_pFont_Shader->Get_Effect()->SetTexture("g_texture",
+					m_pTextureCom2->Get_Texture_From_Array_In_Vector(Damage));
+				break;
+			}
+		}
+	}
+
+	else if(Damage>=10)
+	{
+		int Damage10, Damage1 , Count;
+
+		Damage10 = Damage / 10;
+		Damage1  = Damage % 10;
+		Count = 0;
+
+		for (int i = 0; i < 20; i++)
+		{
+			pFont = pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_UI_Font")->Get_GameObject_In_List(i);
+			m_pFont_Transform = dynamic_cast<Engine::CTransform*>(pFont->Get_Component_In_Map(L"Com_Transform"));
+			fPos = m_pFont_Transform->Get_Position();
+			if (fPos.z == -50.f)
+			{		
+				if (Count == 0)
+				{
+					m_pFont_Transform->Set_Position(D3DXVECTOR3(vPos.x + 40.f - (20 * Count), vPos.y + 80.f, vPos.z));
+					m_pFont_Shader = dynamic_cast<Engine::CShader*>(pFont->Get_Component_In_Map(L"Com_Shader"));
+					m_pFont_Shader->Get_Effect()->SetTexture("g_texture",
+						m_pTextureCom2->Get_Texture_From_Array_In_Vector(Damage1));
+				}
+				else if (Count == 1)
+				{
+					m_pFont_Transform->Set_Position(D3DXVECTOR3(vPos.x + 40.f - (20 * Count), vPos.y + 80.f, vPos.z));
+					m_pFont_Shader = dynamic_cast<Engine::CShader*>(pFont->Get_Component_In_Map(L"Com_Shader"));
+					m_pFont_Shader->Get_Effect()->SetTexture("g_texture",
+						m_pTextureCom2->Get_Texture_From_Array_In_Vector(Damage10));
+				}
+				else
+					break;
+				++Count;
+			}
+		}
+	}
+}
+
+void CUI_HpBar::Get_Object_Transform(Engine::CTransform * vTransform, UINT* HP)
 {
 	m_pObjectTransform = vTransform;
 	m_fObjectHp = HP;
+	m_fObjectHp2 = *HP;
 }

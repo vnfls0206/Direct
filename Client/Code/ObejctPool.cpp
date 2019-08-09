@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "CUI_Card.h"
+#include "ObejctPool.h"
 
 #include "CComponent_Manager.h"
 
@@ -9,24 +9,24 @@
 #include "CRenderCom.h"
 #include "CBuffer_RcTex.h"
 
-CUI_Card::CUI_Card(LPDIRECT3DDEVICE9 pGraphic_Device)
-	: Engine::CGameObject(pGraphic_Device)
+ObjectPool::ObjectPool(LPDIRECT3DDEVICE9 pGraphic_Device)
+	:Engine::CGameObject(pGraphic_Device)
 {
 }
-CUI_Card::CUI_Card(const CUI_Card & rhs)
+
+ObjectPool::ObjectPool(const ObjectPool & rhs)
 	:Engine::CGameObject(rhs)
 {
 }
 
-HRESULT CUI_Card::Initialize_GameObject()
+HRESULT ObjectPool::Initialize_GameObject()
 {
-	return NOERROR;;
+	return S_OK;
 }
 
-HRESULT CUI_Card::Initialize_CloneObject()
+HRESULT ObjectPool::Initialize_CloneObject()
 {
 	m_fTimeAcc = 0.f;
-
 	m_pTransform = dynamic_cast<Engine::CTransform*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Transform"));
 	if (m_pTransform == nullptr) {
@@ -35,12 +35,12 @@ HRESULT CUI_Card::Initialize_CloneObject()
 	}
 	m_mapComponent.emplace(L"Com_Transform", m_pTransform);
 
-	m_pTransform->Set_Position(D3DXVECTOR3(0.f, -10.f, 0.5f));
-	m_pTransform->Set_Scale(D3DXVECTOR3(100.f, 120.f, 1.f));
+	m_pTransform->Set_Position(D3DXVECTOR3(0.f, 0.f, -50.f));
+	m_pTransform->Set_Scale(D3DXVECTOR3(20.f, 20.f, 0.f));
 	m_pTransform->Set_Rotation(D3DXVECTOR3(D3DXToRadian(0.f), D3DXToRadian(-180.f), D3DXToRadian(0.f)));
 
 	m_pTextureCom = dynamic_cast<Engine::CTexture*>
-		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Texture_UI_Card"));
+		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Texture_UI_Font"));
 	if (m_pTextureCom == nullptr) {
 		MSG_BOX("텍스처 컴포넌트가 NULLPTR 로 반환");
 		return E_FAIL;
@@ -79,34 +79,48 @@ HRESULT CUI_Card::Initialize_CloneObject()
 	return NOERROR;
 }
 
-void CUI_Card::Update_GameObject(const float & fTimeDelta)
+void ObjectPool::Update_GameObject(const float & fTimeDelta)
 {
+	m_fTimeAcc += fTimeDelta;
 	m_pTransform->Make_LocalSpace_Matrix();
-	m_pTransform->Set_Position(m_vUiPosition);
+	D3DXVECTOR3 vPos = m_pTransform->Get_Position();
+
+	if (vPos.z == -50.f)
+		m_fTimeAcc = 0.f;
+	else
+	{
+		vPos.y += 0.5f;
+	}
+
+	if (m_fTimeAcc >= 1.0f)
+		vPos.z = -50.f;
+
+	m_pTransform->Set_Position(vPos);
 }
 
-void CUI_Card::LastUpdate_GameObject(const float & fTimeDelta)
+void ObjectPool::LastUpdate_GameObject(const float & fTimeDelta)
 {
 	m_pRenderCom->Add_GameObject_To_List(Engine::CRenderCom::eRender_10, this);
 	Ready_Shader(fTimeDelta);
 }
 
-void CUI_Card::Render_GameObject()
+void ObjectPool::Render_GameObject()
 {
 	m_pShaderCom->Get_Effect()->Begin(0, 0);
-	m_pShaderCom->Get_Effect()->BeginPass(1);
+	m_pShaderCom->Get_Effect()->BeginPass(0);
 
 	if (FAILED(m_pBufferCom->Draw_Buffer()))
 	{
-			MSG_BOX("쉐이더 내에서 정점을 그리려는 데 실패했습니다.");
+		MSG_BOX("쉐이더 내에서 정점을 그리려는 데 실패했습니다.");
 	}
+
 	m_pShaderCom->Get_Effect()->EndPass();
 	m_pShaderCom->Get_Effect()->End();
 }
 
-Engine::CGameObject * CUI_Card::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
+Engine::CGameObject * ObjectPool::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
-	CUI_Card* pInstance = new CUI_Card(pGraphic_Device);
+	ObjectPool* pInstance = new ObjectPool(pGraphic_Device);
 	if (FAILED(pInstance->Initialize_GameObject()))
 	{
 		MSG_BOX("???");
@@ -115,9 +129,9 @@ Engine::CGameObject * CUI_Card::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 	return pInstance;
 }
 
-Engine::CGameObject * CUI_Card::Clone()
+Engine::CGameObject * ObjectPool::Clone()
 {
-	CUI_Card* pInstance = new CUI_Card(*this);
+	ObjectPool* pInstance = new ObjectPool(*this);
 	if (FAILED(pInstance->Initialize_CloneObject()))
 	{
 		MSG_BOX("해당 클론 시 초기화에 실패");
@@ -126,36 +140,19 @@ Engine::CGameObject * CUI_Card::Clone()
 	return pInstance;
 }
 
-HRESULT CUI_Card::Ready_Shader(const float& fTimedetla)
+HRESULT ObjectPool::Ready_Shader(const float & fTimeDelta)
 {
 	D3DXMATRIX matView, matProj;
-
-	D3DXMatrixIdentity(&matView);
-	D3DXMatrixIdentity(&matProj);
-
-	D3DXMatrixOrthoLH(&matProj, ((float)WINCX), ((float)WINCY), 0.0f, 1.0f);
+	Get_Graphic_Device()->GetTransform(D3DTS_VIEW, &matView);
+	Get_Graphic_Device()->GetTransform(D3DTS_PROJECTION, &matProj);
 
 	m_pShaderCom->Set_Object_Matrix("g_matWorld", m_pTransform->Get_m_matLocal());
 	m_pShaderCom->Set_Object_Matrix("g_matView", &matView);
 	m_pShaderCom->Set_Object_Matrix("g_matProj", &matProj);
 
-	m_pShaderCom->Get_Effect()->SetTexture("g_texture",
-		m_pTextureCom->Get_Texture_From_Array_In_Vector(m_iCard));
-
 	return NOERROR;
 }
 
-void CUI_Card::Set_CardInfo(D3DXVECTOR3 vec, int cardstate)
-{
-	m_vUiPosition = vec;
-	m_iCard = cardstate;
-}
-
-void CUI_Card::Set_Activie(bool b)
-{
-	m_bActivie = b;
-}
-
-void CUI_Card::Free()
+void ObjectPool::Free()
 {
 }

@@ -3,6 +3,7 @@
 #include "Client_Include.h"
 
 #include "CComponent_Manager.h"
+#include "CGameObject_Manager.h"
 
 #include "CTransform.h"
 #include "CTexture.h"
@@ -13,6 +14,8 @@
 
 #include "CSound_Manager.h"
 #include "CKeyManager.h"
+
+#include "CArrow.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: Engine::CGameObject(pGraphic_Device)
@@ -33,20 +36,28 @@ HRESULT CPlayer::Initialize_GameObject()
 
 HRESULT CPlayer::Initialize_CloneObject()
 {
+	m_pObjMgr = Engine::CGameObject_Manager::GetInstance();
+
+	m_stInfo = { {{ 0.5f, 2, 2 }, { 0.5f, 0, 0 }, { 0.5f, 3, 3 }, { 0.5f, 1, 1 },
+				{ 0.5f, 16, 21 }, { 0.5f, 4, 9 }, { 0.5f, 22, 27 }, { 0.5f, 10, 15 },
+				{ 0.5f, 36, 39 }, { 0.5f, 28, 31 }, { 0.5f, 40, 43 }, { 0.5f, 32, 35 }},
+				300, 30, 400, 25.f, 0.4f , L"Summoner" };
+			//���ݹ��� ���ݷ�, ü��, ����, ���ݵ�����, �̸�
+
 	m_fTimeAcc = 0.f;
-	m_fHp = 100.f;
-	m_fMana = 100.f;
+	m_stInfo.uiHP = 100;
+	m_stInfo.fMana= 100.f;
 
 
 	m_pTransform = dynamic_cast<Engine::CTransform*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Transform"));
 	if (m_pTransform == nullptr) {
-		MSG_BOX("Ʈ������ ������Ʈ�� NULLPTR �� ��ȯ");
+		MSG_BOX("Transform return NULLPTR ");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Transform", m_pTransform);
 
-	m_pTransform->Set_Position(D3DXVECTOR3(-200.f, 0.f, -5.f));
+	m_pTransform->Set_Position(D3DXVECTOR3(200.f, 0.f, -5.f));
 	m_pTransform->Set_Scale(D3DXVECTOR3(100.f, 100.f, 1.f));
 	m_pTransform->Set_Rotation(D3DXVECTOR3(D3DXToRadian(0.f), D3DXToRadian(180.f), D3DXToRadian(0.f)));
 
@@ -55,7 +66,7 @@ HRESULT CPlayer::Initialize_CloneObject()
 	m_pTextureCom = dynamic_cast<Engine::CTexture*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Texture_Player"));
 	if (m_pTextureCom == nullptr) {
-		MSG_BOX("�ؽ�ó ������Ʈ�� NULLPTR �� ��ȯ");
+		MSG_BOX("Texture return NULLPTR ");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Texture", m_pTextureCom);
@@ -63,7 +74,7 @@ HRESULT CPlayer::Initialize_CloneObject()
 	m_pRenderCom = dynamic_cast<Engine::CRenderCom*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Proto(L"Component_RenderCom"));
 	if (m_pRenderCom == nullptr) {
-		MSG_BOX("������ ������Ʈ�� NULLPTR �� ��ȯ");
+		MSG_BOX("Render return NULLPTR ");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Renderer", m_pRenderCom);
@@ -71,7 +82,7 @@ HRESULT CPlayer::Initialize_CloneObject()
 	m_pShaderCom = dynamic_cast<Engine::CShader*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Shader_Default"));
 	if (m_pShaderCom == nullptr) {
-		MSG_BOX("���̴� ������Ʈ�� NULLPTR �� ��ȯ");
+		MSG_BOX("Shader return NULLPTR ");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Shader", m_pShaderCom);
@@ -79,7 +90,7 @@ HRESULT CPlayer::Initialize_CloneObject()
 	m_pBufferCom = dynamic_cast<Engine::CBuffer*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Buffer_RcTex"));
 	if (m_pBufferCom == nullptr) {
-		MSG_BOX("���� ������Ʈ�� NULLPTR �� ��ȯ");
+		MSG_BOX("Buffer return NULLPTR ");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Buffer", m_pBufferCom);
@@ -87,11 +98,11 @@ HRESULT CPlayer::Initialize_CloneObject()
 	m_pCollider = dynamic_cast<Engine::CCollider*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Collider"));
 	if (m_pCollider == nullptr) {
-		MSG_BOX("�ݶ��̴� ������Ʈ�� NULLPTR �� ��ȯ");
+		MSG_BOX("Collider return NULLPTR");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Collider", m_pCollider);
-	m_pCollider->Initialize_Collider(m_pTransform->Get_m_matLocal(), m_pTransform->Get_Scale());
+	m_pCollider->Initialize_Collider(m_pTransform->Get_m_matLocal());
 
 
 	return NOERROR;
@@ -99,9 +110,7 @@ HRESULT CPlayer::Initialize_CloneObject()
 
 void CPlayer::Update_GameObject(const float & fTimeDelta)
 {
-	m_pTransform->Make_LocalSpace_Matrix();
-
-	D3DXVECTOR3 vPos = m_pTransform->Get_Position();
+	//D3DXVECTOR3 vPos = m_pTransform->Get_Position();
 
 	/*if (Engine::CKeyManager::GetInstance()->KeyPressing(VK_LEFT)) {
 		vPos.x -= m_fMoveSpeed * fTimeDelta;
@@ -118,9 +127,7 @@ void CPlayer::Update_GameObject(const float & fTimeDelta)
 		vPos.y -= 5000.f * fTimeDelta;
 	}*/
 
-
-
-	m_pTransform->Set_Position(vPos);
+	//m_pTransform->Set_Position(vPos);
 	/*
 	if(Engine::CKeyManager::GetInstance()->KeyDown(VK_LBUTTON))
 	{
@@ -133,6 +140,7 @@ void CPlayer::Update_GameObject(const float & fTimeDelta)
 
 
 	m_pTransform->MoveToPosition(m_Dex_p, m_fMoveSpeed, fTimeDelta);
+	m_pTransform->Make_LocalSpace_Matrix();
 	m_pCollider->Set_ColliderPos(m_pTransform->Get_m_matLocal());
 }
 
@@ -149,13 +157,13 @@ void CPlayer::Render_GameObject()
 
 	if (FAILED(m_pBufferCom->Draw_Buffer()))
 	{
-		MSG_BOX("���̴� ������ ������ �׸����� �� �����߽��ϴ�.");
+		MSG_BOX("Draw_Buffer failed in Player.");
 	}
 
 	m_pShaderCom->Get_Effect()->EndPass();
 	m_pShaderCom->Get_Effect()->End();
 
-	m_pCollider->Render_Collider();
+	m_pCollider->Render_Collider(255, 0, 255, 0);
 }
 
 Engine::CGameObject * CPlayer::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -173,7 +181,7 @@ Engine::CGameObject * CPlayer::Clone()
 	CPlayer* pInstance = new CPlayer(*this);
 	if (FAILED(pInstance->Initialize_CloneObject()))
 	{
-		MSG_BOX("�ش� Ŭ�� �� �ʱ�ȭ�� ����");
+		MSG_BOX("Player failed Clone Initialization");
 		Engine::Safe_Release(pInstance);
 	}
 	return pInstance;
@@ -184,24 +192,72 @@ void CPlayer::Set_Dex_P(D3DXVECTOR3 m_dex)
 	m_Dex_p = m_dex;
 }
 
-void CPlayer::Play_Damage(float damage)
+void CPlayer::Play_Damage(UINT damage)
 {
-	m_fHp -= damage;
+	if (m_stInfo.uiHP < damage)
+		m_stInfo.uiHP = 0;
+	else
+		m_stInfo.uiHP -= damage;
 }
 
 void CPlayer::Play_Use_Skill(float ManaCost)
 {
-	m_fMana -= ManaCost;
+	m_stInfo.fMana -= ManaCost;
 }
 
-float * CPlayer::Get_Play_Hp()
+UINT * CPlayer::Get_Play_Hp()
 {
-	return &m_fHp;
+	return &m_stInfo.uiHP;
 }
 
 float * CPlayer::Get_Play_Mana()
 {
-	return &m_fMana;
+	return &m_stInfo.fMana;
+}
+
+void CPlayer::Set_Target(Engine::CGameObject * pTarget)
+{
+	m_pTarget = pTarget;
+}
+
+void CPlayer::Attack(const float& fTimeDelta)
+{
+	if ((m_fAttackTime >= 0.4f) || (m_fAttackTime < 0.5f))
+	{
+		//ȭ�����
+		CArrow* arrow = dynamic_cast<CArrow*>(m_pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Arrow",
+			(int)eScene_Stage1, L"Layer_Arrow"));
+		arrow->Set_Damage(m_stInfo.uiAttackDamage);
+		arrow->Set_Target(m_pTarget);
+		arrow->Set_Position(m_pTransform->Get_Position());
+		//CArrow::Create(Get_Graphic_Device(), Target);
+	}
+	else if (m_fAttackTime >= 0.5f)
+	{
+		m_fAttackTime = 0.f;
+	}
+	m_fAttackTime += fTimeDelta;
+}
+
+void CPlayer::Hit(UINT uiDamage)
+{
+	if (uiDamage < 0)
+	{
+		return;
+	}
+	if (m_stInfo.uiHP <= uiDamage)
+	{
+		m_stInfo.uiHP = 0;
+		m_Current_State = eDie;
+	}
+	else if (m_stInfo.uiHP >= uiDamage)
+	{
+		m_stInfo.uiHP -= uiDamage;
+	}
+}
+
+void CPlayer::Die()
+{
 }
 
 HRESULT CPlayer::Ready_Shader(const float& fTimedetla)
@@ -235,6 +291,12 @@ HRESULT CPlayer::Ready_Shader(const float& fTimedetla)
 
 void CPlayer::Free()
 {
+	Engine::Safe_Release(m_pTransform);
+	Engine::Safe_Release(m_pBufferCom);
+	Engine::Safe_Release(m_pTextureCom);
+	Engine::Safe_Release(m_pShaderCom);
+	Engine::Safe_Release(m_pRenderCom);
+	Engine::Safe_Release(m_pCollider);
 
 	Engine::CGameObject::Free();
 }

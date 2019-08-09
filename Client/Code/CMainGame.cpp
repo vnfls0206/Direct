@@ -23,11 +23,14 @@
 #include "CStatic_Camera.h"
 #include "CPlayer.h"
 #include "CMonster.h"
+#include "CSwordMonster.h"
+#include "CBowMonster.h"
+#include "CArrow.h"
 #include "CBack.h"
-#include "Enemy.h"
 #include "CUI_Card.h"
 #include "CUI_HpBar.h"
 #include "CUI_ManaBar.h"
+#include "ObejctPool.h"
 
 
 #include "CScene_Logo.h"
@@ -56,11 +59,11 @@ HRESULT CMainGame::Initialize_CMainGame()
 {
 	if (FAILED(m_pGraphic_Device->Intialize_CGraphic_Device(g_hWnd, m_pGraphic_Device->eWInMode, WINCX, WINCY, &m_pDevice)))
 	{
-		MSG_BOX("����̽� �ʱ�ȭ�� �����Ͽ����ϴ�!");
+		MSG_BOX("Graphic Device failed Initialization!");
 		return E_FAIL;
 	}
 	
-	m_pFontMgr->Add_Font(m_pDevice, 10, 10, FW_LIGHT, L"굴림");
+	m_pFontMgr->Add_Font(m_pDevice, 20, 20, FW_LIGHT, L"굴림");
 
 	m_pGameObject->Reserve_Proto_Layer_Array(eScene_Count);
 
@@ -68,13 +71,13 @@ HRESULT CMainGame::Initialize_CMainGame()
 		Engine::CTransform::Create(m_pDevice));
 
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_Player",
-		Engine::CTexture::Create(m_pDevice, L"../../Resource/Player/Move/Back/", L".png", 0, 5));
-
-	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_Enemy",
-		Engine::CTexture::Create(m_pDevice, L"../../Resource/Player/", L".png", 0, 0));
+		Engine::CTexture::Create(m_pDevice, L"../../Resource/Player/", L".png", 0, 88));
 
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_Rinel",
 		Engine::CTexture::Create(m_pDevice, L"../../Resource/Rinel/", L".png", 0, 82));
+
+	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_SwordMonster",
+		Engine::CTexture::Create(m_pDevice, L"../../Resource/SwordMonster/", L".png", 0, 48));
 
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_Back",
 		Engine::CTexture::Create(m_pDevice, L"../../Resource/Back/", L".dds", 0, 0));
@@ -84,6 +87,9 @@ HRESULT CMainGame::Initialize_CMainGame()
 
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_UI_Bar",
 		Engine::CTexture::Create(m_pDevice, L"../../Resource/UI/Bar/", L".png", 0, 1));
+
+	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_UI_Font",
+		Engine::CTexture::Create(m_pDevice, L"../../Resource/UI/Font/", L".png", 0, 9));
 
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Buffer_RcTex",
 		Engine::CBuffer_RcTex::Create(m_pDevice));
@@ -105,17 +111,14 @@ HRESULT CMainGame::Initialize_CMainGame()
 		L"GameObject_Proto_StaticCamera", CStatic_Camera::Create(m_pDevice, tagView, tagProj));
 	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
 		L"GameObject_Proto_Player", CPlayer::Create(m_pDevice));
-	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
-		L"GameObject_Proto_Enemy", Enemy::Create(m_pDevice));
-
-	MON_INFO Rinel_Info = { {{ 0.5f, 8, 15 }, { 0.5f, 24, 31 }, { 0.5f, 16, 23 }, { 0.5f, 0, 7 },
-							 { 0.5f, 37, 41 }, { 0.5f, 47, 51 }, { 0.5f, 42, 46 }, { 0.5f, 32, 36 },
-							 { 0.5f, 60, 66 }, { 0.5f, 75, 82 }, { 0.5f, 67, 74 }, { 0.5f, 52, 59 }}, 300, 150 };
 
 
 	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
-		L"GameObject_Proto_Rinel", CMonster::Create(m_pDevice, Rinel_Info));
-
+		L"GameObject_Proto_SwordMonster", CSwordMonster::Create(m_pDevice));
+	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
+		L"GameObject_Proto_BowMonster", CBowMonster::Create(m_pDevice));
+	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
+		L"GameObject_Proto_Arrow", CArrow::Create(m_pDevice));
 	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
 		L"GameObject_Proto_Back", CBack::Create(m_pDevice));
 	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
@@ -124,6 +127,8 @@ HRESULT CMainGame::Initialize_CMainGame()
 		L"GameObject_Proto_UI_HpBar", CUI_HpBar::Create(m_pDevice));
 	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
 		L"GameObject_Proto_UI_ManaBar", CUI_ManaBar::Create(m_pDevice));
+	m_pGameObject->Insert_Prototype_GameObject_To_ProtoMap((int)eScene_Static,
+		L"GameObject_Proto_UI_Font", ObjectPool::Create(m_pDevice));
 
 	Engine::Safe_Release(m_pGameObject);
 	Engine::Safe_Release(m_pComponentMgr);
@@ -175,7 +180,7 @@ void CMainGame::Render()
 		m_pManagement->Render_CurrentScene();
 
 		POINT pt = { 0,20 };
-		m_pFontMgr->Render_Font(L"����", m_szFPS, pt, D3DCOLOR_ARGB(255, 83, 223, 214));
+		m_pFontMgr->Render_Font(L"굴림", m_szFPS, pt, D3DCOLOR_ARGB(255, 83, 223, 214));
 
 		m_pDevice->EndScene();
 		m_pDevice->Present(nullptr, nullptr, g_hWnd, nullptr);
@@ -205,7 +210,7 @@ CMainGame * CMainGame::Create()
 	CMainGame* pInstance = new CMainGame();
 	if (FAILED(pInstance->Initialize_CMainGame()))
 	{
-		MSG_BOX("����̽� ��������!");
+		MSG_BOX("MainGame failed initialization!");
 		Engine::Safe_Release(pInstance);
 	}
 	return pInstance;

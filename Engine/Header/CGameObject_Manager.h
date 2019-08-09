@@ -17,10 +17,6 @@ private :
 	virtual ~CGameObject_Manager() = default;
 
 
-
-
-
-
 public :
 	// ������ => ���� �󸶸�ŭ�� ������Ÿ�� ���������, ���̾� ��������� �Ҵ��س�������.
 	void				Reserve_Proto_Layer_Array(const int iNumScene);	// �Ű����� : �� ����

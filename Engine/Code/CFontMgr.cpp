@@ -22,7 +22,10 @@ void Engine::CFontMgr::Render_Font(const TCHAR * pFontKey, const TCHAR * pSenten
 {
 	Engine::CFont* pFont = Check_Overlapped_Fonts(pFontKey);
 	if (pFont == nullptr)
+	{
+		MSG_BOX("해당 폰트가 존재하지 않습니다..");
 		return;
+	}
 
 	pFont->Render_Font(pSentence, SenPoint, pARGB);
 }
