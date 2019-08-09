@@ -28,6 +28,7 @@ public:
 	virtual void LastUpdate_GameObject(const float & fTimeDelta) override;
 	virtual void Render_GameObject() override;
 
+	void Set_Damage(UINT uiDamage);
 	void Set_Target(Engine::CGameObject* pTarget);
 	void Set_Position(D3DXVECTOR3 vecPos);
 
@@ -44,6 +45,7 @@ private:
 	CGameObject* m_pTarget = nullptr;
 
 	float m_fMoveSpeed = 50.f;
+	UINT m_uiDamage = 0.f;
 
 public:
 	virtual void Free();

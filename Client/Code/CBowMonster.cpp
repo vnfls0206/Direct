@@ -35,7 +35,7 @@ HRESULT CBowMonster::Initialize_CloneObject()
 	m_Info = { {{ 0.5f, 8, 15 }, { 0.5f, 24, 31 }, { 0.5f, 16, 23 }, { 0.5f, 0, 7 },
 							 { 0.5f, 37, 41 }, { 0.5f, 47, 51 }, { 0.5f, 42, 46 }, { 0.5f, 32, 36 },
 							 { 0.5f, 60, 66 }, { 0.5f, 75, 82 }, { 0.5f, 67, 74 }, { 0.5f, 52, 59 }},
-							300, 250, 10, 120, 0.6f, 1, L"BowMon" };
+							300, 250, 10, 120, 0.6f, -1, L"BowMon" };
 
 	m_pPlayer_Transform = dynamic_cast<Engine::CTransform*>(m_pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_Player")->Get_GameObject_In_List(0)->
 		Get_Component_In_Map(L"Com_Transform"));
@@ -174,6 +174,7 @@ void CBowMonster::Attack(const float& fTimeDelta)
 		//화살생성
 		CArrow* arrow = dynamic_cast<CArrow*>(m_pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Arrow",
 			(int)eScene_Stage1, L"Layer_Arrow"));
+		arrow->Set_Damage(m_Info.uiAttackDamage);
 		arrow->Set_Target(Target);
 		arrow->Set_Position(m_pTransform->Get_Position());
 		//CArrow::Create(Get_Graphic_Device(), Target);

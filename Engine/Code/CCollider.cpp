@@ -48,7 +48,7 @@ void Engine::CCollider::Initialize_Collider(D3DXMATRIX* matLocal)
 	D3DXVec3Normalize(&Axis[2], &Axis[2]);
 }
 
-void Engine::CCollider::Set_ColliderPos(D3DXMATRIX* matLocal)
+void Engine::CCollider::Set_ColliderPos(D3DXMATRIX* matLocal, float fScale)
 {
 	/*
 	D3DXVECTOR3 vPos;
@@ -61,6 +61,9 @@ void Engine::CCollider::Set_ColliderPos(D3DXMATRIX* matLocal)
 	memcpy(&vecLook, &matLocal->_31, sizeof(D3DXVECTOR3));
 	memcpy(&Center, &matLocal->_41, sizeof(D3DXVECTOR3));
 
+	vecRight *= fScale;
+	vecUp *= fScale;
+	vecLook *= fScale;
 	vecMax = (vecRight + vecUp + vecLook) / 2.f + Center;
 	vecMin = Center - (vecRight + vecUp + vecLook) / 2.f;
 

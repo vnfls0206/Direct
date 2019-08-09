@@ -11,6 +11,9 @@
 #include "CGameObject_Manager.h"
 #include "CComponent_Manager.h"
 
+#include "CPlayer.h"
+#include "CMonster.h"
+
 CArrow::CArrow(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CGameObject(pGraphic_Device)
 {
@@ -115,7 +118,14 @@ void CArrow::LastUpdate_GameObject(const float & fTimeDelta)
 	Engine::CCollider* pCollider= dynamic_cast<Engine::CCollider*>(m_pTarget->Get_Component_In_Map(L"Com_Collider"));
 	if (m_pCollider->Check_Collision_OBB(pCollider))
 	{
-		//hp°¨¼Ò
+		if (m_pTarget->Tag == L"Layer_Player")
+		{
+			dynamic_cast<CMonster*>(m_pTarget)->Hit(m_uiDamage);
+		}
+		else if (m_pTarget->Tag == L"Layer_Enemy")
+		{
+			dynamic_cast<CPlayer*>(m_pTarget)->Hit(m_uiDamage);
+		}
 		Free();
 	}
 }
@@ -135,6 +145,8 @@ void CArrow::Render_GameObject()
 
 	m_pCollider->Render_Collider(255, 0, 0, 255);
 }
+
+void CArrow::Set_Damage(UINT uiDamage) { m_uiDamage = uiDamage; }
 
 void CArrow::Set_Target(Engine::CGameObject * pTarget)
 {

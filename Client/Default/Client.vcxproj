@@ -180,7 +180,6 @@
     <ClInclude Include="..\Header\CSound_Manager.h" />
     <ClInclude Include="..\Header\CStatic_Camera.h" />
     <ClInclude Include="..\Header\CSwordMonster.h" />
-    <ClInclude Include="..\Header\CUI_Bar.h" />
     <ClInclude Include="..\Header\CUI_HPBar.h" />
     <ClInclude Include="..\Header\CUI_Card.h" />
     <ClInclude Include="..\Header\CUI_ManaBar.h" />
@@ -205,7 +204,6 @@
     <ClCompile Include="..\Code\CSound_Manager.cpp" />
     <ClCompile Include="..\Code\CStatic_Camera.cpp" />
     <ClCompile Include="..\Code\CSwordMonster.cpp" />
-    <ClCompile Include="..\Code\CUI_Bar.cpp" />
     <ClCompile Include="..\Code\CUI_HpBar.cpp" />
     <ClCompile Include="..\Code\CUI_Card.cpp" />
     <ClCompile Include="..\Code\CUI_ManaBar.cpp" />

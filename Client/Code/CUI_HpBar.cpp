@@ -31,7 +31,7 @@ HRESULT CUI_HpBar::Initialize_CloneObject()
 	m_pTransform = dynamic_cast<Engine::CTransform*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Transform"));
 	if (m_pTransform == nullptr) {
-		MSG_BOX("Æ®·£½ºÆû ÄÄÆ÷³ÍÆ®°¡ NULLPTR ·Î ¹ÝÈ¯");
+		MSG_BOX("Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ NULLPTR ï¿½ï¿½ ï¿½ï¿½È¯");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Transform", m_pTransform);
@@ -43,7 +43,7 @@ HRESULT CUI_HpBar::Initialize_CloneObject()
 	m_pTextureCom = dynamic_cast<Engine::CTexture*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Texture_UI_Bar"));
 	if (m_pTextureCom == nullptr) {
-		MSG_BOX("ÅØ½ºÃ³ ÄÄÆ÷³ÍÆ®°¡ NULLPTR ·Î ¹ÝÈ¯");
+		MSG_BOX("ï¿½Ø½ï¿½Ã³ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ NULLPTR ï¿½ï¿½ ï¿½ï¿½È¯");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Texture", m_pTextureCom);
@@ -51,7 +51,7 @@ HRESULT CUI_HpBar::Initialize_CloneObject()
 	m_pTextureCom2 = dynamic_cast<Engine::CTexture*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Texture_UI_Font"));
 	if (m_pTextureCom2 == nullptr) {
-		MSG_BOX("¿¹ºñ ÄÄÆ÷³ÍÆ®°¡ NULLPTR ·Î ¹ÝÈ¯");
+		MSG_BOX("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ NULLPTR ï¿½ï¿½ ï¿½ï¿½È¯");
 		return E_FAIL;
 	}
 	
@@ -60,7 +60,7 @@ HRESULT CUI_HpBar::Initialize_CloneObject()
 	m_pRenderCom = dynamic_cast<Engine::CRenderCom*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Proto(L"Component_RenderCom"));
 	if (m_pRenderCom == nullptr) {
-		MSG_BOX("·»´õ·¯ ÄÄÆ÷³ÍÆ®°¡ NULLPTR ·Î ¹ÝÈ¯");
+		MSG_BOX("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ NULLPTR ï¿½ï¿½ ï¿½ï¿½È¯");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Renderer", m_pRenderCom);
@@ -68,7 +68,7 @@ HRESULT CUI_HpBar::Initialize_CloneObject()
 	m_pShaderCom = dynamic_cast<Engine::CShader*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Shader_Default"));
 	if (m_pShaderCom == nullptr) {
-		MSG_BOX("½¦ÀÌ´õ ÄÄÆ÷³ÍÆ®°¡ NULLPTR ·Î ¹ÝÈ¯");
+		MSG_BOX("ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ NULLPTR ï¿½ï¿½ ï¿½ï¿½È¯");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Shader", m_pShaderCom);
@@ -76,15 +76,15 @@ HRESULT CUI_HpBar::Initialize_CloneObject()
 	m_pBufferCom = dynamic_cast<Engine::CBuffer*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Buffer_RcTex"));
 	if (m_pBufferCom == nullptr) {
-		MSG_BOX("¹öÆÛ ÄÄÆ÷³ÍÆ®°¡ NULLPTR ·Î ¹ÝÈ¯");
+		MSG_BOX("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ NULLPTR ï¿½ï¿½ ï¿½ï¿½È¯");
 		return E_FAIL;
 	}
 	m_mapComponent.emplace(L"Com_Buffer", m_pBufferCom);
 
-	// ¸¯À» Àâ°í =->...
-	// ÇÃ·¹ÀÌ¾î°´Ã¼¸¦ ¶ç¿öº¼²¨¾ß...-> Ä«¸Þ¶ó¸¦ ÇÃ·¹ÀÌ¾î¿¡ °íÁ¤½ÃÅ°°í,
-	// ¿òÁ÷ÀÏ°Å¾ß....
-	// °´Ã¼¸¦ ÇÏ³ª ´õ¸¸¤§¸£¾î¼­, ¾ê¸¦ ¹è°æÀ¸·Î.... // ³»ÀÏÇÏÀÚ..
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ =->...
+	// ï¿½Ã·ï¿½ï¿½Ì¾î°´Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½...-> Ä«ï¿½Þ¶ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½,
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ï°Å¾ï¿½....
+	// ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Ï³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½î¼­, ï¿½ê¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.... // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½..
 
 	return NOERROR;
 }
@@ -115,7 +115,7 @@ void CUI_HpBar::Render_GameObject()
 
 	if (FAILED(m_pBufferCom->Draw_Buffer()))
 	{
-		MSG_BOX("½¦ÀÌ´õ ³»¿¡¼­ Á¤Á¡À» ±×¸®·Á´Â µ¥ ½ÇÆÐÇß½À´Ï´Ù.");
+		MSG_BOX("ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
 	}
 
 	m_pShaderCom->Get_Effect()->EndPass();
@@ -146,7 +146,7 @@ Engine::CGameObject * CUI_HpBar::Clone()
 
 	if (FAILED(pInstance->Initialize_CloneObject()))
 	{
-		MSG_BOX("ÇØ´ç Å¬·Ð ½Ã ÃÊ±âÈ­¿¡ ½ÇÆÐ");
+		MSG_BOX("ï¿½Ø´ï¿½ Å¬ï¿½ï¿½ ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		Engine::Safe_Release(pInstance);
 	}
 	return pInstance;

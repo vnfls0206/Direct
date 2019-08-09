@@ -3,6 +3,7 @@
 #include "Client_Include.h"
 
 #include "CComponent_Manager.h"
+#include "CGameObject_Manager.h"
 
 #include "CTransform.h"
 #include "CTexture.h"
@@ -13,6 +14,8 @@
 
 #include "CSound_Manager.h"
 #include "CKeyManager.h"
+
+#include "CArrow.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: Engine::CGameObject(pGraphic_Device)
@@ -33,9 +36,17 @@ HRESULT CPlayer::Initialize_GameObject()
 
 HRESULT CPlayer::Initialize_CloneObject()
 {
+	m_pObjMgr = Engine::CGameObject_Manager::GetInstance();
+
+	m_stInfo = { {{ 0.5f, 2, 2 }, { 0.5f, 0, 0 }, { 0.5f, 3, 3 }, { 0.5f, 1, 1 },
+				{ 0.5f, 16, 21 }, { 0.5f, 4, 9 }, { 0.5f, 22, 27 }, { 0.5f, 10, 15 },
+				{ 0.5f, 36, 39 }, { 0.5f, 28, 31 }, { 0.5f, 40, 43 }, { 0.5f, 32, 35 }},
+				300, 30, 400, 25.f, 0.4f , L"Summoner" };
+			//공격범위 공격력, 체력, 마나, 공격딜레이, 이름
+
 	m_fTimeAcc = 0.f;
-	m_fHp = 100.f;
-	m_fMana = 100.f;
+	m_stInfo.uiHP = 100;
+	m_stInfo.fMana= 100.f;
 
 
 	m_pTransform = dynamic_cast<Engine::CTransform*>
@@ -181,24 +192,69 @@ void CPlayer::Set_pCursor(POINT m_cursor)
 	m_pCursor = m_cursor;
 }
 
-void CPlayer::Play_Damage(float damage)
+void CPlayer::Play_Damage(UINT damage)
 {
-	m_fHp -= damage;
+	m_stInfo.uiHP -= damage;
 }
 
 void CPlayer::Play_Use_Skill(float ManaCost)
 {
-	m_fMana -= ManaCost;
+	m_stInfo.fMana -= ManaCost;
 }
 
-float * CPlayer::Get_Play_Hp()
+UINT * CPlayer::Get_Play_Hp()
 {
-	return &m_fHp;
+	return &m_stInfo.uiHP;
 }
 
 float * CPlayer::Get_Play_Mana()
 {
-	return &m_fMana;
+	return &m_stInfo.fMana;
+}
+
+void CPlayer::Set_Target(Engine::CGameObject * pTarget)
+{
+	m_pTarget = pTarget;
+}
+
+void CPlayer::Attack(const float& fTimeDelta)
+{
+	if ((m_fAttackTime >= 0.4f) || (m_fAttackTime < 0.5f))
+	{
+		//화살생성
+		CArrow* arrow = dynamic_cast<CArrow*>(m_pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Arrow",
+			(int)eScene_Stage1, L"Layer_Arrow"));
+		arrow->Set_Damage(m_stInfo.uiAttackDamage);
+		arrow->Set_Target(m_pTarget);
+		arrow->Set_Position(m_pTransform->Get_Position());
+		//CArrow::Create(Get_Graphic_Device(), Target);
+	}
+	else if (m_fAttackTime >= 0.5f)
+	{
+		m_fAttackTime = 0.f;
+	}
+	m_fAttackTime += fTimeDelta;
+}
+
+void CPlayer::Hit(UINT uiDamage)
+{
+	if (uiDamage < 0)
+	{
+		return;
+	}
+	if (m_stInfo.uiHP <= uiDamage)
+	{
+		m_stInfo.uiHP = 0;
+		m_Current_State = eDie;
+	}
+	else if (m_stInfo.uiHP >= uiDamage)
+	{
+		m_stInfo.uiHP -= uiDamage;
+	}
+}
+
+void CPlayer::Die()
+{
 }
 
 HRESULT CPlayer::Ready_Shader(const float& fTimedetla)
@@ -232,6 +288,12 @@ HRESULT CPlayer::Ready_Shader(const float& fTimedetla)
 
 void CPlayer::Free()
 {
+	Engine::Safe_Release(m_pTransform);
+	Engine::Safe_Release(m_pBufferCom);
+	Engine::Safe_Release(m_pTextureCom);
+	Engine::Safe_Release(m_pShaderCom);
+	Engine::Safe_Release(m_pRenderCom);
+	Engine::Safe_Release(m_pCollider);
 
 	Engine::CGameObject::Free();
 }

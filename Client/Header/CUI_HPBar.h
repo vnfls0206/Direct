@@ -19,7 +19,7 @@ public:
 	explicit CUI_HpBar(const CUI_HpBar& rhs);
 	virtual ~CUI_HpBar() = default;
 
-	// CGameObjectÀ»(¸¦) ÅëÇØ »ó¼ÓµÊ
+	// CGameObjectï¿½ï¿½(ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Óµï¿½
 public:
 	virtual HRESULT Initialize_GameObject() override;
 	virtual HRESULT Initialize_CloneObject();
@@ -33,7 +33,7 @@ public:
 	static CGameObject * Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	CGameObject * Clone() override;
 private:
-	// ÄÄÆ÷³ÍÆ® ¸ñ·Ï
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½
 	Engine::CTransform* m_pTransform;
 	Engine::CBuffer* m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;

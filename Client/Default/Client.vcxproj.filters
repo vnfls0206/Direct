@@ -153,9 +153,6 @@
     <ClInclude Include="..\Header\CUI_Card.h">
       <Filter>소스 파일\03. GameObject\99. UI</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CUI_Bar.h">
-      <Filter>소스 파일\03. GameObject\99. UI</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CMonster.h">
       <Filter>소스 파일\03. GameObject\04. Monster\00.Monster</Filter>
     </ClInclude>
@@ -171,14 +168,11 @@
     <ClInclude Include="..\Header\CVideo_Manager.h">
       <Filter>소스 파일\04. Manager\01. VideoMgr</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Enemy.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CSound_Manager.h">
       <Filter>소스 파일\04. Manager\00. SoundMgr</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Enemy.h">
-      <Filter>소스 파일\03. GameObject\03. Enemy</Filter>
+    <ClInclude Include="..\Header\CUI_Card.h">
+      <Filter>소스 파일\03. GameObject\99. UI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CUI_HPBar.h">
       <Filter>소스 파일\03. GameObject\99. UI\Bar</Filter>

@@ -12,6 +12,8 @@
 #include "CBuffer_RcTex.h"
 #include "CCollider.h"
 
+#include "CPlayer.h"
+
 CSwordMonster::CSwordMonster(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CMonster(pGraphic_Device)
 {
@@ -33,7 +35,7 @@ HRESULT CSwordMonster::Initialize_CloneObject()
 	m_Info = { {{ 0.5f, 2, 2 }, { 0.5f, 0, 0 }, { 0.5f, 3, 3 }, { 0.5f, 1, 1 },
 							 { 0.5f, 16, 21 }, { 0.5f, 4, 9 }, { 0.5f, 22, 27 }, { 0.5f, 10, 15 },
 							 { 0.5f, 36, 39 }, { 0.5f, 28, 31 }, { 0.5f, 40, 43 }, { 0.5f, 32, 35 }},
-							300, 150, 20, 200, 0.8f, 0, L"SwordMon" };
+							300, 150, 20, 200, 0.8f, 1, L"SwordMon" };
 	//탐색범위 공격볌위 공격력 체력 딜레이 타입 이름
 
 	m_pPlayer_Transform = dynamic_cast<Engine::CTransform*>(m_pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_Player")->Get_GameObject_In_List(0)->
@@ -141,7 +143,7 @@ void CSwordMonster::Update_GameObject(const float & fTimeDelta)
 		break;
 	}
 	m_pCollider->Set_ColliderPos(m_pTransform->Get_m_matLocal());
-	m_pCollider_AttackRange->Set_ColliderPos(m_pTransform->Get_m_matLocal());
+	m_pCollider_AttackRange->Set_ColliderPos(m_pTransform->Get_m_matLocal(), 2.f);
 }
 
 void CSwordMonster::LastUpdate_GameObject(const float & fTimeDelta)
@@ -175,13 +177,19 @@ void CSwordMonster::Attack(const float& fTimeDelta)
 		if (m_pCollider_AttackRange->Check_Collision_OBB(dynamic_cast<Engine::CCollider*>(Target->Get_Component_In_Map(L"Com_Collider"))))
 		{
 			//hp감소
-			
+			if (Target->Tag == L"Layer_Player")
+			{
+				dynamic_cast<CMonster*>(Target)->Hit(m_Info.uiAttackDamage);
+			}
+			else if (Target->Tag == L"Layer_Enemy")
+			{
+				dynamic_cast<CPlayer*>(Target)->Hit(m_Info.uiAttackDamage);
+			}
 		}
 	}
 	else if (m_fAttackTime >= 0.5f)
 	{
 		m_fAttackTime = 0.f;
-		m_Info.uiAttackDelay = 0.f;
 	}
 	m_fAttackTime += fTimeDelta;
 }

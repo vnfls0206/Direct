@@ -22,7 +22,7 @@ private:
 
 public:
 	void Initialize_Collider(D3DXMATRIX* matLocal);	//복사된 콜라이더 객체는 비어있음으로 게임오브젝트에서 반드시 초기화를 해줄 것*
-	void Set_ColliderPos(D3DXMATRIX* matLocal);
+	void Set_ColliderPos(D3DXMATRIX* matLocal, float fScale = 1.f);
 	bool Check_Collision_OBB(Engine::CCollider* targetCollider);				//obb충돌 판정
 	bool Check_Collision_AABB(Engine::CCollider* targetCollider);				//aabb충돌 판정
 
