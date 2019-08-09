@@ -60,6 +60,7 @@ void CScene_Stage::Delete_Empty_GameObject_In_vector()
 
 }
 
+/*
 void CScene_Stage::Check_Attack()
 {
 	Engine::CGameObject* pGameObject;
@@ -134,6 +135,7 @@ void CScene_Stage::Check_Attack()
 		}
 	}
 }
+*/
 
 HRESULT CScene_Stage::Initialize_Scene()
 {
@@ -149,8 +151,8 @@ HRESULT CScene_Stage::Initialize_Scene()
 	pPlayer = m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Player",
 		(int)eScene_Stage1, L"Layer_Player");
 
-	Engine::CGameObject* pPlayer1 = m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Enemy",
-		(int)eScene_Stage1, L"Layer_Enemy");
+	//Engine::CGameObject* pPlayer1 = m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Enemy",
+		//(int)eScene_Stage1, L"Layer_Enemy");
 
 	(m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Back",
 		(int)eScene_Stage1, L"Layer_Back"));
@@ -191,9 +193,9 @@ HRESULT CScene_Stage::Initialize_Scene()
 	//pCameraTransform->Set_Position(vecCameraPos);
 
 	Engine::CTransform* pTransform = dynamic_cast<Engine::CTransform*>(pPlayer->Get_Component_In_Map(L"Com_Transform"));
-	Engine::CTransform* pTransform1 = dynamic_cast<Engine::CTransform*>(pPlayer1->Get_Component_In_Map(L"Com_Transform"));
+	//Engine::CTransform* pTransform1 = dynamic_cast<Engine::CTransform*>(pPlayer1->Get_Component_In_Map(L"Com_Transform"));
 	pTransform->Set_Position({-200.f, 180.f, 0.f});
-	pTransform1->Set_Position({200.f, 180.f, 0.f});
+	//pTransform1->Set_Position({200.f, 180.f, 0.f});
 
 	dynamic_cast<CStatic_Camera*>(pCamera)->Get_Player_Transform
 	(dynamic_cast<Engine::CTransform*>(pPlayer->Get_Component_In_Map(L"Com_Transform")));

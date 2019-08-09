@@ -296,8 +296,8 @@ bool CMonster::Node_Check(Engine::CGameObject_Manager* GM, list<node*> checked_L
 	const TCHAR* Tags[] = { L"Layer_Player", L"Layer_Enemy" };
 
 	D3DXVECTOR3 p_scale = m_pTransform->Get_Scale();	//노드의 크기는 이 몬스터의 크기만큼으로 결정해준다
-	D3DXVECTOR3 p_Min_Vector = { t_Position.x - p_scale.x / 2 , t_Position.y - p_scale.y / 2, 0.f };
-	D3DXVECTOR3 p_Max_Vector = { t_Position.x + p_scale.x / 2 , t_Position.y + p_scale.y / 2, 0.f };
+	D3DXVECTOR3 p_Min_Vector = D3DXVECTOR3( t_Position.x - p_scale.x / 2 , t_Position.y - p_scale.y / 2, 0.f );
+	D3DXVECTOR3 p_Max_Vector = D3DXVECTOR3( t_Position.x + p_scale.x / 2 , t_Position.y + p_scale.y / 2, 0.f );
 
 	for (int i = 0; i < sizeof(Tags) / sizeof(Tags[0]); i++)
 	{
