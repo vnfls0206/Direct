@@ -222,11 +222,11 @@ void CScene_Stage::Update_Scene(const float & fTimeDelta)
 
 		UI_List_Vector.x = temp_pCursor.x - pPlayer_Tr->Get_Position().x;
 		UI_List_Vector.y = temp_pCursor.y - pPlayer_Tr->Get_Position().y;
-		UI_List_Vector.z = 1.f;
+		UI_List_Vector.z = 0.f;
 
 		Evil_List_Vector.x = temp_pCursor.x;
 		Evil_List_Vector.y = temp_pCursor.y;
-		Evil_List_Vector.z = 1.f;
+		Evil_List_Vector.z = -5.f;
 
 		Engine::CGameObject* Target_ = Get_GameObject_From_List_By_Position(Evil_List_Vector, L"Layer_Enemy");
 		Engine::CGameObject* Target__ = Get_GameObject_From_List_By_Position(UI_List_Vector, L"Layer_UI_Card");
@@ -272,15 +272,15 @@ void CScene_Stage::Update_Scene(const float & fTimeDelta)
 		}
 		else
 		{
-			if (temp_pCursor.x <= -250.f)
+			if (Evil_List_Vector.x <= -250.f)
 			{
-				temp_pCursor.x = -250.f;
+				Evil_List_Vector.x = -250.f;
 			}
-			else if (temp_pCursor.x >= 250.f)
+			else if (Evil_List_Vector.x >= 250.f)
 			{
-				temp_pCursor.x = 250.f;
+				Evil_List_Vector.x = 250.f;
 			}
-			dynamic_cast<CPlayer*>(pPlayer)->Set_pCursor(temp_pCursor);
+			dynamic_cast<CPlayer*>(pPlayer)->Set_Dex_P(Evil_List_Vector);
 		}
 	}
 
@@ -350,24 +350,24 @@ Engine::CGameObject* CScene_Stage::Get_GameObject_From_List_By_Position(D3DXVECT
 
 		if (pTransform != nullptr)
 		{
+			/*
 			D3DXMATRIX* matLocal = pTransform->Get_m_matLocal();
-
 			D3DXVECTOR3 vecRight, vecUp, vecLook, vecPos;
 			memcpy(&vecRight, &matLocal->_11, sizeof(D3DXVECTOR3));
 			memcpy(&vecUp, &matLocal->_21, sizeof(D3DXVECTOR3));
 			memcpy(&vecLook, &matLocal->_31, sizeof(D3DXVECTOR3));
 			memcpy(&vecPos, &matLocal->_41, sizeof(D3DXVECTOR3));
-
 			D3DXVECTOR3 vecMin, vecMax;
-
 			//vecMin = vecPos - (vecRight + vecUp + vecLook) / 2.f;
 			//vecMax = (vecRight + vecUp + vecLook) / 2.f + vecPos;
+			//memcpy(&position, &pTransform->Get_Position, sizeof(D3DXVECTOR3));
+			//memcpy(&scale, &pTransform->Get_Scale, sizeof(D3DXVECTOR3));
+			*/
 
 			D3DXVECTOR3 position = pTransform->Get_Position();
 			D3DXVECTOR3 scale = pTransform->Get_Scale();
 
-			//memcpy(&position, &pTransform->Get_Position, sizeof(D3DXVECTOR3));
-			//memcpy(&scale, &pTransform->Get_Scale, sizeof(D3DXVECTOR3));
+
 
 
 			if ((position.x - scale.x / 2) <= Positon.x && Positon.x <= (position.x + scale.x / 2) && (position.y - scale.y / 2) <= Positon.y && Positon.y <= (position.y + scale.y / 2))
@@ -383,6 +383,8 @@ Engine::CGameObject* CScene_Stage::Get_GameObject_From_List_By_Position(D3DXVECT
 	return nullptr;
 
 }
+
+
 
 void CScene_Stage::Free()
 {

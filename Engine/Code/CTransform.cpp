@@ -66,6 +66,7 @@ D3DXVECTOR3 Engine::CTransform::Get_Position()
 	return m_vecPosition;
 }
 
+
 D3DXMATRIX*	Engine::CTransform::Get_m_matLocal()
 { 
 	return &m_matLocal;
@@ -136,10 +137,10 @@ POINT Engine::CTransform::Set_ObjectPoint(D3DXVECTOR3 vPos, POINT MousePoint)
 	return MousePoint;
 }
 
-void Engine::CTransform::MoveToMouse(POINT MousePoint, float movespeed, const float& fDeltaTime)
+void Engine::CTransform::MoveToPosition(D3DXVECTOR3 DexPosition, float movespeed, const float& fDeltaTime)
 {
-	m_vecMousePosition = { (float)MousePoint.x ,(float)MousePoint.y, -5.0f };
-	m_vecDist = m_vecMousePosition - m_vecPosition;
+	m_DexPosition = DexPosition;
+	m_vecDist = m_DexPosition - m_vecPosition;
 
 	if (D3DXVec3Length(&m_vecDist) > 2.5f)
 	{

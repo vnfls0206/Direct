@@ -28,7 +28,7 @@ private :
 	D3DXVECTOR3					m_vecScale;
 	D3DXVECTOR3					m_vecRotation;
 	D3DXVECTOR3					m_vecPosition;
-	D3DXVECTOR3					m_vecMousePosition;		
+	D3DXVECTOR3					m_DexPosition;
 	D3DXVECTOR3					m_vecDist;				
 
 public :
@@ -37,7 +37,7 @@ public :
 	void						Set_Rotation(D3DXVECTOR3 vRot);
 	void						Set_Position(D3DXVECTOR3 vPos);
 	POINT					    Set_ObjectPoint(D3DXVECTOR3 vPos, POINT MousePoint);
-	void						MoveToMouse(POINT MousePoint, float movespeed, const float& fDeltaTime);
+	void						MoveToPosition(D3DXVECTOR3 DexPosition, float movespeed, const float& fDeltaTime);
 
 public :
 	D3DXVECTOR3					Get_Scale();

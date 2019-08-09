@@ -44,7 +44,7 @@ private :
 
 
 public:
-	void Set_pCursor(POINT m_cursor);
+	void Set_Dex_P(D3DXVECTOR3 m_dex);
 
 public:
 	void Play_Damage(float damage);
@@ -57,7 +57,7 @@ private :
 	HRESULT Ready_Shader(const float& fTimeDelta);
 
 private :
-	POINT m_pCursor = { 0,0 };
+	D3DXVECTOR3 m_Dex_p = {0,0,0 };
 	float m_fTimeAcc;
 	float m_fHp;
 	float m_fMana;

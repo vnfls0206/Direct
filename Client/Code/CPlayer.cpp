@@ -50,7 +50,7 @@ HRESULT CPlayer::Initialize_CloneObject()
 	m_pTransform->Set_Scale(D3DXVECTOR3(100.f, 100.f, 1.f));
 	m_pTransform->Set_Rotation(D3DXVECTOR3(D3DXToRadian(0.f), D3DXToRadian(180.f), D3DXToRadian(0.f)));
 
-	m_pCursor = m_pTransform->Set_ObjectPoint(m_pTransform->Get_Position(), m_pCursor);
+	m_Dex_p = m_pTransform->Get_Position();
 
 	m_pTextureCom = dynamic_cast<Engine::CTexture*>
 		(m_pComponentMgr->Get_Component_In_Map_By_Clone(L"Component_Texture_Player"));
@@ -132,7 +132,7 @@ void CPlayer::Update_GameObject(const float & fTimeDelta)
 	*/
 
 
-	m_pTransform->MoveToMouse(m_pCursor, m_fMoveSpeed, fTimeDelta);
+	m_pTransform->MoveToPosition(m_Dex_p, m_fMoveSpeed, fTimeDelta);
 	m_pCollider->Set_ColliderPos(m_pTransform->Get_m_matLocal());
 }
 
@@ -179,9 +179,9 @@ Engine::CGameObject * CPlayer::Clone()
 	return pInstance;
 }
 
-void CPlayer::Set_pCursor(POINT m_cursor)
+void CPlayer::Set_Dex_P(D3DXVECTOR3 m_dex)
 {
-	m_pCursor = m_cursor;
+	m_Dex_p = m_dex;
 }
 
 void CPlayer::Play_Damage(float damage)

@@ -2,14 +2,18 @@
 #include "CMonster.h"
 
 #include "CComponent_Manager.h"
+
+#include "CLayer.h"
 #include "CGameObject_Manager.h"
-
-
 #include "CTransform.h"
 #include "CTexture.h"
 #include "CShader.h"
 #include "CRenderCom.h"
 #include "CBuffer_RcTex.h"
+
+#include <iostream>
+
+
 
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphic_Device, MON_INFO m_mon_info)
@@ -37,7 +41,7 @@ HRESULT CMonster::Initialize_CloneObject()
 {
 	Engine::CGameObject_Manager* pObjMgr = Engine::CGameObject_Manager::GetInstance();
 	pPlayer = pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_Player")->Get_GameObject_In_List(0);
-	m_pPlayer_Transform = dynamic_cast<Engine::CTransform*>(pPlayer->Get_Component_In_Map(L"Com_Transform"));
+	//m_pPlayer_Transform = dynamic_cast<Engine::CTransform*>(pPlayer->Get_Component_In_Map(L"Com_Transform"));
 
 
 	m_fTimeAcc = 0.f;
@@ -86,6 +90,9 @@ HRESULT CMonster::Initialize_CloneObject()
 	}
 	m_mapComponent.emplace(L"Com_Buffer", m_pBufferCom);
 
+
+	Dex_Position = m_pTransform->Get_Position();
+
 	Update_Current_State();	//���۽��ѹ� ���¸� �������ش�.
 
 	return NOERROR;
@@ -109,8 +116,114 @@ void CMonster::Update_GameObject(const float & fTimeDelta)
 	case 5:
 	case 6:
 	case 7:
+	{
+		if (Get_Distance(m_pTransform->Get_Position(), Dex_Position) < 10)
+		{
+
+			Engine::CGameObject_Manager* GM = Engine::CGameObject_Manager::GetInstance();
+
+			std::list<node*> openlist;	////open list, add unchecked node
+			std::list<node*> closedlist;	//closed list, add checked node
+
+			D3DXVECTOR3 Current_P = m_pTransform->Get_Position();
+			D3DXVECTOR3 Target_P =
+				dynamic_cast<Engine::CTransform*>(Target->Get_Component_In_Map(L"Com_Transform"))->Get_Position();
+
+			//node Parent_node = { Current_P, 0, 0, nullptr };
+
+			node *Selected_node = (node *)malloc(sizeof(node));
+
+			Selected_node->position = Current_P;
+			Selected_node->G = 0;
+			Selected_node->H = 0;
+			Selected_node->Parent_node = nullptr;
+
+			openlist.push_back(Selected_node);
+
+
+			for (int Finding_Range = 0; Finding_Range < 2; Finding_Range++)
+			{
+				node* Low_Cost_List = nullptr;
+
+				//list<node*>::iterator iter = openlist.begin();
+
+				for_each(openlist.begin(), openlist.end(),
+					[&](node* temp_node)
+				{
+					if (Low_Cost_List == nullptr)
+						Low_Cost_List = temp_node;
+					else
+					{
+						if ((Low_Cost_List->G + Low_Cost_List->H) > (temp_node->G + temp_node->H))
+						{
+							Low_Cost_List = temp_node;
+						}
+					}
+
+				});
+
+				Selected_node = Low_Cost_List;	//select node, 
+
+				float scale = m_pTransform->Get_Scale().x;
+
+
+				for (int i = -1; i <= 1; i++)
+				{
+					for (int j = -1; j <= 1; j++)
+					{
+						if (!(i == 0 && j == 0))
+						{
+							D3DXVECTOR3 Node_Position = D3DXVECTOR3((Selected_node->position.x) + i * scale, (Selected_node->position.y) + j * scale, 0.f);
+
+							if (Node_Check(GM, openlist, Node_Position))
+							{
+								node* m_node = (node *)malloc(sizeof(node));;
+
+								unsigned int cost = (i*j) == -1 ? 14 : 10;
+
+								m_node->position = Node_Position;
+								m_node->H = abs(Node_Position.x - Target_P.x) + abs(Node_Position.y - Target_P.y);
+								m_node->G = cost + Selected_node->G;
+								m_node->Parent_node = Selected_node;
+
+								openlist.push_back(m_node);
+
+							}
+
+						}
+
+
+					}
+
+				}
+
+				closedlist.push_back(Selected_node);
+				openlist.remove(Selected_node);	//Add self position, to closed list
+
+			}
+			Dex_Position = Selected_node->position;
+
+
+
+			while (!openlist.empty())
+			{
+				auto iter = openlist.begin();
+				delete[](*iter);
+				openlist.erase(iter);
+			}
+			while (!closedlist.empty())
+			{
+				auto iter = closedlist.begin();
+				delete[](*iter);
+				closedlist.erase(iter);
+			}
+
+		}
+		m_pTransform->MoveToPosition(Dex_Position, m_fMoveSpeed, fTimeDelta);
+
 
 		break;
+	}
 	case 8:
 	case 9:
 	case 10:
@@ -156,6 +269,77 @@ eMonsterState CMonster::Get_State()
 }
 
 
+bool CMonster::Node_Check(Engine::CGameObject_Manager* GM, list<node*> checked_List, D3DXVECTOR3 t_Position)	//t_position = target_p
+{
+	bool a;
+
+
+	for_each(checked_List.begin(), checked_List.end(),
+		[&](node* temp_node)
+	{
+		if (t_Position == temp_node->position)
+			a =  false;
+
+	});
+
+	if(a ==false)
+		return false;
+
+
+	/*for (auto iter = checked_List.begin(); iter != checked_List.end(); iter++)
+	{
+		node* temp_node = *iter;
+		if (t_Position == temp_node->position)
+			return false;
+	}*/
+
+	const TCHAR* Tags[] = { L"Layer_Player", L"Layer_Enemy" };
+
+	D3DXVECTOR3 p_scale = m_pTransform->Get_Scale();	//노드의 크기는 이 몬스터의 크기만큼으로 결정해준다
+	D3DXVECTOR3 p_Min_Vector = { t_Position.x - p_scale.x / 2 , t_Position.y - p_scale.y / 2, 0.f };
+	D3DXVECTOR3 p_Max_Vector = { t_Position.x + p_scale.x / 2 , t_Position.y + p_scale.y / 2, 0.f };
+
+	for (int i = 0; i < sizeof(Tags) / sizeof(Tags[0]); i++)
+	{
+		Engine::CLayer* Checked_Layer = GM->Find_Layer((int)eScene_Stage1, Tags[i]);
+
+		for (int j = 0; j < Checked_Layer->Get_List_Size(); j++)
+		{
+			CGameObject* Target_obj = Checked_Layer->Get_GameObject_In_List(j);
+
+			Engine::CTransform* pTransform =
+				dynamic_cast<Engine::CTransform*>(Target_obj->Get_Component_In_Map(L"Com_Transform"));
+
+			if (pTransform != nullptr)
+			{
+				D3DXVECTOR3 c_position = i != 0 ? dynamic_cast<CMonster*>(Target_obj)->Get_Dex_Position() : pTransform->Get_Position();
+	
+				D3DXVECTOR3 c_scale = pTransform->Get_Scale();
+
+				D3DXVECTOR3 c_Min_Vector = { c_position.x - c_scale.x / 2 , c_position.y - c_scale.y / 2, 0.f };
+				D3DXVECTOR3 c_Max_Vector = { c_position.x + c_scale.x / 2 , c_position.y + c_scale.y / 2, 0.f };
+
+				if (!(c_Min_Vector.x >= p_Max_Vector.x ||
+					c_Max_Vector.x <= p_Min_Vector.x ||
+					c_Max_Vector.y <= p_Min_Vector.y ||
+					c_Min_Vector.y >= p_Max_Vector.y) )
+				{
+					return false;
+
+				}
+	
+	
+			}
+
+
+		}
+	}
+	
+
+
+	return true;
+}
+
 
 Engine::CGameObject * CMonster::Create(LPDIRECT3DDEVICE9 pGraphic_Device, MON_INFO m_mon_info)
 {
@@ -191,6 +375,11 @@ Engine::CGameObject * CMonster::Get_Target()
 bool CMonster::Get_Attack_Able()
 {
 	return IsCanAttack;
+}
+
+D3DXVECTOR3 CMonster::Get_Dex_Position()
+{
+	return Dex_Position;
 }
 
 HRESULT CMonster::Ready_Shader(const float& fTimedetla)
@@ -229,10 +418,43 @@ HRESULT CMonster::Ready_Shader(const float& fTimedetla)
 void CMonster::Update_Current_State()
 {
 	D3DXVECTOR3 M_Position = m_pTransform->Get_Position();
-	D3DXVECTOR3 P_Position = m_pPlayer_Transform->Get_Position();
+	unsigned long distance = 9999;
+	eDirection direction;
+	Target = nullptr;
+	const TCHAR* Tags[] = { L"Layer_Player" };
 
-	unsigned long distance = Get_Distance(M_Position, P_Position);
-	eDirection direction = Get_Direction(M_Position, P_Position);
+	for (int i = 0; i < sizeof(Tags) / sizeof(Tags[0]); i++)
+	{
+		Engine::CGameObject_Manager* GM = Engine::CGameObject_Manager::GetInstance();
+
+		Engine::CLayer* Checked_Layer = GM->Find_Layer((int)eScene_Stage1, Tags[i]);
+
+		for (int j = 0; j < Checked_Layer->Get_List_Size(); j++)
+		{
+			CGameObject* Target_obj = Checked_Layer->Get_GameObject_In_List(j);
+
+			Engine::CTransform* pTransform =
+				dynamic_cast<Engine::CTransform*>(Target_obj->Get_Component_In_Map(L"Com_Transform"));
+
+			if (pTransform != nullptr)
+			{
+				float target_distance = Get_Distance(M_Position, pTransform->Get_Position());
+
+				if (target_distance < distance)
+				{
+					Target = Target_obj;
+					distance = target_distance;
+					direction = Get_Direction(M_Position, pTransform->Get_Position());
+
+				}
+
+
+
+			}
+
+
+		}
+	}
 
 
 
