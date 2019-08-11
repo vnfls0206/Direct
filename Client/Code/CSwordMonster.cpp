@@ -32,9 +32,9 @@ HRESULT CSwordMonster::Initialize_GameObject()
 
 HRESULT CSwordMonster::Initialize_CloneObject()
 {
-	m_Info = { {{ 0.5f, 2, 2 }, { 0.5f, 0, 0 }, { 0.5f, 3, 3 }, { 0.5f, 1, 1 },
-							 { 0.5f, 16, 21 }, { 0.5f, 4, 9 }, { 0.5f, 22, 27 }, { 0.5f, 10, 15 },
-							 { 0.5f, 36, 39 }, { 0.5f, 28, 31 }, { 0.5f, 40, 43 }, { 0.5f, 32, 35 }},
+	m_Info = { {{ 0.1f, 2, 2 }, { 0.1f, 0, 0 }, { 0.1f, 3, 3 }, { 0.1f, 1, 1 },
+							 { 0.1f, 16, 21 }, { 0.1f, 4, 9 }, { 0.1f, 22, 27 }, { 0.5f, 10, 15 },
+							 { 0.1f, 36, 39 }, { 0.1f, 28, 31 }, { 0.1f, 40, 43 }, { 0.1f, 32, 35 }},
 							300, 150, 20, 200, 0.8f, 1, L"SwordMon" };
 	//탐색범위 공격볌위 공격력 체력 딜레이 타입 이름
 
@@ -133,6 +133,120 @@ void CSwordMonster::Update_GameObject(const float & fTimeDelta)
 	case 5:
 	case 6:
 	case 7:
+	{
+		Engine::CGameObject_Manager* GM = Engine::CGameObject_Manager::GetInstance();
+
+		std::list<NODE*> openlist;	////open list, add unchecked node
+		std::list<NODE*> closedlist;	//closed list, add checked node
+
+		D3DXVECTOR3 Current_P = m_pTransform->Get_Position();
+		D3DXVECTOR3 Target_P =
+			dynamic_cast<Engine::CTransform*>(Target->Get_Component_In_Map(L"Com_Transform"))->Get_Position();
+
+		//node Parent_node = { Current_P, 0, 0, nullptr };
+
+		NODE *Selected_node = (NODE *)malloc(sizeof(NODE));
+
+		Selected_node->position = Current_P;
+		Selected_node->G = 0;
+		Selected_node->H = 0;
+		Selected_node->Parent_node = nullptr;
+
+		openlist.push_back(Selected_node);
+
+
+		for (int Finding_Range = 0; Finding_Range < 3; Finding_Range++)
+		{
+			NODE* Low_Cost_List = nullptr;
+
+			//list<node*>::iterator iter = openlist.begin();
+
+			for_each(openlist.begin(), openlist.end(),
+				[&](NODE* temp_node)
+			{
+				if (Low_Cost_List == nullptr)
+					Low_Cost_List = temp_node;
+				else
+				{
+					if ((Low_Cost_List->G + Low_Cost_List->H) > (temp_node->G + temp_node->H))
+					{
+						Low_Cost_List = temp_node;
+					}
+				}
+
+			});
+
+			Selected_node = Low_Cost_List;	//select node, 
+
+
+			if (Selected_node == nullptr)
+			{
+				Clear_List(openlist);
+				Clear_List(closedlist);
+
+				return;
+			}
+
+			float scale = 10;
+
+
+			for (int i = -1; i <= 1; i++)
+			{
+				for (int j = -1; j <= 1; j++)
+				{
+					if (!(i == 0 && j == 0))
+					{
+						D3DXVECTOR3 Node_Position = D3DXVECTOR3((Selected_node->position.x) + i * scale, (Selected_node->position.y) + j * scale, 0.f);
+
+						if (Node_Check(GM, openlist, Node_Position))
+						{
+							unsigned int cost = (i*j) == -1 ? 14 : 10;
+
+
+							NODE* m_node = (NODE *)malloc(sizeof(NODE));;
+
+							m_node->position = Node_Position;
+							m_node->H = abs(Node_Position.x - Target_P.x) + abs(Node_Position.y - Target_P.y);
+							m_node->G = cost + Selected_node->G;
+							m_node->Parent_node = Selected_node;
+
+							openlist.push_back(m_node);
+
+						}
+
+					}
+
+
+				}
+
+			}
+
+
+			closedlist.push_back(Selected_node);
+			openlist.remove(Selected_node);	//Add self position, to closed list
+
+			
+		}
+
+
+		Dex_Position = Selected_node->Parent_node->position;
+
+		m_pTransform->MoveToPosition(Dex_Position, m_fMoveSpeed, fTimeDelta);
+
+
+		while (!openlist.empty())
+		{
+			auto iter = openlist.begin();
+			delete[](*iter);
+			openlist.erase(iter);
+		}
+		while (!closedlist.empty())
+		{
+			auto iter = closedlist.begin();
+			delete[](*iter);
+			closedlist.erase(iter);
+		}
+	}
 
 		break;
 	case 8:

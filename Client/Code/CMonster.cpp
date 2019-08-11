@@ -63,7 +63,7 @@ bool CMonster::Node_Check(Engine::CGameObject_Manager* GM, list<NODE*> checked_L
 	bool a;
 
 
-	for_each(checked_List.begin(), checked_List.end(),
+	for_each(checked_List.begin(), checked_List.end(),	//이미 해당 list에 들어있는가를 체크한다
 		[&](NODE* temp_node)
 	{
 		if (t_Position == temp_node->position)
@@ -74,13 +74,6 @@ bool CMonster::Node_Check(Engine::CGameObject_Manager* GM, list<NODE*> checked_L
 	if(a ==false)
 		return false;
 
-
-	/*for (auto iter = checked_List.begin(); iter != checked_List.end(); iter++)
-	{
-		node* temp_node = *iter;
-		if (t_Position == temp_node->position)
-			return false;
-	}*/
 
 	const TCHAR* Tags[] = { L"Layer_Player", L"Layer_Enemy" };
 
@@ -101,23 +94,28 @@ bool CMonster::Node_Check(Engine::CGameObject_Manager* GM, list<NODE*> checked_L
 
 			if (pTransform != nullptr)
 			{
-				D3DXVECTOR3 c_position = pTransform->Get_Position();
-					//i != 0 ? dynamic_cast<CMonster*>(Target_obj)->Get_Dex_Position() : pTransform->Get_Position();
-	
-				D3DXVECTOR3 c_scale = pTransform->Get_Scale();
 
-				D3DXVECTOR3 c_Min_Vector = { c_position.x - c_scale.x / 2 , c_position.y - c_scale.y / 2, 0.f };
-				D3DXVECTOR3 c_Max_Vector = { c_position.x + c_scale.x / 2 , c_position.y + c_scale.y / 2, 0.f };
-
-				if (!(c_Min_Vector.x >= p_Max_Vector.x ||
-					c_Max_Vector.x <= p_Min_Vector.x ||
-					c_Max_Vector.y <= p_Min_Vector.y ||
-					c_Min_Vector.y >= p_Max_Vector.y) )
+				if (m_pTransform != pTransform)
 				{
-					return false;
 
+					D3DXVECTOR3 c_position = //pTransform->Get_Position();
+						i != 0 ? dynamic_cast<CMonster*>(Target_obj)->Get_Dex_Position() : pTransform->Get_Position();
+
+					D3DXVECTOR3 c_scale = pTransform->Get_Scale();
+
+					D3DXVECTOR3 c_Min_Vector = { c_position.x - c_scale.x / 2 , c_position.y - c_scale.y / 2, 0.f };
+					D3DXVECTOR3 c_Max_Vector = { c_position.x + c_scale.x / 2 , c_position.y + c_scale.y / 2, 0.f };
+
+					if (!(c_Min_Vector.x >= p_Max_Vector.x ||
+						c_Max_Vector.x <= p_Min_Vector.x ||
+						c_Max_Vector.y <= p_Min_Vector.y ||
+						c_Min_Vector.y >= p_Max_Vector.y))
+					{
+						return false;
+
+					}
 				}
-	
+
 	
 			}
 

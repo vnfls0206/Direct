@@ -53,6 +53,16 @@ float Get_Distance(T bVector, T tVector)
 			   + (bVector.y - tVector.y) * (bVector.y - tVector.y));	//피타고라스로 거리구함
 }
 
+template <typename T>
+void Clear_List(T List)
+{
+	while (!List.empty())
+	{
+		auto iter = List.begin();
+		delete[](*iter);
+		List.erase(iter);
+	}
+}
 
 
 

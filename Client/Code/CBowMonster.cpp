@@ -153,7 +153,7 @@ void CBowMonster::Update_GameObject(const float & fTimeDelta)
 		openlist.push_back(Selected_node);
 
 
-		for (int Finding_Range = 0; Finding_Range < 2; Finding_Range++)
+		for (int Finding_Range = 0; Finding_Range < 3; Finding_Range++)
 		{
 			NODE* Low_Cost_List = nullptr;
 
@@ -176,7 +176,16 @@ void CBowMonster::Update_GameObject(const float & fTimeDelta)
 
 			Selected_node = Low_Cost_List;	//select node, 
 
-			float scale = m_pTransform->Get_Scale().x + 10;
+			if (Selected_node == nullptr)
+			{
+				Clear_List(openlist);
+				Clear_List(closedlist);
+
+				return;
+			}
+
+
+			float scale = 10;
 
 
 			for (int i = -1; i <= 1; i++)
@@ -189,9 +198,10 @@ void CBowMonster::Update_GameObject(const float & fTimeDelta)
 
 						if (Node_Check(GM, openlist, Node_Position))
 						{
-							NODE* m_node = (NODE *)malloc(sizeof(NODE));;
-
 							unsigned int cost = (i*j) == -1 ? 14 : 10;
+
+
+							NODE* m_node = (NODE *)malloc(sizeof(NODE));;
 
 							m_node->position = Node_Position;
 							m_node->H = abs(Node_Position.x - Target_P.x) + abs(Node_Position.y - Target_P.y);
@@ -209,31 +219,21 @@ void CBowMonster::Update_GameObject(const float & fTimeDelta)
 
 			}
 
+
 			closedlist.push_back(Selected_node);
 			openlist.remove(Selected_node);	//Add self position, to closed list
 
+			
 		}
-		Dex_Position = Selected_node->position;
+
+
+		Dex_Position = Selected_node->Parent_node->position;
 
 		m_pTransform->MoveToPosition(Dex_Position, m_fMoveSpeed, fTimeDelta);
 
+		Clear_List(openlist);
+		Clear_List(closedlist);
 
-		while (!openlist.empty())
-		{
-			auto iter = openlist.begin();
-			delete[](*iter);
-			openlist.erase(iter);
-		}
-		while (!closedlist.empty())
-		{
-			auto iter = closedlist.begin();
-			delete[](*iter);
-			closedlist.erase(iter);
-		}
-
-
-
-		
 
 		break;
 	}
