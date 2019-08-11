@@ -38,9 +38,9 @@ HRESULT CPlayer::Initialize_CloneObject()
 {
 	m_pObjMgr = Engine::CGameObject_Manager::GetInstance();
 
-	m_stInfo = { {{ 0.5f, 2, 2 }, { 0.5f, 0, 0 }, { 0.5f, 3, 3 }, { 0.5f, 1, 1 },
-				{ 0.5f, 16, 21 }, { 0.5f, 4, 9 }, { 0.5f, 22, 27 }, { 0.5f, 10, 15 },
-				{ 0.5f, 36, 39 }, { 0.5f, 28, 31 }, { 0.5f, 40, 43 }, { 0.5f, 32, 35 }},
+	m_stInfo = { {{ 0.5f, 41, 44 }, { 0.5f, 33, 36 }, { 0.5f, 45, 48 }, { 0.5f, 37, 40 },
+				{ 0.5f, 61, 66 }, { 0.5f, 49, 54}, { 0.5f, 67, 72 }, { 0.5f, 55, 60 },
+				{ 0.5f, 16, 23 }, { 0.5f, 0, 7 }, { 0.5f, 24, 32 }, { 0.5f, 8, 15 }},
 				300, 30, 400, 25.f, 0.4f , L"Summoner" };
 			//���ݹ��� ���ݷ�, ü��, ����, ���ݵ�����, �̸�
 
@@ -58,7 +58,7 @@ HRESULT CPlayer::Initialize_CloneObject()
 	m_mapComponent.emplace(L"Com_Transform", m_pTransform);
 
 	m_pTransform->Set_Position(D3DXVECTOR3(200.f, 0.f, -5.f));
-	m_pTransform->Set_Scale(D3DXVECTOR3(100.f, 100.f, 1.f));
+	m_pTransform->Set_Scale(D3DXVECTOR3(50.f, 50.f, 1.f));
 	m_pTransform->Set_Rotation(D3DXVECTOR3(D3DXToRadian(0.f), D3DXToRadian(180.f), D3DXToRadian(0.f)));
 
 	m_Dex_p = m_pTransform->Get_Position();
@@ -225,8 +225,7 @@ void CPlayer::Attack(const float& fTimeDelta)
 	if ((m_fAttackTime >= 0.4f) || (m_fAttackTime < 0.5f))
 	{
 		//ȭ�����
-		CArrow* arrow = dynamic_cast<CArrow*>(m_pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Arrow",
-			(int)eScene_Stage1, L"Layer_Arrow"));
+		CArrow* arrow = dynamic_cast<CArrow*>(m_pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_Arrow")->Get_GameObject_In_List(g_iCount_Arrow <= Arrow_Count ? g_iCount_Arrow = 0 : g_iCount_Arrow++));
 		arrow->Set_Damage(m_stInfo.uiAttackDamage);
 		arrow->Set_Target(m_pTarget);
 		arrow->Set_Position(m_pTransform->Get_Position());

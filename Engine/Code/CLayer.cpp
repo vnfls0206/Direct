@@ -44,6 +44,13 @@ Engine::CGameObject * Engine::CLayer::Get_GameObject_In_List(const int iIndex)
 	int index = 0;
 	for (; iter_begin != iter_end; iter_begin++)
 	{
+		if (*iter_begin == nullptr)
+		{
+			//(*iter_begin)->Free();
+			m_pList_GameObject.erase(iter_begin);
+			m_uiListSize--;
+
+		}
 		if (index == iIndex)
 		{
 			return *iter_begin;
@@ -59,13 +66,65 @@ void Engine::CLayer::Update_Layer(const float & fTimeDelta)
 	if (m_pList_GameObject.empty()) {
 		return;
 	}
+	/*
+	int iCount = 0;
+	auto iter_begin = m_pList_GameObject.begin();
+	auto iter_end = m_pList_GameObject.end();
 
+	while (iter_begin != iter_end)
+	{
+		if (*iter_begin == nullptr)
+		{
+			m_pList_GameObject.erase(iter_begin);
+			iter_begin = m_pList_GameObject.begin();
+			iter_end = m_pList_GameObject.end();
+			for (int i = 0; i < iCount; i++)
+			{
+				iter_begin++;
+			}
+		}
+		(*iter_begin)->Update_GameObject(fTimeDelta);
+
+		iter_begin++;
+		iCount++;
+	}
+
+	iCount = 0;
+	iter_begin = m_pList_GameObject.begin();
+	iter_end = m_pList_GameObject.end();
+	while (iter_begin != iter_end)
+	{
+		if (*iter_begin == nullptr)
+		{
+			m_pList_GameObject.erase(iter_begin);
+			iter_begin = m_pList_GameObject.begin();
+			iter_end = m_pList_GameObject.end();
+			for (int i = 0; i < iCount; i++)
+			{
+				iter_begin++;
+			}
+		}
+		(*iter_begin)->LastUpdate_GameObject(fTimeDelta);
+
+		iter_begin++;
+		iCount++;
+	}*/
+	
 	for (auto& pInstance : m_pList_GameObject) {
+		if(pInstance == nullptr)
+		{
+			return;
+		}
 		pInstance->Update_GameObject(fTimeDelta);
 	}
 	for (auto& pInstance : m_pList_GameObject) {
+		if (pInstance == nullptr)
+		{
+			return;
+		}
 		pInstance->LastUpdate_GameObject(fTimeDelta);
 	}
+	
 	return;
 }
 

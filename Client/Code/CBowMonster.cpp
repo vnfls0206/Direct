@@ -15,6 +15,8 @@
 #include "CBuffer_RcTex.h"
 #include "CCollider.h"
 
+
+
 CBowMonster::CBowMonster(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CMonster(pGraphic_Device)
 {
@@ -35,7 +37,7 @@ HRESULT CBowMonster::Initialize_CloneObject()
 	m_Info = { {{ 0.1f, 8, 15 }, { 0.1f, 24, 31 }, { 0.1f, 16, 23 }, { 0.1f, 0, 7 },
 				{ 0.1f, 37, 41 }, { 0.1f, 47, 51 }, { 0.1f, 42, 46 }, { 0.1f, 32, 36 },
 				{ 0.1f, 60, 66 }, { 0.1f, 75, 82 }, { 0.1f, 67, 74 }, { 0.1f, 52, 59 }},
-				400, 250, 10, 120, 0.6f, -1, L"BowMon" };
+				400, 250, 10, 120, 0.6f, 0.f, -1, L"BowMon" };
 
 	m_pPlayer_Transform = dynamic_cast<Engine::CTransform*>(m_pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_Player")->Get_GameObject_In_List(0)->
 		Get_Component_In_Map(L"Com_Transform"));
@@ -54,7 +56,7 @@ HRESULT CBowMonster::Initialize_CloneObject()
 	m_mapComponent.emplace(L"Com_Transform", m_pTransform);
 
 	m_pTransform->Set_Position(D3DXVECTOR3(0.f, 0.f, 0.f));
-	m_pTransform->Set_Scale(D3DXVECTOR3(100.f, 100.f, 1.f));
+	m_pTransform->Set_Scale(D3DXVECTOR3(50.f, 50.f, 1.f));
 	m_pTransform->Set_Rotation(D3DXVECTOR3(D3DXToRadian(0.f), D3DXToRadian(180.f), D3DXToRadian(0.f)));
 
 	m_pTextureCom = dynamic_cast<Engine::CTexture*>
@@ -111,6 +113,7 @@ HRESULT CBowMonster::Initialize_CloneObject()
 
 	m_pCollider->Initialize_Collider(m_pTransform->Get_m_matLocal());
 	m_pCollider_AttackRange->Initialize_Collider(m_pTransform->Get_m_matLocal());
+	m_pCollider_AttackRange->Set_ColliderPos(m_pTransform->Get_m_matLocal(), 2.f);
 
 	return NOERROR;
 }
@@ -242,14 +245,23 @@ void CBowMonster::Update_GameObject(const float & fTimeDelta)
 	case 9:
 	case 10:
 	case 11:
-
+		if (m_Info.uiAttackDelay <= m_Info.uiCurrentAttackDelay)
+		{
+			Attack(fTimeDelta);	
+			m_Info.uiCurrentAttackDelay = 0.f;
+		}
 		break;
 	default:
 		break;
 	}
+	if (m_Info.uiAttackDelay > m_Info.uiCurrentAttackDelay)
+	{
+		m_Info.uiCurrentAttackDelay += fTimeDelta;
+	}
+
 	m_pTransform->Make_LocalSpace_Matrix();
 	m_pCollider->Set_ColliderPos(m_pTransform->Get_m_matLocal());
-	m_pCollider_AttackRange->Set_ColliderPos(m_pTransform->Get_m_matLocal());
+	m_pCollider_AttackRange->Set_ColliderPos(m_pTransform->Get_m_matLocal(), 2.f);
 }
 
 void CBowMonster::LastUpdate_GameObject(const float & fTimeDelta)
@@ -272,17 +284,19 @@ void CBowMonster::Render_GameObject()
 	m_pShaderCom->Get_Effect()->End();
 
 	m_pCollider->Render_Collider(255, 0, 255, 0);
-	m_pCollider_AttackRange->Render_Collider(255, 255, 0, 0);
+	m_pCollider_AttackRange->Render_Collider(100, 255, 0, 0);
 }
 
 
 void CBowMonster::Attack(const float& fTimeDelta)
 {
+	if (Target == nullptr)
+	{
+		return;
+	}
 	if ((m_fAttackTime >= 0.4f) || (m_fAttackTime < 0.5f))
 	{
-		//화살생성
-		CArrow* arrow = dynamic_cast<CArrow*>(m_pObjMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Arrow",
-			(int)eScene_Stage1, L"Layer_Arrow"));
+		CArrow* arrow = dynamic_cast<CArrow*>(m_pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_Arrow")->Get_GameObject_In_List(g_iCount_Arrow >= Arrow_Count ? g_iCount_Arrow = 0 : g_iCount_Arrow++));
 		arrow->Set_Damage(m_Info.uiAttackDamage);
 		arrow->Set_Target(Target);
 		arrow->Set_Position(m_pTransform->Get_Position());

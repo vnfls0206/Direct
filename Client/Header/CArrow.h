@@ -27,7 +27,9 @@ public:
 	virtual void Update_GameObject(const float & fTimeDelta) override;
 	virtual void LastUpdate_GameObject(const float & fTimeDelta) override;
 	virtual void Render_GameObject() override;
+	HRESULT Ready_Shader(const float& fTimeDelta);
 
+	int Count_Arrow();
 	void Set_Damage(UINT uiDamage);
 	void Set_Target(Engine::CGameObject* pTarget);
 	void Set_Position(D3DXVECTOR3 vecPos);
@@ -44,8 +46,9 @@ private:
 	Engine::CCollider* m_pCollider;
 	CGameObject* m_pTarget = nullptr;
 
-	float m_fMoveSpeed = 50.f;
+	float m_fMoveSpeed = 500.f;
 	UINT m_uiDamage = 0.f;
+	//int g_iCount_Arrow;
 
 public:
 	virtual void Free();

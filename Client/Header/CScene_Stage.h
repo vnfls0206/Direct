@@ -41,7 +41,7 @@ private:
 	Engine::CGameObject * Get_GameObject_From_List_By_Position
 	(D3DXVECTOR3 Positon, const TCHAR* tag);
 
-	void Summon_Monster(Engine::CGameObject* pGameObject, int iSummonNum, int iAttackType);
+	void Summon_Monster(const TCHAR* ptagProtoMonster, int iSummonNum, int iAttackType);
 
 public:
 	virtual void Update_Scene(const float & fTimeDelta) override;

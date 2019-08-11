@@ -17,35 +17,29 @@ void Engine::CCollider::Initialize_Collider(D3DXMATRIX* matLocal)
 	D3DXCreateLine(Get_Graphic_Device(), &m_pLine);
 	m_pLine->SetWidth(2);
 
-	D3DXVECTOR3 vecRight, vecUp, vecLook, vecPos;
+	D3DXVECTOR3 vecRight, vecUp, vecLook;
 	memcpy(&vecRight, &matLocal->_11, sizeof(D3DXVECTOR3));
 	memcpy(&vecUp, &matLocal->_21, sizeof(D3DXVECTOR3));
 	memcpy(&vecLook, &matLocal->_31, sizeof(D3DXVECTOR3));
-	memcpy(&vecPos, &matLocal->_41, sizeof(D3DXVECTOR3));
+	memcpy(&Center, &matLocal->_41, sizeof(D3DXVECTOR3));
 
-	vecMax = (vecRight + vecUp + vecLook) / 2.f + vecPos;
-	vecMin = vecPos - (vecRight + vecUp + vecLook) / 2.f;
+	vecMax = (vecRight + vecUp + vecLook) / 2.f + Center;
+	vecMin = Center - (vecRight + vecUp + vecLook) / 2.f;
 
 	/*
 	Center.x = (vecMax.x + vecMin.x) / 2.f;
 	Center.y = (vecMax.y + vecMin.y) / 2.f;
 	Center.z = (vecMax.z + vecMin.z) / 2.f;
 	*/
-	Center.x = vecPos.x;
-	Center.y = vecPos.y;
-	Center.z = vecPos.z;
-
-	Extent.x = (vecMax.x - Center.x);
-	Extent.y = (vecMax.y - Center.y);
-	Extent.z = (vecMax.z - Center.z);
-
+	Extent = vecMax - Center;
+	/*
 	Axis[0] = { vecMax.x - vecMin.x, 0.f, 0.f };
 	Axis[1] = { 0.f, vecMax.y - vecMin.y, 0.f };
 	Axis[2] = { 0.f, 0.f, vecMax.z - vecMin.z };
-
-	D3DXVec3Normalize(&Axis[0], &Axis[0]);
-	D3DXVec3Normalize(&Axis[1], &Axis[1]);
-	D3DXVec3Normalize(&Axis[2], &Axis[2]);
+	*/
+	D3DXVec3Normalize(&Axis[0], &vecRight);
+	D3DXVec3Normalize(&Axis[1], &vecUp);
+	D3DXVec3Normalize(&Axis[2], &vecLook);
 }
 
 void Engine::CCollider::Set_ColliderPos(D3DXMATRIX* matLocal, float fScale)
@@ -64,9 +58,10 @@ void Engine::CCollider::Set_ColliderPos(D3DXMATRIX* matLocal, float fScale)
 	vecRight *= fScale;
 	vecUp *= fScale;
 	vecLook *= fScale;
+
 	vecMax = (vecRight + vecUp + vecLook) / 2.f + Center;
 	vecMin = Center - (vecRight + vecUp + vecLook) / 2.f;
-
+	//Extent = (vecMax - vecMin) / 2;
 }
 
 bool Engine::CCollider::Check_Collision_OBB(Engine::CCollider* targetCollider)
@@ -245,6 +240,11 @@ bool Engine::CCollider::Check_Collision_OBB(Engine::CCollider* targetCollider)
 bool Engine::CCollider::Check_Collision_AABB(Engine::CCollider* targetCollider)
 {
 	return false;
+}
+
+void Engine::CCollider::ColliderScaleExpand()
+{
+	Extent *= 2;
 }
 
 void Engine::CCollider::Render_Collider(int A, int R, int G, int B)

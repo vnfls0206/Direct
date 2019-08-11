@@ -76,6 +76,9 @@ HRESULT CMainGame::Initialize_CMainGame()
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_Rinel",
 		Engine::CTexture::Create(m_pDevice, L"../../Resource/Rinel/", L".png", 0, 82));
 
+	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_Arrow",
+		Engine::CTexture::Create(m_pDevice, L"../../Resource/Arrow/", L".dds", 0, 0));
+	
 	m_pComponentMgr->Add_Component_In_Map(L"Component_Texture_SwordMonster",
 		Engine::CTexture::Create(m_pDevice, L"../../Resource/SwordMonster/", L".png", 0, 48));
 

@@ -25,7 +25,7 @@ public:
 	void Set_ColliderPos(D3DXMATRIX* matLocal, float fScale = 1.f);
 	bool Check_Collision_OBB(Engine::CCollider* targetCollider);				//obb충돌 판정
 	bool Check_Collision_AABB(Engine::CCollider* targetCollider);				//aabb충돌 판정
-
+	void ColliderScaleExpand();
 
 	void Render_Collider(int A, int R, int G, int B);
 

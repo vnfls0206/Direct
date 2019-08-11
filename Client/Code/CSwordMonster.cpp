@@ -35,7 +35,8 @@ HRESULT CSwordMonster::Initialize_CloneObject()
 	m_Info = { {{ 0.1f, 2, 2 }, { 0.1f, 0, 0 }, { 0.1f, 3, 3 }, { 0.1f, 1, 1 },
 							 { 0.1f, 16, 21 }, { 0.1f, 4, 9 }, { 0.1f, 22, 27 }, { 0.5f, 10, 15 },
 							 { 0.1f, 36, 39 }, { 0.1f, 28, 31 }, { 0.1f, 40, 43 }, { 0.1f, 32, 35 }},
-							300, 150, 20, 200, 0.8f, 1, L"SwordMon" };
+							300, 100, 20, 200, 0.8f, 0.f, 1, L"SwordMon" };
+
 	//탐색범위 공격볌위 공격력 체력 딜레이 타입 이름
 
 	m_pPlayer_Transform = dynamic_cast<Engine::CTransform*>(m_pObjMgr->Find_Layer((int)eScene_Stage1, L"Layer_Player")->Get_GameObject_In_List(0)->
@@ -55,8 +56,8 @@ HRESULT CSwordMonster::Initialize_CloneObject()
 	}
 	m_mapComponent.emplace(L"Com_Transform", m_pTransform);
 
-	m_pTransform->Set_Position(D3DXVECTOR3(0.f, 0.f, 0.f));
-	m_pTransform->Set_Scale(D3DXVECTOR3(100.f, 100.f, 1.f));
+	m_pTransform->Set_Position(D3DXVECTOR3(20.f, 20.f, 0.f));
+	m_pTransform->Set_Scale(D3DXVECTOR3(50.f, 50.f, 1.f));
 	m_pTransform->Set_Rotation(D3DXVECTOR3(D3DXToRadian(0.f), D3DXToRadian(180.f), D3DXToRadian(0.f)));
 
 	m_pTextureCom = dynamic_cast<Engine::CTexture*>
@@ -113,6 +114,8 @@ HRESULT CSwordMonster::Initialize_CloneObject()
 
 	m_pCollider->Initialize_Collider(m_pTransform->Get_m_matLocal());
 	m_pCollider_AttackRange->Initialize_Collider(m_pTransform->Get_m_matLocal());
+	m_pCollider_AttackRange->Set_ColliderPos(m_pTransform->Get_m_matLocal(), 2.f);
+	m_pCollider_AttackRange->ColliderScaleExpand();
 
 	return NOERROR;
 }
@@ -253,10 +256,19 @@ void CSwordMonster::Update_GameObject(const float & fTimeDelta)
 	case 9:
 	case 10:
 	case 11:
-
+		if (m_Info.uiAttackDelay <= m_Info.uiCurrentAttackDelay)
+		{
+			IsCanAttack = true;
+			Attack(fTimeDelta);
+			m_Info.uiCurrentAttackDelay = 0.f;
+		}
 		break;
 	default:
 		break;
+	}
+	if (m_Info.uiAttackDelay > m_Info.uiCurrentAttackDelay)
+	{
+		m_Info.uiCurrentAttackDelay += fTimeDelta;
 	}
 	m_pCollider->Set_ColliderPos(m_pTransform->Get_m_matLocal());
 	m_pCollider_AttackRange->Set_ColliderPos(m_pTransform->Get_m_matLocal(), 2.f);
@@ -282,24 +294,34 @@ void CSwordMonster::Render_GameObject()
 	m_pShaderCom->Get_Effect()->End();
 
 	m_pCollider->Render_Collider(255, 0, 255, 0);
-	m_pCollider_AttackRange->Render_Collider(255, 255, 0, 0);
+	m_pCollider_AttackRange->Render_Collider(100, 255, 0, 0);
 }
 
 
 void CSwordMonster::Attack(const float& fTimeDelta)
 {
+	if (Target == nullptr)
+	{
+		return;
+	}
 	if ((m_fAttackTime >= 0.4f) || (m_fAttackTime < 0.5f))
 	{
-		if (m_pCollider_AttackRange->Check_Collision_OBB(dynamic_cast<Engine::CCollider*>(Target->Get_Component_In_Map(L"Com_Collider"))))
+		if (IsCanAttack)
 		{
-			//hp감소
-			if (Target->Tag == L"Layer_Player")
+			if (m_pCollider_AttackRange->Check_Collision_OBB(dynamic_cast<Engine::CCollider*>(Target->Get_Component_In_Map(L"Com_Collider"))))
 			{
-				dynamic_cast<CMonster*>(Target)->Hit(m_Info.uiAttackDamage);
-			}
-			else if (Target->Tag == L"Layer_Enemy")
-			{
-				dynamic_cast<CPlayer*>(Target)->Hit(m_Info.uiAttackDamage);
+				//hp감소
+				if (Target->Tag == L"Layer_Enemy")
+				{
+					dynamic_cast<CMonster*>(Target)->Hit(m_Info.uiAttackDamage);
+				}
+				else if (Target->Tag == L"Layer_Player")
+				{
+					dynamic_cast<CPlayer*>(Target)->Hit(m_Info.uiAttackDamage);
+				}
+				else
+				{
+				}
 			}
 		}
 	}

@@ -15,6 +15,7 @@
 #include "CMonster.h"
 #include "CSwordMonster.h"
 #include "CBowMonster.h"
+#include "CArrow.h"
 
 #include "CTransform.h"
 #include "CCollider.h"
@@ -154,6 +155,7 @@ HRESULT CScene_Stage::Initialize_Scene()
 		(int)eScene_Stage1, L"Layer_Player");
 
 	m_pPlayer_Transform = dynamic_cast<Engine::CTransform*>(pPlayer->Get_Component_In_Map(L"Com_Transform"));
+
 	(m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Back",
 		(int)eScene_Stage1, L"Layer_Back"));
 	
@@ -164,6 +166,11 @@ HRESULT CScene_Stage::Initialize_Scene()
 	Engine::CTransform* pTransform = dynamic_cast<Engine::CTransform*>(monster->Get_Component_In_Map(L"Com_Transform"));
 	pTransform->Set_Position(D3DXVECTOR3(200.f, 40.f, 0.f));
 	
+	for(int i = 0; i < Arrow_Count + 1; i ++)
+	{
+		m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_Arrow", (int)eScene_Stage1, L"Layer_Arrow");
+	}
+
 	monster = (m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_SwordMonster",
 		(int)eScene_Stage1, L"Layer_Enemy"));
 
@@ -248,7 +255,10 @@ void CScene_Stage::Update_Scene(const float & fTimeDelta)
 	
 		if (Target_ != nullptr)
 		{
-			MSG_BOX("clicked Enemy object");
+			//MSG_BOX("clicked Enemy object");
+			CPlayer *pplay = dynamic_cast<CPlayer*>(pPlayer);
+			pplay->Set_Target(Target_);
+			pplay->Attack(fTimeDelta);
 		}
 		else if (Target__ != nullptr)
 		{
@@ -316,6 +326,7 @@ void CScene_Stage::Update_Scene(const float & fTimeDelta)
 
 	if (Engine::CKeyManager::GetInstance()->KeyDown(0x45)) //e
 	{
+		Summon_Monster(L"GameObject_Proto_SwordMonster", 2 , 1);
 	}
 
 	if (Engine::CKeyManager::GetInstance()->KeyDown(0x52)) //r
@@ -417,33 +428,86 @@ Engine::CGameObject* CScene_Stage::Get_GameObject_From_List_By_Position(D3DXVECT
 
 }
 
-void CScene_Stage::Summon_Monster(Engine::CGameObject * pGameObject, int iSummonNum, int iAttackType)
+void CScene_Stage::Summon_Monster(const TCHAR* ptagProtoMonster, int iSummonNum, int iAttackType)
 {
-	
+	if ((ptagProtoMonster == nullptr) || (!lstrcmp(ptagProtoMonster, L"")))
+	{
+		return;
+	}
+	if (iSummonNum <= 0)
+	{
+		return;
+	}
+	Engine::CGameObject* pGameObject;
+	Engine::CGameObject* pGameObject2;
 	for (int i = iSummonNum / -2; i < iSummonNum; i++)
 	{
 		if ((iSummonNum%2 == 0) && (i == 0))
 		{
 			continue;
 		}
-		Engine::CTransform* pTransform = dynamic_cast<Engine::CTransform*>(
-		m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, L"GameObject_Proto_SwordMonster", (int)eScene_Stage1, L"Layer_Ally"));
+
+		pGameObject = m_pGameObjectMgr->Copy_Proto_GameObject_To_Layer((int)eScene_Static, ptagProtoMonster, (int)eScene_Stage1, L"Layer_Ally");
+		Engine::CTransform* pTransform = dynamic_cast<Engine::CTransform*>(pGameObject->Get_Component_In_Map(L"Com_Transform"));
+		Engine::CCollider* pCollider = dynamic_cast<Engine::CCollider*>(pGameObject->Get_Component_In_Map(L"Com_Collider"));
+		/*
+		if (pTransform == nullptr)
+		{
+			MSG_BOX("Summon monster transform nullptr");
+			return;
+		}
+		if (pCollider == nullptr)
+		{
+			MSG_BOX("Summon monster collider nullptr");
+			return;
+		}
+		*/
 		D3DXVECTOR3 vPos = m_pPlayer_Transform->Get_Position();
 		// 1근거리 -1원거리
-		vPos.x += (-20 * i);
+		vPos.x += (-30 * i);
 		vPos.y += (40 * iAttackType);
-		//vPos.z
-		while (Get_GameObject_From_List_By_Position(vPos, L"Layer_Ally") != nullptr)	//소환할 장소 vPos에 아군과 위치가 겹친다면 y값을 조정
-		{
-			vPos.y += (20 * iAttackType);
-		}
-		while (Get_GameObject_From_List_By_Position(vPos, L"Layer_Enemy") != nullptr)	//소환할 장소 vPos에 아군과 위치가 겹친다면 y값을 조정
-		{
-			vPos.y += (20 * iAttackType);
-		}
-		
 		pTransform->Set_Position(vPos);
-		
+		pCollider->Set_ColliderPos(pTransform->Get_m_matLocal());
+		//vPos.z
+
+		Engine::CLayer* pLayer = m_pGameObjectMgr->Find_Layer((int)eScene_Stage1, L"Layer_Ally");
+		if (pLayer != nullptr)
+		{
+			for (int i = 0; i < pLayer->Get_List_Size(); i++)
+			{
+				pGameObject2 = pLayer->Get_GameObject_In_List(i);
+				if (pGameObject2 == nullptr)
+				{
+					continue;
+				}
+				if (pCollider->Check_Collision_OBB(dynamic_cast<Engine::CCollider*>(pGameObject2->Get_Component_In_Map(L"Com_Collider"))))
+				{
+					vPos.y += (55 * iAttackType);
+					pTransform->Set_Position(vPos);
+					pCollider->Set_ColliderPos(pTransform->Get_m_matLocal());
+				}
+			}
+		}
+		pLayer = m_pGameObjectMgr->Find_Layer((int)eScene_Stage1, L"Layer_Enemy");
+		if (pLayer != nullptr)
+		{
+			for (int i = 0; i < pLayer->Get_List_Size(); i++)
+			{
+				pGameObject2 = pLayer->Get_GameObject_In_List(i);
+				if (pGameObject2 == nullptr)
+				{
+					continue;
+				}
+				if (pCollider->Check_Collision_OBB(dynamic_cast<Engine::CCollider*>(pGameObject2->Get_Component_In_Map(L"Com_Collider"))))
+				{
+					vPos.y += (55 * iAttackType);
+					pTransform->Set_Position(vPos);
+					pCollider->Set_ColliderPos(pTransform->Get_m_matLocal());
+				}
+			}
+		}
+
+		pTransform->Set_Position(vPos);
 	}
 
 

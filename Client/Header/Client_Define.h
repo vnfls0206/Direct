@@ -3,5 +3,6 @@
 
 #define WINCX 800
 #define WINCY 600
+#define Arrow_Count 5
 
 #endif

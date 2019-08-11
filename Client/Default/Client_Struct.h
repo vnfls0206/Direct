@@ -20,6 +20,7 @@ typedef struct tagMonster_Infomation
 	UINT uiAttackDamage;
 	UINT uiHP;
 	float uiAttackDelay;
+	float uiCurrentAttackDelay;
 	int iAttackType;	//1은 근거리, -1은 원거리 공격타입
 	const TCHAR* pName;
 
